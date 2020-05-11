@@ -1,6 +1,6 @@
 const { readConfig, getConfig } = require("../../misc/config")
 const express = require("express")
-const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload')
 const api = require("../api")
 
 const app = express()
