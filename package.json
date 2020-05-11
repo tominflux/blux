@@ -2,9 +2,9 @@
   "name": "blux",
   "version": "0.1.0",
   "description": "Framework for building static-site and WYSIWYG CMS.",
-  "main": "n/a",
+  "main": "echo \"Error: no main specified\" && exit 1",
   "scripts": {
-    "test": "n/a"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
