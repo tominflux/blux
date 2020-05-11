@@ -1,0 +1,45 @@
+{
+  "name": "blux",
+  "version": "0.1.0",
+  "description": "Framework for building static-site and WYSIWYG CMS.",
+  "main": "n/a",
+  "scripts": {
+    "test": "n/a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MakingUtopia/blux.git"
+  },
+  "keywords": [
+    "blux",
+    "cms",
+    "static-site",
+    "jamstack",
+    "git",
+    "deploy",
+    "framework"
+  ],
+  "author": "Thomas Chesters",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/MakingUtopia/blux/issues"
+  },
+  "homepage": "https://github.com/MakingUtopia/blux#readme",
+  "dependencies": {
+    "@primer/octicons-react": "^9.6.0",
+    "draft-js": "^0.11.4",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
+    "fs-extra": "^9.0.0",
+    "parcel-bundler": "^1.12.4",
+    "plyr": "^3.6.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "regenerator-runtime": "^0.13.3",
+    "simple-git": "^2.4.0"
+  }
+}
