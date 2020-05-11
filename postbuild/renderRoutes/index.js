@@ -1,9 +1,9 @@
 const fs = require("fs-extra")
 const path = require("path")
-const { readConfig } = require("../../misc/config")
+const { getConfig } = require("../../misc/config")
 
 async function processHtml(html, isCms=false) {
-    const config = await readConfig()
+    const config = getConfig()
     const replaceTitle = (input) => (
         input.replace(
             "[Blux-App-Title]", 

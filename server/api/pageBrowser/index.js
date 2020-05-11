@@ -1,11 +1,17 @@
 const path = require("path")
 const fs = require("fs-extra")
+const { getConfig } = require("../../../misc/config")
 
 const API_PATH = /\/api\/page-browser\/?(.*)/
-const PAGE_ROOT = "./static/content/page"
 
-const getAbsPath = pagePath => path.join(PAGE_ROOT, pagePath)
-const getPagePath = absPath => path.relative(PAGE_ROOT, absPath)
+const getPageRoot = () => (
+    path.join(
+        getConfig().staticPath, "content/page"
+    )
+)
+
+const getAbsPath = pagePath => path.join(getPageRoot(), pagePath)
+const getPagePath = absPath => path.relative(getPageRoot(), absPath)
 
 //async function createNewPage(id, )
 

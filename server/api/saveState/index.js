@@ -1,5 +1,6 @@
 const simpleGit = require("simple-git/promise")
-
+const { getConfig } = require("../../../misc/config")
+const path = require("path")
 
 const API_PATH = "/api/save-state"
 
@@ -10,7 +11,8 @@ const API_PATH = "/api/save-state"
 
 const commitChanges = async () => {
     const git = simpleGit()
-    await git.add("./static/*")
+    const config = getConfig()
+    await git.add(path.join(config.static, "./*"))
     await git.addConfig('user.name', 'BluxCMS')
     await git.addConfig('user.email', '...')
     await git.commit(
@@ -25,8 +27,6 @@ const pushMaster = async (user, pass) => {
     const remote = `https://${user}:${pass}@${repo}`
     await git.push(remote, "master:master")
 }
-
-
 
 const saveState = async (user, pass) => {
     console.log("Pushing app state changes to master Git repository...")

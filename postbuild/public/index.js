@@ -3,6 +3,7 @@ const path = require("path")
 const discoverPages = require("../../misc/pages").discoverPages
 const readPages = require("../../misc/pages").readPages
 const renderRoutes = require("../renderRoutes").renderRoutes
+const { readConfig, getConfig } = require("../config")
 
 async function copyPagesJson(pagesData) {
     const destFolder = "public/content/"
@@ -14,11 +15,16 @@ async function copyPagesJson(pagesData) {
 }
 
 async function postbuild() {
+    await readConfig()
     const routes = await discoverPages()
     await renderRoutes("public", routes)  
     const pagesData = await readPages(routes)
     await copyPagesJson(pagesData)
-    fs.copy("static/content", "public/content")
+    const config = getConfig()
+    const contentPath = path.join(
+        config.static, "content"
+    )
+    fs.copy(contentPath, "public/content")
 }
 
 postbuild()

@@ -1,8 +1,8 @@
 const path = require("path")
 const fs = require("fs-extra")
+const { getConfig } = require("../../../misc/config")
 
 const API_PATH = /\/api\/page\/(.*)/
-
 
 const blankPage = () => ({
     type: "default",
@@ -10,7 +10,7 @@ const blankPage = () => ({
 })
 
 const getFilePath = id => path.join(
-    "./static/content/page", id + ".json"
+    getConfig().staticPath, "content/page", id + ".json"
 )
 
 async function createNewPage(id) {

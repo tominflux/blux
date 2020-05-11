@@ -1,12 +1,17 @@
 const path = require("path")
 const fs = require("fs-extra")
+const { getConfig } = require("../config")
 
-const PAGE_DIRECTORY = "./static/content/page"
+const getPageDirectory = () => (
+    path.join(
+        getConfig().staticPath, "content/page"
+    )
+)
 
 async function discoverPages(relativeDirectory="") {
     const jsonFilter = /\.json$/
     const absDirectory = path.join(
-        PAGE_DIRECTORY, relativeDirectory
+        getPageDirectory(), relativeDirectory
     )
     let accumulatedFileIds = []
     const immediateFilePaths = await fs.readdir(absDirectory)
@@ -30,7 +35,7 @@ async function discoverPages(relativeDirectory="") {
 }
 
 const pageIdToFilepath = pageId => path.join(
-    PAGE_DIRECTORY, pageId + ".json"
+    getPageDirectory(), pageId + ".json"
 )
 
 async function readPages(pageIds) {

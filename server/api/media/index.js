@@ -1,11 +1,16 @@
 const path = require("path")
 const fs = require("fs-extra")
+const { getConfig } = require("../../../misc/config")
 
 const API_PATH = /\/api\/media\/?(.*)/
-const MEDIA_ROOT = "./static/content/media"
+const getMediaRoot = () => (
+    path.join(
+        getConfig().staticPath, "content/media"
+    )
+)
 
-const getAbsPath = mediaPath => path.join(MEDIA_ROOT, mediaPath)
-const getMediaPath = absPath => path.relative(MEDIA_ROOT, absPath)
+const getAbsPath = mediaPath => path.join(getMediaRoot(), mediaPath)
+const getMediaPath = absPath => path.relative(getMediaRoot(), absPath)
 
 
 const checkIfFolder = async absPath => {
