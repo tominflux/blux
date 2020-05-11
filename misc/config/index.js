@@ -9,10 +9,11 @@ const CONFIG_DEFAULT = {
 async function readConfig() {
     const rawData = await fs.readFile(CONFIG_PATH)
     const text = rawData.toString()
-    const config = JSON.parse(text)
-    return {
-        htmlDocTitle: config.htmlDocTitle || CONFIG_DEFAULT.htmlDocTitle
+    const fileConfig = JSON.parse(text)
+    const config = {
+        htmlDocTitle: fileConfig.htmlDocTitle || CONFIG_DEFAULT.htmlDocTitle
     }
+    return config
 }
 
 exports.readConfig = readConfig

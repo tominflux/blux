@@ -2,8 +2,8 @@ const fs = require("fs-extra")
 const path = require("path")
 const { readConfig } = require("../../misc/config")
 
-function processHtml(html, isCms=false) {
-    const config = readConfig()
+async function processHtml(html, isCms=false) {
+    const config = await readConfig()
     const replaceTitle = (input) => (
         input.replace(
             "[Blux-App-Title]", 
@@ -19,7 +19,7 @@ async function renderRoutes(buildFolder, routes, isCms=false) {
     const htmlLocation = path.join(buildFolder, "/index.html")
     const data = await fs.readFile(htmlLocation)
     const preHtml = data.toString()
-    const postHtml = processHtml(preHtml, isCms)
+    const postHtml = await processHtml(preHtml, isCms)
     for(const route of routes) {
         const routeDir = path.join(
             buildFolder, route
@@ -28,8 +28,10 @@ async function renderRoutes(buildFolder, routes, isCms=false) {
         if (!dirExists) {
             await fs.mkdir(routeDir, {recursive: true})
         }
-        const newHtmlPath = path.join(
-            routeDir, "/index.html"
+        const newHtmlPath = (
+            (route === "index") ?
+                path.join(buildFolder, "/index.html") :
+                path.join(routeDir, "/index.html")
         )
         console.log(newHtmlPath)
         await fs.writeFile(newHtmlPath, postHtml)
