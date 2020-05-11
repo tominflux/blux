@@ -1,6 +1,6 @@
 const fs = require("fs-extra")
 
-const CONFIG_PATH = "../blux-config.json"
+const CONFIG_PATH = "./blux-config.json"
 
 const CONFIG_DEFAULT = {
     htmlDocTitle: "Blux App"

@@ -8,7 +8,7 @@ function processHtml(html, isCms=false) {
         input.replace(
             "[Blux-App-Title]", 
             config.htmlDocTitle +
-            (isCMS ? " [CMS]" : "")
+            (isCms ? " [CMS]" : "")
         )
     )
     const htmlTitleReplaced = replaceTitle(html)
