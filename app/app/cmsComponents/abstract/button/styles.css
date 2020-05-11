@@ -1,0 +1,29 @@
+
+.blux-button {
+    padding: 6pt;
+    font-size: 16pt;
+    border: none;
+    border-radius: 6pt;
+    background-color: white;
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        2pt 2pt 11pt aliceblue inset, 
+        -2pt -2pt 11pt aliceblue inset, 
+        2pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        2pt -2pt 4pt rgba(0, 0, 0, 0.33), 
+        -1pt 2pt 4pt rgba(0, 0, 0, 0.66),
+        -2pt 2pt 2pt aliceblue;
+    transition: background-color 0.166s ease;
+    cursor: pointer;
+}
+.blux-button:hover {
+    background-color: rgba(233,233,255, 0.88);
+}
+.blux-button:focus {
+    outline: none;
+}
+.blux-button--disabled {
+    opacity: 0.44;
+    pointer-events: none;
+}

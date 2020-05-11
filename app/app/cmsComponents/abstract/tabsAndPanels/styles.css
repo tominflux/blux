@@ -1,0 +1,12 @@
+
+
+
+
+.blux-tabs-and-panels__panel {
+    margin-top: 0.66pt;
+    box-shadow: 
+    1pt -1pt 6pt rgba(240, 248, 255, 0.33), 
+    1pt -1pt 2pt rgba(0, 0, 0, 0.22),
+        0.66pt -1pt 2pt rgba(0, 0, 0, 0.33),
+        1pt -1pt 1pt aliceblue;
+}

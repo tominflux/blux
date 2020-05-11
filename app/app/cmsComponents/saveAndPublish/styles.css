@@ -1,0 +1,14 @@
+
+.blux-save-and-publish {
+    position: fixed;
+    top: 22pt;
+    right: 22pt;
+}
+
+.blux-save-and-publish__button {
+    padding-left: 8pt;
+    padding-right: 8pt;
+    padding-bottom: 4.4pt;
+    margin-left: 9pt;
+    margin-right: 9pt;
+}

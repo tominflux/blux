@@ -1,0 +1,18 @@
+.blux-text-block {
+    padding: 22pt;
+    padding-left: 88pt;
+    padding-right: 88pt;
+}
+
+.blux-text-block--left {
+    text-align: left;
+}
+.blux-text-block--center {
+    text-align: center;
+}
+.blux-text-block--right {
+    text-align: right;
+}
+.blux-text-block--justified {
+    text-align: justify;
+}

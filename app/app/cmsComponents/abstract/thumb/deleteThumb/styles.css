@@ -1,0 +1,23 @@
+
+
+.blux-thumb__delete {
+    position: absolute;
+    z-index: 9999;
+    top: 13.33pt;
+    right: 13.33pt;
+    line-height: 10pt;
+    padding-top: 4pt;
+    padding-bottom: 6pt;
+    padding-left: 8pt;
+    padding-right: 8pt;
+    transform: scale(1.0);
+    opacity: 1.0;
+    transition: transform 0.122s ease, opacity 0.22s ease;
+}
+.blux-thumb__delete:hover {
+    background-color: rgba(255, 166, 166, 0.88);
+}
+.blux-thumb__delete--hidden {
+    transform: scale(0.0);
+    opacity: 0.0;
+}

@@ -1,0 +1,14 @@
+
+@font-face {
+    font-family: SinkinSans;
+    src: url(fonts/sinkin-sans/SinkinSans-400Regular.otf);
+}
+@font-face {
+    font-family: SinkinSans;
+    src: url(fonts/sinkin-sans/SinkinSans-500Medium.otf);
+    font-weight: 500;
+}
+
+body {
+    font-family: SinkinSans, sans-serif;
+}

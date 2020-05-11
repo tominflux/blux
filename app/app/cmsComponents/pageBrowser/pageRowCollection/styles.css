@@ -1,0 +1,15 @@
+
+.blux-page-browser__thumbs {
+    height: 60vh;
+    overflow-y: initial;
+    overflow-x: hidden;
+}
+
+.blux-page-browser__page-row {
+    margin-bottom: 11pt;
+}
+
+.blux-page-browser__page-col {
+    padding-left: 11pt;
+    padding-right: 11pt;
+}

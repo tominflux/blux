@@ -1,0 +1,14 @@
+
+
+.blux-image-block__edit {
+    position: absolute;
+    top: 9pt;
+    right: 9pt;
+    display: inline-block;
+}
+
+.blux-image-block__edit-thumb {
+    width: 44pt;
+    height: 44pt;
+    border-radius: 9pt;
+}

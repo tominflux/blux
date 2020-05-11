@@ -1,0 +1,17 @@
+
+.blux-image-block {
+    width: 100%;
+    text-align: center;
+    padding: 22pt;
+}
+
+
+.blux-image-block__img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.blux-image-block__img {
+    max-width: 900px;
+    max-height: 480px;
+}

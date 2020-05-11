@@ -1,0 +1,11 @@
+
+.blux-navigator {
+    padding: 22pt;
+    height: 60vh;   
+    overflow-y: scroll;
+}
+
+.blux-navigator__drag-over {
+    border: 3.3pt solid rgba(200, 200, 255, 0.88);
+    background-color: rgba(200, 200, 255, 0.66)
+}

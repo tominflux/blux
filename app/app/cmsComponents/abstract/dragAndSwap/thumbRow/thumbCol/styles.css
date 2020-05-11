@@ -1,0 +1,12 @@
+
+
+.blux-drag-and-swap__thumb-container {
+    width: 220pt;
+    transition: transform 0.133s ease, opacity 0.133s ease;
+}
+
+
+.blux-drag-and-swap__thumb-container--shrink {
+    transform: scale(0.88);
+    opacity: 0.66;
+}

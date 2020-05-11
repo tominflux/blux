@@ -1,0 +1,61 @@
+
+.blux-tab {
+    text-align: center;
+    padding-top: 6pt;
+    padding-bottom: 6pt;
+    padding-left: 9pt;
+    padding-right: 9pt;
+    margin-left: 1.66pt;
+    margin-right: 1.66pt;
+    font-size: 14pt;
+    border: none;
+    border-top-left-radius: 6pt;
+    border-top-right-radius: 6pt;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: white;
+    box-shadow: 
+        -0.66pt -0.66pt 1pt rgba(0, 0, 0, 0.11) inset, 
+        0.66pt 0.66pt 2pt rgba(0, 0, 0, 0.06) inset,
+        1pt 1pt 6pt aliceblue inset, 
+        -1pt -1pt 6pt aliceblue inset, 
+        1pt -1pt 6pt rgba(240, 248, 255, 0.33), 
+        1pt -1pt 2pt rgba(0, 0, 0, 0.22), 
+        -0.66pt 1pt 2pt rgba(0, 0, 0, 0.33),
+        -1pt 1pt 1pt aliceblue;
+    transform: scale(1.0);
+    transform-origin: 50% 100%;
+    opacity: 0.88;
+    z-index: 0;
+    transition: 
+        background-color 0.166s ease,
+        box-shadow 0.088s ease,
+        opacity 0.088s ease,
+        transform 0.088s ease;
+    cursor: pointer;
+}
+.blux-tab:hover {
+    background-color: rgba(233,233,255, 0.88);
+}
+.blux-tab:focus {
+    outline: none;
+}
+.blux-tab--disabled {
+    opacity: 0.44;
+    pointer-events: none;
+}
+.blux-tab--selected {
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        1pt 2pt 11pt aliceblue inset, 
+        -1pt -2pt 11pt aliceblue inset, 
+        1pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        1pt -2pt 4pt rgba(0, 0, 0, 0.33), 
+        -1pt 2pt 4pt rgba(0, 0, 0, 0.66),
+        -1pt 2pt 2pt aliceblue;
+    background-color: rgba(166, 166, 222, 0.33);
+    text-shadow: 0pt 0.99pt 2pt rgba(233, 244, 255, 0.99);
+    opacity: 1.0;
+    z-index: 1;
+}

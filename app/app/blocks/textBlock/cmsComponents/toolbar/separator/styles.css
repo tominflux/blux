@@ -1,0 +1,11 @@
+
+
+.blux-toolbar__separator {
+    display: inline-block;
+    width: 0px;
+    height: 22pt;
+    vertical-align: middle;
+    border: 0.5pt groove rgba(0, 0, 0, 0.22);
+    margin-left: 4pt;
+    margin-right: 4pt;
+}

@@ -1,0 +1,41 @@
+
+
+.blux-modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    text-align: center;
+}
+
+.blux-modal__container {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 33pt;
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        3pt 3pt 22pt rgba(134, 176, 190, 0.44) inset, 
+        -3pt -3pt 22pt rgba(134, 176, 190, 0.44) inset,
+        2pt -2pt 2pt rgba(0, 0, 0, 0.11), 
+        -2pt 2pt 1pt rgba(0, 0, 0, 0.11),
+        2pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        -2pt 2pt 2pt aliceblue;
+    padding-left: 44pt;
+    padding-right: 44pt;
+    padding-top: 33pt;
+    padding-bottom: 33pt;
+}
+
+
+.blux-modal__heading {
+    padding-bottom: 6pt;
+    border-bottom: groove 2.2pt rgba(255,255,255,0.88);
+    margin-bottom: 16pt;
+}

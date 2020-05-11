@@ -1,0 +1,39 @@
+
+
+.blux-toolbar {
+    position: absolute;
+    left: 50%;
+    top: -66px;
+    transform: translateX(-50%) scale(1.0);
+    z-index: 600;
+    opacity: 1.0;
+    transition: transform 0.122s ease, opacity 0.22s ease;
+    padding-top: 16.6pt;
+    padding-bottom: 16.6pt;
+    padding-left: 266pt;
+    padding-right: 266pt;
+    white-space: nowrap;
+}
+.blux-toolbar__container {
+    background-color: white;
+    border: none;
+    border-radius: 6pt;
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        2pt 2pt 11pt aliceblue inset, 
+        -2pt -2pt 11pt aliceblue inset, 
+        2pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        2pt -2pt 4pt rgba(0, 0, 0, 0.33), 
+        -1pt 2pt 4pt rgba(0, 0, 0, 0.66),
+        -2pt 2pt 2pt aliceblue;
+}
+.blux-toolbar--fixed {
+    position: fixed;
+    left: 50%;
+    top: 66px;
+}
+.blux-toolbar--hidden {
+    transform: translateX(-50%) scale(0.0);
+    opacity: 0.0;
+}

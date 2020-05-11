@@ -1,0 +1,12 @@
+
+
+.blux-hideable {
+    transform: scale(1.0);
+    opacity: 1.0;
+    transition: transform 0.122s ease, opacity 0.22s ease;
+}
+
+.blux-hideable--hidden {
+    transform: scale(0.0);
+    opacity: 0.0;
+}

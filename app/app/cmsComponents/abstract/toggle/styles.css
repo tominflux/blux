@@ -1,0 +1,28 @@
+
+
+.blux-toggle {
+    display: inline-block;
+    width: 33pt;
+    height: 33pt;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6pt;
+    background-color: rgba(233,233,255, 0.0);
+    transition: background-color 0.166s ease;
+    vertical-align: middle;
+}
+.blux-toggle:hover {
+    background-color: rgba(233,233,255, 0.88);
+}
+.blux-toggle__symbol {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.blux-toggle--toggled {
+    background-color: rgba(22, 22, 66, 0.55);
+    box-shadow: 
+        0pt 0pt 2pt 2pt rgba(255, 255, 255, 0.44) inset;
+    color: rgb(199, 233, 255);
+    text-shadow: 0pt 0.66pt 3pt rgba(233, 244, 255, 0.88);
+}
