@@ -1,6 +1,7 @@
-/*
+
 const { 
-    checkRepoInitialised, initialiseRepo 
+    checkStaticRepoCloned,
+    cloneStaticRepo
 } = require("../../../misc/git")
 
 const API_PATH = "/api/git"
@@ -9,19 +10,20 @@ const API_PATH = "/api/git"
 /////////
 
 const getHandler = async (req, res) => {
-    const initialised = await checkRepoInitialised()
-    res.send({ initialised })
+    const isCloned = await checkStaticRepoCloned()
+    res.send({ isCloned })
 }
 
 const postHandler = async (req, res, next) => {
     const { user, pass } = req.body
-    const initialised = await checkRepoInitialised()
-    if (initialised) {
-        res.send()
+    const cloned = await checkStaticRepoCloned()
+    if (cloned) {
+        res.send("Already Cloned")
+        return
     }
     try {
-        await initialiseRepo(user, pass)
-        res.send()
+        await cloneStaticRepo(user, pass)
+        res.send("Cloned Successfully")
     } catch (err) {
         console.error(err)
         next(err)
@@ -44,4 +46,3 @@ function configure(expressApp) {
 
 
 exports.configure = configure
-*/

@@ -7,7 +7,7 @@ const API_PATH = "/api/publish"
 /////////
 /////////
 
-
+/*
 const pullFromMasterToPublic = async() => {
     const git = simpleGit()
     await git.pull("origin", "master:public")
@@ -24,12 +24,14 @@ const publish = async () => {
     await pushPublic()
     console.log("Publish complete.")
 }
+*/
 
 /////////
 /////////
 
 
 const postHandler = async (req, res) => {
+    /*
     try {
         await saveState()
     } catch (err) {
@@ -44,7 +46,8 @@ const postHandler = async (req, res) => {
         next(err)
         return
     }
-    res.send()
+    */
+    res.send("API endpoint in development.")
 }
 
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import NeedsInitModal from './needsInitModal'
 
 const mapStateToProps = (state) => ({
     checking: state.Git.checking,
@@ -15,6 +16,14 @@ const VIEW_STATE = {
 }
 
 function GitCheck(props) {
+    //Events
+    const onInitSubmit = (user, pass) => {
+        props.gitInitSend()
+        fetch(
+            "/api/git"
+        )
+    }
+    //Functions
     const getViewState = () => {
         if (props.checking === true) 
             return VIEW_STATE.CHECKING
@@ -36,12 +45,17 @@ function GitCheck(props) {
             "Could not determine Git state."
         )
     }
+    //
+
+    //
     switch (getViewState()) {
         case VIEW_STATE.CHECKING:
             return null
         case VIEW_STATE.NEEDS_INITIALISING:
             return (
-
+                <NeedsInitModal 
+                    onSubmit={(user, pass) => onInitSubmit(user, pass)}
+                />
             )
         case VIEW_STATE.INITIALISING:
             return null

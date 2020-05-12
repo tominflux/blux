@@ -1,5 +1,8 @@
 const simpleGit = require("simple-git/promise")
 const { getConfig } = require("../../../misc/config")
+const {
+    pushStaticRepo
+} = require("../../../misc/git")
 const path = require("path")
 
 const API_PATH = "/api/save-state"
@@ -8,7 +11,7 @@ const API_PATH = "/api/save-state"
 /////////
 /////////
 
-
+/*
 const commitChanges = async () => {
     const git = simpleGit()
     const config = getConfig()
@@ -27,11 +30,11 @@ const pushMaster = async (user, pass) => {
     const remote = `https://${user}:${pass}@${repo}`
     await git.push(remote, "master:master")
 }
+*/
 
 const saveState = async (user, pass) => {
     console.log("Pushing app state changes to master Git repository...")
-    await commitChanges()
-    await pushMaster(user, pass)
+    await pushStaticRepo(user, pass)
     console.log("Save state complete.")
 }
 
@@ -42,7 +45,6 @@ const saveState = async (user, pass) => {
 
 const postHandler = async (req, res, next) => {
     const {user, pass} = req.body
-    console.log(`User: ${user}`)
     try {
         await saveState(user, pass)
     } catch (err) {

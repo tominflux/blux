@@ -29,8 +29,8 @@ const getAdminEmail = () => {
 const checkStaticRepoCloned = async () => {
     const { staticPath, staticRepo } = getStaticPathAndRepo()
     try {      
-        const git = simpleGit()
-        const status = await git.status(staticPath)
+        const git = simpleGit(staticPath)
+        const status = await git.status()
         console.log(status)
         return true
     } catch (err) {
