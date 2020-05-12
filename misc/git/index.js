@@ -40,8 +40,9 @@ const checkStaticRepoCloned = async () => {
 
 const cloneStaticRepo = async (user, pass) => {
     const { staticPath, staticRepo } = getStaticPathAndRepo()
+    console.log(`Cloning static repo: ${staticRepo}`)
     const git = simpleGit()
-    const authRepo = `https://${user}:${pass}@${staticRepo}`
+    const authRepo = `https://${staticRepo}`
     await git.clone(authRepo, staticPath)
 }
 

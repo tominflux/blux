@@ -17,6 +17,9 @@ const VIEW_STATE = {
 
 function GitCheck(props) {
     //Events
+    const onCheckResponse = (isCloned) => {
+        props.gitCheckReceive(isCloned)
+    }
     const onInitSubmit = (user, pass) => {
         props.gitInitSend()
         fetch(
@@ -44,6 +47,12 @@ function GitCheck(props) {
         throw new Error(
             "Could not determine Git state."
         )
+    }
+    const performCheck = async () => {
+        props.getCheckSend()
+        const response = await fetch("/api/git")
+        const { isCloned } = await response.json()
+        onCheckResponse(isCloned)
     }
     //
 
