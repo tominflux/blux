@@ -4,7 +4,9 @@ const CONFIG_PATH = "./blux-config.json"
 
 const CONFIG_DEFAULT = {
     htmlDocTitle: "Blux App",
-    staticPath: null
+    staticRepo: null,
+    staticPath: null,
+    adminEmail: null
 }
 
 let _config = null
@@ -15,7 +17,9 @@ async function readConfig() {
     const fileConfig = JSON.parse(text)
     const config = {
         htmlDocTitle: fileConfig.htmlDocTitle || CONFIG_DEFAULT.htmlDocTitle,
-        staticPath: fileConfig.staticPath || CONFIG_DEFAULT.staticPath
+        staticRepo: fileConfig.staticRepo || CONFIG_DEFAULT.staticRepo,
+        staticPath: fileConfig.staticPath || CONFIG_DEFAULT.staticPath,
+        adminEmail: fileConfig.adminEmail || CONFIG_DEFAULT.adminEmail
     }
     _config = config
 }
