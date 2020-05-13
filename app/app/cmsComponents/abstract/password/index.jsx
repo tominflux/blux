@@ -1,13 +1,12 @@
 import React from 'react'
 import { inheritClasses } from '../../../misc'
-import './styles.css'
+import '../textbox/styles.css'
 
-export default function Textbox(props) {
-    //const ref = React.createRef(null)
+export default function Password(props) {
     return (
         <input
             className={inheritClasses(props, "blux-textbox")}
-            type="text"
+            type="password"
             placeholder={props.children}
             onChange={props.onChange}
         />   

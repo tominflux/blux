@@ -2,7 +2,7 @@ const simpleGit = require("simple-git/promise")
 const { getConfig } = require("../../../misc/config")
 const {
     pushStaticRepo
-} = require("../../../misc/git")
+} = require("../../../misc/staticRepo")
 const path = require("path")
 
 const API_PATH = "/api/save-state"

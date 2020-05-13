@@ -13,6 +13,8 @@ import { loadPageStates } from '../persister'
 import { isCMS } from '../misc'
 import ControlModal from '../cmsComponents/controlModal'
 import SaveAndPublish from '../cmsComponents/saveAndPublish'
+import StaticRepoCheck from '../cmsComponents/staticRepoCheck'
+import { getStaticRepoStateSummary, STATIC_REPO_STATE } from '../redux/reducer/staticRepo'
 
 
 //Useful functions
@@ -64,29 +66,42 @@ const getLoadingPage = () => (
 
 //Redux mappers
 const mapStateToProps = (state) => ({
+    staticRepoState: {
+        checking: state.StaticRepo.checking,
+        initialised: state.StaticRepo.initialised,
+        initialising: state.StaticRepo.initialising
+    },
     pages: state.PageCollection.pages
 })
-const mapDispatchToProps = { fetchPages, receivePages }
-
-//Hooks
-const onMount = props => {
-    //Inform redux of page fetching.
-    props.fetchPages([])
-    //Fetch pages
-    loadPageStates()
-    //Inform redux of page receival.
-    .then(pages => {
-        //console.log(pages)
-        props.receivePages(pages)
-    })
+const mapDispatchToProps = { 
+    fetchPages, 
+    receivePages 
 }
 
-//Blux Content Component
-const BluxContent = props => {
-    React.useEffect(() => { onMount(props) }, [])
-    return (props.pages !== null) ? 
-        getCurrentPage(props) :
-        getLoadingPage(props)
+function BluxContent(props) {
+    //Functions
+    const acquirePages = () => {
+        props.fetchPages([])
+        loadPageStates()
+        .then(pages => {
+            props.receivePages(pages)
+        })
+    }
+    //
+    const onStaticRepoCheckPass = () => {
+        acquirePages()
+    }
+    //
+    return (<>
+        <StaticRepoCheck
+            onPass={() => onStaticRepoCheckPass()}
+        />
+        {
+            (props.pages !== null) ? 
+                getCurrentPage(props) :
+                getLoadingPage(props)
+        }
+    </>)
 }
 
 export default withRouter(

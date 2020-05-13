@@ -17,7 +17,8 @@ export default function Modal(props) {
         <div 
             className="blux-modal"
             onClick={
-                e => onClick(e, ref, props.onClickAway)
+                props.onClickAway ?
+                    (e) => onClick(e, ref, props.onClickAway) : null
             }
             ref={ref}
         >

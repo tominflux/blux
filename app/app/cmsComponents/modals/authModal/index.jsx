@@ -1,7 +1,9 @@
 import React from 'react'
 import Modal from '../../abstract/modal'
 import Textbox from '../../abstract/textbox'
+import Password from '../../abstract/password'
 import Button from '../../abstract/button'
+import './styles.css'
 
 export default function AuthModal(props) {
     //State
@@ -33,23 +35,23 @@ export default function AuthModal(props) {
             show={props.show}
             heading={getHeading()}
         >
-            <p>
+            <p className="blux-auth-modal__info">
                 {props.children}
             </p>
             <Textbox
+                className="blux-auth-modal__user"
                 onChange={(e) => onUserChange(e)}
             >
                 Username
             </Textbox>
-            <Textbox
+            <Password
+                className="blux-auth-modal__pass"
                 onChange={(e) => onPassChange(e)}
             >
                 Password / Personal Access Token*
-            </Textbox>
-            <p>
-                <i>
-                    *Personal Access Token advised for enhanced security.
-                </i>
+            </Password>
+            <p className="blux-auth-modal__pat-recommendation">
+                *Personal Access Token advised for enhanced security.
             </p>
             <Button
                 onClick={() => onSubmit()}

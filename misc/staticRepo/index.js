@@ -26,12 +26,12 @@ const getAdminEmail = () => {
     return adminEmail
 }
 
+
 const checkStaticRepoCloned = async () => {
     const { staticPath, staticRepo } = getStaticPathAndRepo()
     try {      
         const git = simpleGit(staticPath)
-        const status = await git.status()
-        console.log(status)
+        await git.status()
         return true
     } catch (err) {
         return false
@@ -42,8 +42,12 @@ const cloneStaticRepo = async (user, pass) => {
     const { staticPath, staticRepo } = getStaticPathAndRepo()
     console.log(`Cloning static repo: https://${staticRepo}`)
     const git = simpleGit()
-    const authRepo = `https://${user}@${staticRepo}`
-    await git.clone(authRepo, staticPath)
+    const authRepo = `https://${user}:${pass}@${staticRepo}`
+    await git.clone(
+        authRepo, 
+        staticPath
+    )
+    console.log("Finished cloning.")
 }
 
 const pullStaticRepo = async (user, pass) => {

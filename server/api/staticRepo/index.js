@@ -2,9 +2,9 @@
 const { 
     checkStaticRepoCloned,
     cloneStaticRepo
-} = require("../../../misc/git")
+} = require("../../../misc/staticRepo")
 
-const API_PATH = "/api/git"
+const API_PATH = "/api/static-repo"
 
 /////////
 /////////

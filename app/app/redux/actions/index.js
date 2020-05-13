@@ -21,10 +21,11 @@ import {
     PAGE_BROWSER_SELECT,
     PAGE_BROWSER_CONFIRM,
     PAGE_BROWSER_ACKNOWLEDGE,
-    GIT_CHECK_SEND,
-    GIT_CHECK_RECEIVE,
-    GIT_INIT_SEND,
-    GIT_INIT_RECEIVE,
+    //GIT CHECK
+    STATIC_REPO_CHECK_SEND,
+    STATIC_REPO_CHECK_RECEIVE,
+    STATIC_REPO_INIT_SEND,
+    STATIC_REPO_INIT_RECEIVE,
 } from "../actionTypes";
 
 
@@ -169,22 +170,23 @@ export const pageBrowserAcknowledge = () => ({
 /////////
 /////////
 
-export const gitCheckSend = () => ({
-    type: GIT_CHECK_SEND,
+
+export const staticRepoCheckSend = () => ({
+    type: STATIC_REPO_CHECK_SEND,
     payload: {}
 })
 
-export const gitCheckReceive = (initialised) => ({
-    type: GIT_CHECK_RECEIVE,
+export const staticRepoCheckReceive = (initialised) => ({
+    type: STATIC_REPO_CHECK_RECEIVE,
     payload: { initialised }
 })
 
-export const gitInitSend = () => ({
-    type: GIT_INIT_SEND,
+export const staticRepoInitSend = () => ({
+    type: STATIC_REPO_INIT_SEND,
     payload: {}
 })
 
-export const getInitReceive = (successful) => ({
-    type: GIT_INIT_RECEIVE,
+export const staticRepoInitReceive = (successful) => ({
+    type: STATIC_REPO_INIT_RECEIVE,
     payload: { successful }
 })

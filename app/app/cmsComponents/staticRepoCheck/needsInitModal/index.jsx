@@ -1,7 +1,4 @@
 import React from 'react'
-import Modal from '../../abstract/modal'
-import Textbox from '../../abstract/textbox'
-import Button from '../../abstract/button'
 import AuthModal from '../../modals/authModal'
 
 export default function NeedsInitModal(props) {
@@ -12,10 +9,8 @@ export default function NeedsInitModal(props) {
             heading={"Importing Static Content"}
             onSubmit={props.onSubmit}
         >
-            <p>
-                Authentication required to clone static content 
-                repository.
-            </p>
+            Git credentials required to import static content 
+            repository.
         </AuthModal>
     )
 }
