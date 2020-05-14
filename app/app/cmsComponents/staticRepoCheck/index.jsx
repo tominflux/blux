@@ -8,11 +8,12 @@ import {
     staticRepoInitReceive
 } from '../../redux/actions'
 import { getStaticRepoStateSummary, STATIC_REPO_STATE } from '../../redux/reducer/staticRepo'
+import ImportingCover from './importingCover'
 
 const mapStateToProps = (state) => ({
     checking: state.StaticRepo.checking,
     initialised: state.StaticRepo.initialised,
-    initialising: state.StaticRepo.initialised
+    initialising: state.StaticRepo.initialising
 })
 
 const mapDispatchToProps = {
@@ -83,7 +84,9 @@ function StaticRepoCheck(props) {
                 />
             )
         case STATIC_REPO_STATE.INITIALISING:
-            return null
+            return (
+                <ImportingCover />
+            )
         case STATIC_REPO_STATE.INITIALISED:
             return null
     }

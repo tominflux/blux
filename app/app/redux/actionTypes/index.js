@@ -2,7 +2,7 @@
 
 /* PAGE COLLECTION */
 
-export const FETCH_PAGES = "FETCH PAGES"
+export const FETCH_PAGES = "FETCH_PAGES"
 export const RECEIVE_PAGES = "RECEIVE_PAGES"
 export const PAGE_ACTION = "PAGE_ACTION"
 

@@ -56,12 +56,16 @@ export const getStaticRepoStateSummary = (staticRepoReduxState) => {
     if (staticRepoReduxState.checking === true) 
         return STATIC_REPO_STATE.CHECKING
     else if (
-        !staticRepoReduxState.initialised &&
+        staticRepoReduxState.initialised === null
+    )
+        return STATIC_REPO_STATE.NOT_YET_CHECKED
+    else if (
+        staticRepoReduxState.initialised === false &&
         staticRepoReduxState.initialising === false
     )
         return STATIC_REPO_STATE.NEEDS_INITIALISING
     else if (
-        !staticRepoReduxState.initialised &&
+        staticRepoReduxState.initialised === false &&
         staticRepoReduxState.initialising === true
     ) 
         return STATIC_REPO_STATE.INITIALISING
@@ -70,5 +74,7 @@ export const getStaticRepoStateSummary = (staticRepoReduxState) => {
     ) 
         return STATIC_REPO_STATE.INITIALISED
     else 
-        return STATIC_REPO_STATE.NOT_YET_CHECKED
+        throw new Error(
+            "Static repo state summary could not be determined."
+        )
 }
