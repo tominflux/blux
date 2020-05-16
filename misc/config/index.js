@@ -6,7 +6,8 @@ const CONFIG_DEFAULT = {
     htmlDocTitle: "Blux App",
     staticRepo: null,
     staticPath: null,
-    adminEmail: null
+    adminEmail: null,
+    authSaltRounds: 10
 }
 
 let _config = null
@@ -19,7 +20,8 @@ async function readConfig() {
         htmlDocTitle: fileConfig.htmlDocTitle || CONFIG_DEFAULT.htmlDocTitle,
         staticRepo: fileConfig.staticRepo || CONFIG_DEFAULT.staticRepo,
         staticPath: fileConfig.staticPath || CONFIG_DEFAULT.staticPath,
-        adminEmail: fileConfig.adminEmail || CONFIG_DEFAULT.adminEmail
+        adminEmail: fileConfig.adminEmail || CONFIG_DEFAULT.adminEmail,
+        authSaltRounds: fileConfig.authSaltRounds || CONFIG_DEFAULT.authSaltRounds
     }
     _config = config
 }
