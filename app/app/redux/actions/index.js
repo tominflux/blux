@@ -26,6 +26,10 @@ import {
     STATIC_REPO_CHECK_RECEIVE,
     STATIC_REPO_INIT_SEND,
     STATIC_REPO_INIT_RECEIVE,
+    AUTH_CHECK_SEND,
+    AUTH_CHECK_RECEIVE,
+    AUTH_LOGIN_SEND,
+    AUTH_LOGIN_RECEIVE,
 } from "../actionTypes";
 
 
@@ -189,4 +193,29 @@ export const staticRepoInitSend = () => ({
 export const staticRepoInitReceive = (successful) => ({
     type: STATIC_REPO_INIT_RECEIVE,
     payload: { successful }
+})
+
+
+/////////
+/////////
+/////////
+
+export const authCheckSend = () => ({
+    type: AUTH_CHECK_SEND,
+    payload: {}
+})
+
+export const authCheckReceive = (configured) => ({
+    type: AUTH_CHECK_RECEIVE,
+    payload: { configured }
+})
+
+export const authLoginSend = () => ({
+    type: AUTH_LOGIN_SEND,
+    payload: {}
+})
+
+export const authLoginReceive = (authValid, sessionAvailable) => ({
+    type: AUTH_LOGIN_RECEIVE,
+    payload: { authValid, sessionAvailable }
 })

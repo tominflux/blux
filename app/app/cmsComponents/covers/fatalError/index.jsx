@@ -1,11 +1,11 @@
 import React from 'react'
-import Cover from '../cover'
+import Cover from '../../abstract/cover'
 import { cmsify } from '../../cmsify'
 
 function FatalError(props) {
     return (
         <Cover
-            message={props.message}
+            message={props.children}
         />
     )
 }

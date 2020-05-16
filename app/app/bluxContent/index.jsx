@@ -11,10 +11,9 @@ import PageBrowser from '../cmsComponents/pageBrowser'
 import { savePageState } from '../persister'
 import { loadPageStates } from '../persister'
 import { isCMS } from '../misc'
-import ControlModal from '../cmsComponents/controlModal'
 import SaveAndPublish from '../cmsComponents/saveAndPublish'
 import StaticRepoCheck from '../cmsComponents/staticRepoCheck'
-import { getStaticRepoStateSummary, STATIC_REPO_STATE } from '../redux/reducer/staticRepo'
+import AuthCheck, { getAuthStateSummary, AUTH_STATE } from '../cmsComponents/authCheck'
 
 
 //Useful functions
@@ -66,6 +65,7 @@ const getLoadingPage = () => (
 
 //Redux mappers
 const mapStateToProps = (state) => ({
+    authStateSummary: getAuthStateSummary(state.Auth),
     staticRepoState: {
         checking: state.StaticRepo.checking,
         initialised: state.StaticRepo.initialised,
@@ -80,12 +80,10 @@ const mapDispatchToProps = {
 
 function BluxContent(props) {
     //Functions
-    const acquirePages = () => {
+    const acquirePages = async () => {
         props.fetchPages([])
-        loadPageStates()
-        .then(pages => {
-            props.receivePages(pages)
-        })
+        const pages = await loadPageStates() 
+        props.receivePages(pages)
     }
     //
     const onStaticRepoCheckPass = () => {
@@ -93,9 +91,13 @@ function BluxContent(props) {
     }
     //
     return (<>
-        <StaticRepoCheck
-            onPass={() => onStaticRepoCheckPass()}
-        />
+        <AuthCheck />
+        {
+            (props.authStateSummary === AUTH_STATE.LOGGED_IN) ?
+                <StaticRepoCheck
+                    onPass={() => onStaticRepoCheckPass()}
+                /> : null
+        }
         {
             (props.pages !== null) ? 
                 getCurrentPage(props) :

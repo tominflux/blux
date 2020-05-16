@@ -67,7 +67,9 @@ const handleLoginCircumstance = async (circumstance, user, pass, res) => {
         const sessionToken = getSession()
         const cookieOptions = {
             httpOnly: true,
-            signed: true
+            signed: true,
+            sameSite: true,
+            secure: true
         }
         res
         .cookie(
