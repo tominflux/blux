@@ -2,7 +2,7 @@
 
 
 .blux-auth-modal__info {
-    margin-top: 22pt;
+    margin-top: 55pt;
     margin-bottom: 22pt;
 }
 
@@ -15,6 +15,10 @@
 }
 
 .blux-auth-modal__pat-recommendation {
-    margin-bottom: 22pt;
+    margin-bottom: 44pt;
     font-style: italic;
+}
+
+.blux-auth-modal__submit {
+    margin-bottom: 22pt;
 }

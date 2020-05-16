@@ -54,6 +54,7 @@ export default function AuthModal(props) {
                 *Personal Access Token advised for enhanced security.
             </p>
             <Button
+                className="blux-auth-modal__submit"
                 onClick={() => onSubmit()}
             >
                 Submit

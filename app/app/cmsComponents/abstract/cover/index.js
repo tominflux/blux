@@ -2,10 +2,11 @@ import React from 'react'
 import CoverMessage from './coverMessage'
 import { cmsify } from '../../cmsify'
 import './styles.css'
+import { inheritClasses } from '../../../misc'
 
 function Cover(props) {
     return (
-        <div className="blux-cover">
+        <div className={inheritClasses(props, "blux-cover")}>
             <div className="blux-cover__content-container">
                 {
                     (
