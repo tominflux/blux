@@ -1,6 +1,7 @@
 const path = require("path")
 const fs = require("fs-extra")
 const { getConfig } = require("../../../misc/config")
+const { HTTP_METHOD, configureAuthApi } = require("../auth")
 
 const API_PATH = /\/api\/media\/?(.*)/
 const getMediaRoot = () => (
@@ -124,9 +125,24 @@ async function deleteHandler(req, res) {
 
 
 function configure(expressApp) {
-    expressApp.post(API_PATH, createHandler)
-    expressApp.get(API_PATH, readHandler)
-    expressApp.delete(API_PATH, deleteHandler)
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.POST,
+        API_PATH,
+        createHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.GET,
+        API_PATH,
+        readHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.DELETE,
+        API_PATH,
+        deleteHandler
+    )
 }
 
 

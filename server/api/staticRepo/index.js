@@ -3,6 +3,7 @@ const {
     checkStaticRepoCloned,
     cloneStaticRepo
 } = require("../../../misc/staticRepo")
+const { HTTP_METHOD, configureAuthApi } = require("../auth")
 
 const API_PATH = "/api/static-repo"
 
@@ -36,8 +37,18 @@ const postHandler = async (req, res, next) => {
 
 
 function configure(expressApp) {
-    expressApp.get(API_PATH, getHandler)
-    expressApp.post(API_PATH, postHandler)
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.GET,
+        API_PATH,
+        getHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.POST,
+        API_PATH,
+        postHandler
+    )
 }
 
 

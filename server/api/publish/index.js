@@ -1,5 +1,6 @@
 const simpleGit = require("simple-git/promise")
 const saveState = require("../saveState").saveState
+const { HTTP_METHOD, configureAuthApi } = require("../auth")
 
 const API_PATH = "/api/publish"
 
@@ -56,7 +57,12 @@ const postHandler = async (req, res) => {
 
 
 function configure(expressApp) {
-    expressApp.post(API_PATH, postHandler)
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.POST,
+        API_PATH,
+        postHandler
+    )
 }
 
 

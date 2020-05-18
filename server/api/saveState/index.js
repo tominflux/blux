@@ -4,6 +4,7 @@ const {
     pushStaticRepo
 } = require("../../../misc/staticRepo")
 const path = require("path")
+const { HTTP_METHOD, configureAuthApi } = require("../auth")
 
 const API_PATH = "/api/save-state"
 
@@ -61,7 +62,12 @@ const postHandler = async (req, res, next) => {
 
 
 function configure(expressApp) {
-    expressApp.post(API_PATH, postHandler)
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.POST,
+        API_PATH,
+        postHandler
+    )
 }
 
 

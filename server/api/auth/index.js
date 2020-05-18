@@ -16,6 +16,22 @@ const API_PATH = "/api/auth"
 /////////
 
 
+const checkSessionCookie = (req) => {
+    const cookies = req.signedCookies
+    //const cookies = req.cookies
+    const sessionToken = cookies["bluxcms-session"]
+    const validSession = (
+        sessionToken ? 
+            checkSessionValid(sessionToken) : false
+    )
+    return validSession
+}
+
+
+/////////
+/////////
+
+
 // GET - Check if already authenticated 
 // Response: { configured : boolean, validSession : boolean }
 
@@ -26,13 +42,7 @@ const getHandler = async (req, res, next) => {
             if (!configured) {
                 return null
             } else {
-                const cookies = req.signedCookies
-                //const cookies = req.cookies
-                const sessionToken = cookies["bluxcms-session"]
-                const validSession = (
-                    sessionToken ? 
-                        checkSessionValid(sessionToken) : false
-                )
+                const validSession = checkSessionCookie(req)
                 return validSession
             }
         }
@@ -107,3 +117,52 @@ function configure(expressApp) {
 exports.configure = configure
 
 
+/////////
+/////////
+
+
+const HTTP_METHOD = {
+    POST: "POST",
+    GET: "GET",
+    PUT: "PUT",
+    DELETE: "DELETE"
+}
+
+function configureAuthApi(expressApp, httpMethod, apiPath, handler) {
+    const authedHandler = (req, res, next) => {
+        if (!checkSessionCookie(req)) {
+            const err = new Error(
+                "Unauthorised API call."
+            )
+            next(err)
+        } else (
+            handler(req, res, next)
+        )
+    }
+    switch (httpMethod) {
+        case HTTP_METHOD.POST:
+            expressApp.post(apiPath, authedHandler)
+            break
+        case HTTP_METHOD.GET:
+            expressApp.get(apiPath, authedHandler)
+            break
+        case HTTP_METHOD.PUT:
+            expressApp.put(apiPath, authedHandler)
+            break
+        case HTTP_METHOD.DELETE:
+            expressApp.delete(apiPath, authedHandler)
+            break
+        default:
+            throw new Error(
+                `Unrecognised HTTP method: ${httpMethod}`
+            )
+    }
+}
+
+
+/////////
+/////////
+
+
+exports.HTTP_METHOD = HTTP_METHOD
+exports.configureAuthApi = configureAuthApi

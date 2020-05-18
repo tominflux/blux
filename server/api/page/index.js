@@ -1,6 +1,7 @@
 const path = require("path")
 const fs = require("fs-extra")
 const { getConfig } = require("../../../misc/config")
+const { HTTP_METHOD, configureAuthApi } = require("../auth")
 
 const API_PATH = /\/api\/page\/(.*)/
 
@@ -83,8 +84,18 @@ function updateHandler(req, res, next) {
 
 
 function configure(expressApp) {
-    expressApp.post(API_PATH, createHandler)
-    expressApp.put(API_PATH, updateHandler)
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.POST,
+        API_PATH,
+        createHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.PUT,
+        API_PATH,
+        updateHandler
+    )
 }
 
 

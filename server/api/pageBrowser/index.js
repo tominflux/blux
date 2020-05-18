@@ -1,6 +1,7 @@
 const path = require("path")
 const fs = require("fs-extra")
 const { getConfig } = require("../../../misc/config")
+const { HTTP_METHOD, configureAuthApi } = require("../auth")
 
 const API_PATH = /\/api\/page-browser\/?(.*)/
 
@@ -86,7 +87,12 @@ async function readHandler(req, res) {
 
 
 function configure(expressApp) {
-    expressApp.get(API_PATH, readHandler)
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.GET,
+        API_PATH,
+        readHandler
+    )
 }
 
 
