@@ -15,7 +15,15 @@ async function processHtml(html, isCms=false) {
     return htmlTitleReplaced
 }
 
-async function renderRoutes(buildFolder, routes, isCms=false) {
+async function renderRouteHtml(buildFolder, isCms) {
+    const htmlLocation = path.join(buildFolder, "/index.html")
+    const data = await fs.readFile(htmlLocation)
+    const preHtml = data.toString()
+    const postHtml = await processHtml(preHtml, isCms)
+    return postHtml
+}
+
+async function renderRoutesToFiles(buildFolder, routes, isCms=false) {
     const htmlLocation = path.join(buildFolder, "/index.html")
     const data = await fs.readFile(htmlLocation)
     const preHtml = data.toString()
@@ -38,4 +46,5 @@ async function renderRoutes(buildFolder, routes, isCms=false) {
     }
 }
 
-exports.renderRoutes = renderRoutes
+exports.renderRouteHtml = renderRouteHtml
+exports.renderRoutesToFiles = renderRoutesToFiles
