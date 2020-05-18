@@ -1,11 +1,12 @@
+const { getSecrets } = require("../../../misc/secrets")
 const {
     checkAuthConfigured,
     checkAuth
 } = require("../../../misc/auth")
 const {
-    checkSessionExists,
+    checkSessionValid,
     createSession,
-    getSession
+    SESSION_SHELF_LIFE
 } = require("../../../misc/session")
 
 const API_PATH = "/api/auth"
@@ -14,107 +15,40 @@ const API_PATH = "/api/auth"
 /////////
 /////////
 
-const LOGIN_CIRCUMSTANCE = {
-    AUTH_INVALID: "AUTH_INVALID",
-    SESSION_EXISTS: "SESSION_EXISTS",
-    SUCCESSFUL: "SUCCESSFUL"
-}
 
-const throwUnexpectedCircumstance = () => {
-    const errMsg = `Unexpected circumstance.`
-    throw new Error(errMsg)
-}
-
-const getLoginCircumstance = async (user, pass) => {
-    const authValid = await checkAuth(user, pass)
-    if (authValid === false) {
-        return LOGIN_CIRCUMSTANCE.AUTH_INVALID
-    } else if (authValid === true) {
-        const sessionExists = await checkSessionExists()
-        if (sessionExists === true) {
-            return LOGIN_CIRCUMSTANCE.SESSION_EXISTS
-        } else if (sessionExists === false) {
-            return LOGIN_CIRCUMSTANCE.SUCCESSFUL
-        } else {
-            throwUnexpectedCircumstance()
-        }
-    } else {
-        throwUnexpectedCircumstance()
-    }
-}
-
-const handleLoginCircumstance = async (circumstance, user, pass, res) => {
-    const onAuthInvalid = async () => {
-        const responseBody = { authValid: false }
-        const responseJson = JSON.stringify(responseBody)
-        res.send(responseJson)
-    }
-    const onSessionExists = async () => {
-        const responseBody = {
-            authValid: true,
-            sessionAvailable: false
-        }
-        const responseJson = JSON.stringify(responseBody)
-        res.send(responseJson)
-    }
-    const onSuccessful = async () => {
-        const responseBody = {
-            authValid: true,
-            sessionAvailable: true
-        }
-        const responseJson = JSON.stringify(responseBody)
-        await createSession(user, pass)
-        const sessionToken = getSession()
-        const cookieOptions = {
-            httpOnly: true,
-            signed: true,
-            sameSite: true,
-            secure: true
-        }
-        res
-        .cookie(
-            "bluxcms-session", 
-            sessionToken,
-            cookieOptions
-        )
-        .send(responseJson)
-    }
-    switch (circumstance) {
-        case LOGIN_CIRCUMSTANCE.AUTH_INVALID:
-            await onAuthInvalid()
-            break
-        case LOGIN_CIRCUMSTANCE.SESSION_EXISTS:
-            await onSessionExists()
-            break
-        case LOGIN_CIRCUMSTANCE.SUCCESSFUL:
-            await onSuccessful()
-            break
-        default:
-            throwUnexpectedCircumstance()
-    }
-}
-
-
-/////////
-/////////
-
+// GET - Check if already authenticated 
+// Response: { configured : boolean, validSession : boolean }
 
 const getHandler = async (req, res, next) => {
     try {
-        const authConfigured = await checkAuthConfigured()
-        if (authConfigured) {
-            const responseBody = { configured: "true" }
-            const responseJson = JSON.stringify(responseBody)
-            res.send(responseJson)
-        } else {
-            const responseBody = { configured: "false" }
-            const responseJson = JSON.stringify(responseBody)
-            res.send(responseJson)
+        const configured = checkAuthConfigured()
+        const checkValidSession = () => {
+            if (!configured) {
+                return null
+            } else {
+                //const cookies = req.signedCookies
+                const cookies = req.cookies
+                const sessionToken = cookies["bluxcms-session"]
+                const validSession = (
+                    sessionToken ? 
+                        checkSessionValid(sessionToken) : false
+                )
+                return validSession
+            }
         }
+        const validSession = checkValidSession()
+        const responseBody = { configured, validSession }
+        const responseJson = JSON.stringify(responseBody)
+        res.send(responseJson)
     } catch (err) {
         next(err)
     }
 }
+
+
+// POST - Attempt to login
+// Response: { authValid } + session-cookie
+// Fail (500): Authentication not configured.
 
 const postHandler = async (req, res, next) => {
     const authConfigured = await checkAuthConfigured()
@@ -126,8 +60,29 @@ const postHandler = async (req, res, next) => {
     } else {
         const { user, pass } = req.body 
         try {
-            const loginCircumstance = await getLoginCircumstance(user, pass)
-            await handleLoginCircumstance(loginCircumstance, user, pass, res)
+            const authValid = await checkAuth(user, pass)
+            const responseBody = { authValid }
+            const responseJson = JSON.stringify(responseBody)
+            if (authValid) {
+                const sessionToken = await createSession(user, pass)
+                const cookieOptions = {
+                    /*
+                    httpOnly: true,
+                    sameSite: true,
+                    secure: true,
+                    signed: true,*/
+                    maxAge: SESSION_SHELF_LIFE
+                }
+                res
+                .cookie(
+                    "bluxcms-session", 
+                    sessionToken,
+                    cookieOptions
+                )
+                .send(responseJson)
+            } else {
+                res.send(responseJson)
+            }
         } catch (err) {
             console.error(err)
             next(err)

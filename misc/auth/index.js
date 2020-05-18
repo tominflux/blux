@@ -41,7 +41,9 @@ const checkAuthConfigured = () => {
         return false
     const authUser = getSecrets().authUser
     const authPassHash = getSecrets().authPassHash
-    return (authUser && authPassHash)
+    return (
+        (authUser && authPassHash) ? true : false
+    )
 }
 
 const checkAuth = async (user, pass) => {

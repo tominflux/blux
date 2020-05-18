@@ -2,11 +2,13 @@ import { AUTH_CHECK_SEND, AUTH_CHECK_RECEIVE, AUTH_LOGIN_SEND, AUTH_LOGIN_RECEIV
 
 
 const initialState = {
+    //AUTH CHECK (GET)
     checking: false,
     configured: null,
+    validSession: null,
+    //LOG IN (POST)
     loggingIn: false,
     authValid: null,
-    sessionAvailable: null
 }
 
 export default function Auth(
@@ -16,29 +18,29 @@ export default function Auth(
         case AUTH_CHECK_SEND:
             return {
                 ...state,
-                checking: true
+                checking: true,
+                validSession: null
             }
         case AUTH_CHECK_RECEIVE:
-            const { configured } = action.payload
+            const { configured, validSession } = action.payload
             return {
                 ...state,
                 checking: false,
-                configured
+                configured,
+                validSession
             }
         case AUTH_LOGIN_SEND:
             return {
                 ...state,
                 loggingIn: true,
-                authValid: null,
-                sessionAvailable: null
+                authValid: null
             }
         case AUTH_LOGIN_RECEIVE:
-            const { authValid, sessionAvailable } = action.payload
+            const { authValid } = action.payload
             return {
                 ...state,
                 loggingIn: false,
-                authValid: authValid,
-                sessionAvailable: sessionAvailable
+                authValid: authValid
             }
         default:
             return state

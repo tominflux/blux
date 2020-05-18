@@ -205,9 +205,9 @@ export const authCheckSend = () => ({
     payload: {}
 })
 
-export const authCheckReceive = (configured) => ({
+export const authCheckReceive = (configured, validSession) => ({
     type: AUTH_CHECK_RECEIVE,
-    payload: { configured }
+    payload: { configured, validSession }
 })
 
 export const authLoginSend = () => ({
@@ -215,7 +215,7 @@ export const authLoginSend = () => ({
     payload: {}
 })
 
-export const authLoginReceive = (authValid, sessionAvailable) => ({
+export const authLoginReceive = (authValid) => ({
     type: AUTH_LOGIN_RECEIVE,
-    payload: { authValid, sessionAvailable }
+    payload: { authValid }
 })

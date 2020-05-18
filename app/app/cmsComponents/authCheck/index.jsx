@@ -10,47 +10,99 @@ import LoginModal from './loginModal'
 import { connect } from 'react-redux'
 
 export const AUTH_STATE = {
-    NOT_YET_CHECKED: "NOT_YET_CHECKED",
+    LOGGED_OUT: "LOGGED_OUT",
     CHECKING: "CHECKING",
     NOT_CONFIGURED: "NOT_CONFIGURED",
     AWAITING_LOG_IN: "AWAITING_LOG_IN",
     LOGGING_IN: "LOGGING_IN",
     INVALID_AUTH: "INVALID_AUTH",
-    SESSION_UNAVAILABLE: "SESSION_UNAVAILABLE",
     LOGGED_IN: "LOGGED_IN"
 }
 
-export const getAuthStateSummary = (state) => {
-    console.log(state)
-    if (state.checking === true) {
-        return AUTH_STATE.CHECKING
-    } else if (state.configured === null) {
-        return AUTH_STATE.NOT_YET_CHECKED
-    } else if (state.configured === false) {
-        return AUTH_STATE.NOT_CONFIGURED
-    } else if (state.loggingIn === true) {
-        return AUTH_STATE.LOGGING_IN
-    } else if (
-        state.authValid === null &&
-        state.sessionAvailable === null
-    ) {
-        return AUTH_STATE.AWAITING_LOG_IN
-    } else if (state.authValid === false) {
-        return AUTH_STATE.INVALID_AUTH
-    } else if (
-        state.sessionAvailable === false
-    ) {
-        return AUTH_STATE.SESSION_UNAVAILABLE
-    } else if (
-        state.authValid === true &&
-        state.sessionAvailable === true
-    ) {
-        return AUTH_STATE.LOGGED_IN
-    } else {
-        throw new Error(
-            "Authentication state could not be determined."
+const AUTH_STATE_CONDITIONS = new Map([
+    [
+        AUTH_STATE.LOGGED_OUT, (state) => (
+            state.checking === false &&
+            state.configured === null &&
+            state.validSession === null &&
+            state.loggingIn === false &&
+            state.authValid === null
         )
+    ],
+    [
+        AUTH_STATE.CHECKING, (state) => (
+            state.checking === true &&
+            state.configured === null &&
+            state.validSession === null &&
+            state.loggingIn === false &&
+            state.authValid === null
+        )
+    ],
+    [
+        AUTH_STATE.NOT_CONFIGURED, (state) => (
+            state.checking === false &&
+            state.configured === false &&
+            state.validSession === null &&
+            state.loggingIn === false &&
+            state.authValid === null
+        )
+    ],
+    [
+        AUTH_STATE.AWAITING_LOG_IN, (state) => (
+            state.checking === false &&
+            state.configured === true &&
+            state.validSession === false &&
+            state.loggingIn === false &&
+            state.authValid === null
+        )
+    ],
+    [
+        AUTH_STATE.LOGGING_IN, (state) => (
+            state.checking === false &&
+            state.configured === true &&
+            state.validSession === false &&
+            state.loggingIn === true &&
+            state.authValid === null
+        )
+    ],
+    [
+        AUTH_STATE.LOGGED_IN, (state) => (
+            state.checking === false &&
+            state.configured === true &&
+            state.loggingIn === false &&
+            (
+                (
+                    state.validSession === false &&
+                    state.authValid === true
+                ) || (
+                    state.validSession === true &&
+                    state.authValid === false
+                )
+            ) 
+        )
+    ],
+    [
+        AUTH_STATE.INVALID_AUTH, (state) => (
+            state.checking === false &&
+            state.configured === true &&
+            state.validSession === false &&
+            state.loggingIn === false &&
+            state.authValid === false
+        )
+    ]
+])
+
+export const getAuthStateSummary = (state) => {
+    for (const key of AUTH_STATE_CONDITIONS.keys()) {
+        const condition = AUTH_STATE_CONDITIONS.get(key)
+        const conditionResult = condition(state)
+        if (conditionResult === true) {
+            return key
+        }
     }
+    throw new Error(
+        "Could not determine Auth State Summary."
+    )
 }
 
 const mapStateToProps = (state) => ({
@@ -107,7 +159,7 @@ function AuthCheck(props) {
     }
     //
     switch (props.stateSummary) {
-        case AUTH_STATE.NOT_YET_CHECKED:
+        case AUTH_STATE.LOGGED_OUT:
             performCheck()
             return null
         case AUTH_STATE.CHECKING:
@@ -136,12 +188,11 @@ function AuthCheck(props) {
                     onSubmit={(user, pass) => onLoginSubmit(user, pass)}
                 />
             )
-        case AUTH_STATE.SESSION_UNAVAILABLE:
-            return (
-                <FatalError>
-                    A different session is currently active for this
-                    CMS.
-                </FatalError>
+        case AUTH_STATE.LOGGED_IN:
+            return null
+        default: 
+            throw new Error(
+                "no recognised auth state summary."
             )
     }
 }

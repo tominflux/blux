@@ -33,17 +33,19 @@ const generateSessionToken = (user, pass) => {
 ////////
 ////////
 
+//Key: session-token
+//Value: expires
+const _sessions = new Map()
 
-let _session = null
+const SESSION_SHELF_LIFE = 1000 * 60 * 30
 
 
 ///////////
 //EXPORTS//
 ///////////
 
-
-const checkSessionExists = () => (
-    _session !== null
+const checkSessionValid = (sessionToken) => (
+    Date.now() < _sessions.get(sessionToken)
 )
 
 const createSession = async (user, pass) => {
@@ -54,25 +56,15 @@ const createSession = async (user, pass) => {
             "Authentication invalid."
         )
     }
-    const sessionExists = checkSessionExists()
-    if (sessionExists) {
-        throw new Error(
-            "Could not create session.",
-            "Session already exists."
-        )
-    }
     const sessionToken = await generateSessionToken(user, pass)
-    _session = sessionToken
+    const expires = Date.now() + SESSION_SHELF_LIFE
+    _sessions.set(sessionToken, expires)
+    return sessionToken
 }
 
-const getSession = () => (
-    _session
-)
-
-
 ////////
 ////////
 
-exports.checkSessionExists = checkSessionExists
+exports.checkSessionValid = checkSessionValid
 exports.createSession = createSession
-exports.getSession = getSession
+exports.SESSION_SHELF_LIFE = SESSION_SHELF_LIFE
