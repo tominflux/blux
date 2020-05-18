@@ -26,8 +26,6 @@ export default function Auth(
             }
         case AUTH_CHECK_RECEIVE:
             const { configured, validSession } = action.payload
-            console.log(configured)
-            console.log(validSession)
             if (configured) {
                 return {
                     ...state,
