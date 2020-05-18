@@ -1,6 +1,18 @@
 const simpleGit = require("simple-git/promise")
 const { getConfig } = require("../config")
 
+
+const checkCredentialsConfigured = () => {
+    const confidentialsExists = getConfidentialsExists()
+    if (!confidentialsExists)
+        return false
+    const gitUser = getConfidentials().gitUser
+    const gitPass = getConfidentials().gitPass
+    return (
+        (gitUser && gitPass) ? true : false
+    )
+}
+
 const getStaticPathAndRepo = () => {
     const { staticPath, staticRepo } = getConfig()
     if (staticPath === null) {
@@ -38,29 +50,41 @@ const checkStaticRepoCloned = async () => {
     }
 }
 
-const cloneStaticRepo = async (user, pass) => {
+const cloneStaticRepo = async () => {
+    if (!checkAuthConfigured()) {
+        throw new Error("Git credentials not configured.")
+    }
     const { staticPath, staticRepo } = getStaticPathAndRepo()
     console.log(`Cloning static repo: https://${staticRepo}`)
     const git = simpleGit()
-    const authRepo = `https://${user}:${pass}@${staticRepo}`
-    await git.clone(
-        authRepo, 
-        staticPath
-    )
+    const gitUser = getConfidentials().gitUser
+    const gitPass = getConfidentials().gitPass
+    const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
+    await git.clone(authRepo, staticPath)
     console.log("Finished cloning.")
 }
 
-const pullStaticRepo = async (user, pass) => {
+const pullStaticRepo = async () => {
+    if (!checkAuthConfigured()) {
+        throw new Error("Git credentials not configured.")
+    }
     const { staticPath, staticRepo } = getStaticPathAndRepo()
     const git = simpleGit(staticPath)
-    const authRepo = `https://${user}:${pass}@${staticRepo}`
+    const gitUser = getConfidentials().gitUser
+    const gitPass = getConfidentials().gitPass
+    const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
     await git.pull(authRepo)
 }
 
-const pushStaticRepo = async (user, pass) => {
+const pushStaticRepo = async () => {
+    if (!checkAuthConfigured()) {
+        throw new Error("Git credentials not configured.")
+    }
     const { staticPath, staticRepo } = getStaticPathAndRepo()
     const adminEmail = getAdminEmail()
     const git = simpleGit(staticPath)
+    const gitUser = getConfidentials().gitUser
+    const gitPass = getConfidentials().gitPass
     await git.add("./*")
     await git.addConfig('user.name', 'BluxCMS')
     await git.addConfig('user.email', adminEmail)
@@ -68,7 +92,7 @@ const pushStaticRepo = async (user, pass) => {
         "CMS Save State\n" + 
         "Automated commit of all app state changes."
     )
-    const authRepo = `https://${user}:${pass}@${staticRepo}`
+    const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
     await git.push(authRepo)
 }
 

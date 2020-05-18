@@ -1,14 +1,21 @@
 import { 
     STATIC_REPO_CHECK_SEND, 
     STATIC_REPO_CHECK_RECEIVE, 
-    STATIC_REPO_INIT_SEND, 
-    STATIC_REPO_INIT_RECEIVE 
+    STATIC_REPO_IMPORT_SEND, 
+    STATIC_REPO_IMPORT_RECEIVE 
 } from "../../actionTypes";
 
+export const STATIC_REPO_STATE = {
+    NEEDS_CHECKING: "NEEDS_CHECKING",
+    CHECKING: "CHECKING",
+    NEEDS_IMPORTING: "NEEDS_IMPORTING",
+    IMPORTING: "IMPORTING",
+    IMPORTED: "IMPORTED",
+    FAILED_IMPORT: "FAILED_IMPORT"
+}
+
 const initialState = {
-    checking: false,
-    initialised: null,
-    initialising: false
+    staticRepoState: STATIC_REPO_STATE.NEEDS_CHECKING
 }
 
 export default function StaticRepo(
@@ -18,63 +25,34 @@ export default function StaticRepo(
         case STATIC_REPO_CHECK_SEND:
             return {
                 ...state,
-                checking: true
+                staticRepoState: CHECKING
             }
         case STATIC_REPO_CHECK_RECEIVE:
-            const { initialised } = action.payload
+            const { alreadyImported } = action.payload
             return {
                 ...state,
-                checking: false,
-                initialised
+                staticRepoState: (
+                    alreadyImported ? 
+                        STATIC_REPO_STATE.IMPORTED :
+                        STATIC_REPO_STATE.NEEDS_IMPORTING
+                )
             }
-        case STATIC_REPO_INIT_SEND:
+        case STATIC_REPO_IMPORT_SEND:
             return {
                 ...state,
-                initialising: true
+                staticRepoState: STATIC_REPO_STATE.IMPORTING
             }
-        case STATIC_REPO_INIT_RECEIVE:
+        case STATIC_REPO_IMPORT_RECEIVE:
             const { successful } = action.payload
             return {
                 ...state,
-                initialised: successful,
-                initialising: false
+                staticRepoState: (
+                    successful ? 
+                        STATIC_REPO_STATE.IMPORTED :
+                        STATIC_REPO_STATE.FAILED_IMPORT
+                )
             }
         default:
             return state
     }
-}
-
-export const STATIC_REPO_STATE = {
-    NOT_YET_CHECKED: "NOT_YET_CHECKED",
-    CHECKING: "CHECKING",
-    NEEDS_INITIALISING: "NEEDS_INITIALISING",
-    INITIALISING: "INITIALISING",
-    INITIALISED: "INITIALISED"
-}
-
-export const getStaticRepoStateSummary = (staticRepoReduxState) => {
-    if (staticRepoReduxState.checking === true) 
-        return STATIC_REPO_STATE.CHECKING
-    else if (
-        staticRepoReduxState.initialised === null
-    )
-        return STATIC_REPO_STATE.NOT_YET_CHECKED
-    else if (
-        staticRepoReduxState.initialised === false &&
-        staticRepoReduxState.initialising === false
-    )
-        return STATIC_REPO_STATE.NEEDS_INITIALISING
-    else if (
-        staticRepoReduxState.initialised === false &&
-        staticRepoReduxState.initialising === true
-    ) 
-        return STATIC_REPO_STATE.INITIALISING
-    else if (
-        staticRepoReduxState.initialised === true
-    ) 
-        return STATIC_REPO_STATE.INITIALISED
-    else 
-        throw new Error(
-            "Static repo state summary could not be determined."
-        )
 }

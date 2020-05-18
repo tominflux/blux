@@ -12,30 +12,9 @@ const API_PATH = "/api/save-state"
 /////////
 /////////
 
-/*
-const commitChanges = async () => {
-    const git = simpleGit()
-    const config = getConfig()
-    await git.add(path.join(config.static, "./*"))
-    await git.addConfig('user.name', 'BluxCMS')
-    await git.addConfig('user.email', '...')
-    await git.commit(
-        "CMS Save State\n" + 
-        "Automated commit of all app state changes."
-    )
-}
-
-const pushMaster = async (user, pass) => {
-    const git = simpleGit()
-    const repo = ''
-    const remote = `https://${user}:${pass}@${repo}`
-    await git.push(remote, "master:master")
-}
-*/
-
-const saveState = async (user, pass) => {
+const saveState = async () => {
     console.log("Pushing app state changes to master Git repository...")
-    await pushStaticRepo(user, pass)
+    await pushStaticRepo()
     console.log("Save state complete.")
 }
 
@@ -45,9 +24,8 @@ const saveState = async (user, pass) => {
 
 
 const postHandler = async (req, res, next) => {
-    const {user, pass} = req.body
     try {
-        await saveState(user, pass)
+        await saveState()
     } catch (err) {
         console.error(err)
         next(err)

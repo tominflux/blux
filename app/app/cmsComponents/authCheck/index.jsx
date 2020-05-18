@@ -24,10 +24,6 @@ const mapDispatchToProps = {
 const API_PATH = "/api/auth"
 
 function AuthCheck(props) {
-    //Effects
-    React.useEffect(() => {
-        window.addEventListener("unload", () => alert("Bye bye."))
-    })
     //Events
     const onCheckResponse = (configured, validSession) => {
         props.authCheckReceive(configured, validSession)

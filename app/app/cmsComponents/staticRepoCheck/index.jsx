@@ -4,10 +4,10 @@ import NeedsInitModal from './needsInitModal'
 import {
     staticRepoCheckSend,
     staticRepoCheckReceive,
-    staticRepoInitSend,
-    staticRepoInitReceive
+    staticRepoImportSend,
+    staticRepoImportReceive
 } from '../../redux/actions'
-import { getStaticRepoStateSummary, STATIC_REPO_STATE } from '../../redux/reducer/staticRepo'
+import { STATIC_REPO_STATE } from '../../redux/reducer/staticRepo'
 import ImportingCover from './importingCover'
 
 const mapStateToProps = (state) => ({
@@ -19,76 +19,63 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     staticRepoCheckSend,
     staticRepoCheckReceive,
-    staticRepoInitSend,
-    staticRepoInitReceive
+    staticRepoImportSend,
+    staticRepoImportReceive
 }
 
 const API_PATH = "/api/static-repo"
 
 function StaticRepoCheck(props) {
     //Events
-    const onCheckResponse = (isCloned) => {
-        props.staticRepoCheckReceive(isCloned)
-        if (isCloned) {
+    const onCheckResponse = (alreadyImported) => {
+        props.staticRepoCheckReceive(alreadyImported)
+        if (alreadyImported) {
             props.onPass()
         }
     }
-    const onInitSubmit = (user, pass) => {
-        props.staticRepoInitSend()
-        performInit(user, pass)
-    }
     const onInitResponse = (successful) => {
-        props.staticRepoInitReceive(successful)
+        props.staticRepoImportReceive(successful)
         if (successful) {
             props.onPass()
         }
     }
     //Functions
-    const getViewState = () => (
-        getStaticRepoStateSummary(props)
-    )
     const performCheck = async () => {
         props.staticRepoCheckSend()
         const response = await fetch(API_PATH)
         const { isCloned } = await response.json()
         onCheckResponse(isCloned)
     }
-    const performInit = async (user, pass) => {
-        const auth = { user, pass }
-        const requestBody = JSON.stringify(auth) 
+    const performInit = async () => {
+        props.staticRepoImportSend()
         const response = await fetch(
-            API_PATH, 
-            { 
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: requestBody
-            }
+            API_PATH, { method: "POST"}
         )
         const successful = (response.status === 200)
         onInitResponse(successful)
     }
     //
-    switch (getViewState()) {
-        case STATIC_REPO_STATE.NOT_YET_CHECKED:
+    switch (props.staticRepoState) {
+        case STATIC_REPO_STATE.NEEDS_CHECKING:
             performCheck()
             return null
         case STATIC_REPO_STATE.CHECKING:
             return null
-        case STATIC_REPO_STATE.NEEDS_INITIALISING:
-            return (
-                <NeedsInitModal 
-                    show={true}
-                    onSubmit={(user, pass) => onInitSubmit(user, pass)}
-                />
-            )
-        case STATIC_REPO_STATE.INITIALISING:
+        case STATIC_REPO_STATE.NEEDS_IMPORTING:
+            performInit()
+            return null
+        case STATIC_REPO_STATE.IMPORTING:
             return (
                 <ImportingCover />
             )
-        case STATIC_REPO_STATE.INITIALISED:
+        case STATIC_REPO_STATE.IMPORTED:
             return null
+        case STATIC_REPO_STATE.FAILED_IMPORT:
+            return (
+                <FatalError>
+                    Failed to import static content.
+                </FatalError>
+            )
     }
 }
 

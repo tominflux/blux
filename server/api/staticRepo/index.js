@@ -16,14 +16,14 @@ const getHandler = async (req, res) => {
 }
 
 const postHandler = async (req, res, next) => {
-    const { user, pass } = req.body
     const cloned = await checkStaticRepoCloned()
     if (cloned) {
-        res.send("Already Cloned")
+        const err = new Error("Already cloned.")
+        next(err)
         return
     }
     try {
-        await cloneStaticRepo(user, pass)
+        await cloneStaticRepo()
         res.send("Cloned Successfully")
     } catch (err) {
         console.error(err)

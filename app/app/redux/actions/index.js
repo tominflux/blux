@@ -24,8 +24,8 @@ import {
     //GIT CHECK
     STATIC_REPO_CHECK_SEND,
     STATIC_REPO_CHECK_RECEIVE,
-    STATIC_REPO_INIT_SEND,
-    STATIC_REPO_INIT_RECEIVE,
+    STATIC_REPO_IMPORT_SEND,
+    STATIC_REPO_IMPORT_RECEIVE,
     AUTH_CHECK_SEND,
     AUTH_CHECK_RECEIVE,
     AUTH_LOGIN_SEND,
@@ -180,18 +180,18 @@ export const staticRepoCheckSend = () => ({
     payload: {}
 })
 
-export const staticRepoCheckReceive = (initialised) => ({
+export const staticRepoCheckReceive = (alreadyImported) => ({
     type: STATIC_REPO_CHECK_RECEIVE,
-    payload: { initialised }
+    payload: { alreadyImported }
 })
 
-export const staticRepoInitSend = () => ({
-    type: STATIC_REPO_INIT_SEND,
+export const staticRepoImportSend = () => ({
+    type: STATIC_REPO_IMPORT_SEND,
     payload: {}
 })
 
-export const staticRepoInitReceive = (successful) => ({
-    type: STATIC_REPO_INIT_RECEIVE,
+export const staticRepoImportReceive = (successful) => ({
+    type: STATIC_REPO_IMPORT_RECEIVE,
     payload: { successful }
 })
 

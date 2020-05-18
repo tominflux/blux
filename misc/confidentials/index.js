@@ -5,17 +5,15 @@ const CONFIDENTIALS_PATH = "./blux-confidentials.json"
 
 let _confidentials = null
 
-async function generateConfidentials() {
+async function inheritConfidentials() {
     const confidentials = {
         signedCookieSecret: passGen.generate({
             length: 12, numbers: true
         }),
         authUser: process.env.AUTH_USER || null,
-        authPass: process.env.AUTH_PASS || null,
-        /*
+        authPassHash: process.env.AUTH_PASS_HASH || null,
         gitUser: process.env.GIT_USER || null,
         gitPass: process.env.GIT_PASS || null
-        */
     }
     return confidentials
 }
@@ -28,7 +26,7 @@ async function readConfidentials() {
         const confidentials = JSON.parse(text)
         _confidentials = confidentials
     } else {
-        _confidentials = await generateConfidentials()
+        _confidentials = await inheritConfidentials()
     }
 }
 
