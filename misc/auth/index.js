@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const { getSecretsExists, getSecrets } = require("../secrets")
+const { getConfidentialsExists: getConfidentialsExists, getConfidentials } = require("../confidentials")
 const { getConfig } = require("../config")
 
 const generatePassHash = (pass) => {
@@ -36,11 +36,11 @@ const checkPassAgainstPassHash = (pass, passHash) => {
 }
 
 const checkAuthConfigured = () => {
-    const secretsExists = getSecretsExists()
-    if (!secretsExists)
+    const confidentialsExists = getConfidentialsExists()
+    if (!confidentialsExists)
         return false
-    const authUser = getSecrets().authUser
-    const authPassHash = getSecrets().authPassHash
+    const authUser = getConfidentials().authUser
+    const authPassHash = getConfidentials().authPassHash
     return (
         (authUser && authPassHash) ? true : false
     )
@@ -52,8 +52,8 @@ const checkAuth = async (user, pass) => {
     }
     if (!user || !pass)
         return false
-    const authUser = getSecrets().authUser
-    const authPassHash = getSecrets().authPassHash
+    const authUser = getConfidentials().authUser
+    const authPassHash = getConfidentials().authPassHash
     const userMatch = (user === authUser)
     const passMatch = await checkPassAgainstPassHash(pass, authPassHash)
     return (userMatch && passMatch)

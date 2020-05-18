@@ -1,4 +1,4 @@
-const { getSecrets } = require("../../../misc/secrets")
+const { getConfidentials } = require("../../../misc/confidentials")
 const {
     checkAuthConfigured,
     checkAuth

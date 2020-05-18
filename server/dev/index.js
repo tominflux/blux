@@ -1,4 +1,4 @@
-const { readSecrets, getSecrets } = require("../../misc/secrets")
+const { readConfidentials: readConfidentials, getConfidentials } = require("../../misc/confidentials")
 const { readConfig } = require("../../misc/config")
 const express = require("express")
 const cookieParser = require('cookie-parser')
@@ -11,9 +11,9 @@ const port = parseInt(process.env.PORT) || 3000
 const bundler = new parcelBundler("./blux/app/cms/index.html", {})
 
 async function run() {
-    await readSecrets()
+    await readConfidentials()
     await readConfig()
-    const signedCookieSecret = getSecrets().signedCookieSecret
+    const signedCookieSecret = getConfidentials().signedCookieSecret
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))
     app.use(fileUpload())

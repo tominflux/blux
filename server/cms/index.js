@@ -1,4 +1,4 @@
-const { readSecrets, getSecrets } = require("../../misc/secrets")
+const { readConfidentials, getConfidentials } = require("../../misc/confidentials")
 const { readConfig, getConfig } = require("../../misc/config")
 const express = require("express")
 const cookieParser = require('cookie-parser')
@@ -9,9 +9,9 @@ const app = express()
 const port = parseInt(process.env.PORT) || 3000
 
 async function run() {
-    await readSecrets()
+    await readConfidentials()
     await readConfig()
-    const signedCookieSecret = getSecrets().signedCookieSecret
+    const signedCookieSecret = getConfidentials().signedCookieSecret
     const config = getConfig()
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))
