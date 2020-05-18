@@ -38,27 +38,42 @@ export default function AuthModal(props) {
             <p className="blux-auth-modal__info">
                 {props.children}
             </p>
-            <Textbox
-                className="blux-auth-modal__user"
-                onChange={(e) => onUserChange(e)}
-            >
-                Username
-            </Textbox>
-            <Password
-                className="blux-auth-modal__pass"
-                onChange={(e) => onPassChange(e)}
-            >
-                Password / Personal Access Token*
-            </Password>
-            <p className="blux-auth-modal__pat-recommendation">
-                *Personal Access Token advised for enhanced security.
-            </p>
-            <Button
-                className="blux-auth-modal__submit"
-                onClick={() => onSubmit()}
-            >
-                Submit
-            </Button>
+            <div>
+                <Textbox
+                    className="blux-auth-modal__user"
+                    onChange={(e) => onUserChange(e)}
+                >
+                    {
+                        props.userPrompt || 
+                        "Username"
+                    }
+                </Textbox>
+            </div>
+            <div>
+                <Password
+                    className="blux-auth-modal__pass"
+                    onChange={(e) => onPassChange(e)}
+                >
+                    {
+                        props.passPrompt || 
+                        "Password"
+                    }
+                </Password>
+            </div>
+            {
+                props.note ? 
+                    <p className="blux-auth-modal__note">
+                        { props.note }
+                    </p> : null
+            }
+            <div>
+                <Button
+                    className="blux-auth-modal__submit"
+                    onClick={() => onSubmit()}
+                >
+                    Submit
+                </Button>
+            </div>
         </Modal>
     )
 }

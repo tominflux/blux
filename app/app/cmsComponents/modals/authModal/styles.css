@@ -2,19 +2,23 @@
 
 
 .blux-auth-modal__info {
-    margin-top: 55pt;
-    margin-bottom: 22pt;
+    margin-top: 36.6pt;
+    margin-bottom: 33pt;
 }
 
 .blux-auth-modal__user {
-    margin-bottom: 22pt;
+    width: 100%;
+    max-width: 266pt;
+    margin-bottom: 9.9pt;
 }
 
 .blux-auth-modal__pass {
-    margin-bottom: 22pt;
+    width: 100%;
+    max-width: 266pt;
+    margin-bottom: 44pt;
 }
 
-.blux-auth-modal__pat-recommendation {
+.blux-auth-modal__note {
     margin-bottom: 44pt;
     font-style: italic;
 }

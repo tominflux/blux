@@ -13,7 +13,8 @@ import { loadPageStates } from '../persister'
 import { isCMS } from '../misc'
 import SaveAndPublish from '../cmsComponents/saveAndPublish'
 import StaticRepoCheck from '../cmsComponents/staticRepoCheck'
-import AuthCheck, { getAuthStateSummary, AUTH_STATE } from '../cmsComponents/authCheck'
+import AuthCheck from '../cmsComponents/authCheck'
+import { AUTH_STATE } from '../redux/reducer/auth'
 
 
 //Useful functions
@@ -65,7 +66,7 @@ const getLoadingPage = () => (
 
 //Redux mappers
 const mapStateToProps = (state) => ({
-    authStateSummary: getAuthStateSummary(state.Auth),
+    authState: state.Auth.authState,
     staticRepoState: {
         checking: state.StaticRepo.checking,
         initialised: state.StaticRepo.initialised,
@@ -93,7 +94,7 @@ function BluxContent(props) {
     return (<>
         <AuthCheck />
         {
-            (props.authStateSummary === AUTH_STATE.LOGGED_IN) ?
+            (props.authState === AUTH_STATE.LOGGED_IN) ?
                 <StaticRepoCheck
                     onPass={() => onStaticRepoCheckPass()}
                 /> : null

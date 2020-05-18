@@ -26,8 +26,8 @@ const getHandler = async (req, res, next) => {
             if (!configured) {
                 return null
             } else {
-                //const cookies = req.signedCookies
-                const cookies = req.cookies
+                const cookies = req.signedCookies
+                //const cookies = req.cookies
                 const sessionToken = cookies["bluxcms-session"]
                 const validSession = (
                     sessionToken ? 
@@ -66,11 +66,10 @@ const postHandler = async (req, res, next) => {
             if (authValid) {
                 const sessionToken = await createSession(user, pass)
                 const cookieOptions = {
-                    /*
                     httpOnly: true,
                     sameSite: true,
+                    signed: true,
                     secure: true,
-                    signed: true,*/
                     maxAge: SESSION_SHELF_LIFE
                 }
                 res

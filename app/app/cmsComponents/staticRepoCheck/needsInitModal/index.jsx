@@ -6,7 +6,9 @@ export default function NeedsInitModal(props) {
         <AuthModal
             onClickAway={null}
             show={props.show}
-            heading={"Importing Static Content"}
+            heading="Importing Static Content"
+            passPrompt="Password / Personal Access Token*"
+            note="*Personal Access Token advised for enhanced security."
             onSubmit={props.onSubmit}
         >
             Git credentials required to import static content 
