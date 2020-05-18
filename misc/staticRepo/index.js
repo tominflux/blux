@@ -51,7 +51,7 @@ const checkStaticRepoCloned = async () => {
 }
 
 const cloneStaticRepo = async () => {
-    if (!checkAuthConfigured()) {
+    if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
     const { staticPath, staticRepo } = getStaticPathAndRepo()
@@ -65,7 +65,7 @@ const cloneStaticRepo = async () => {
 }
 
 const pullStaticRepo = async () => {
-    if (!checkAuthConfigured()) {
+    if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
     const { staticPath, staticRepo } = getStaticPathAndRepo()
@@ -77,7 +77,7 @@ const pullStaticRepo = async () => {
 }
 
 const pushStaticRepo = async () => {
-    if (!checkAuthConfigured()) {
+    if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
     const { staticPath, staticRepo } = getStaticPathAndRepo()

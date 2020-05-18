@@ -25,7 +25,7 @@ export default function StaticRepo(
         case STATIC_REPO_CHECK_SEND:
             return {
                 ...state,
-                staticRepoState: CHECKING
+                staticRepoState: STATIC_REPO_STATE.CHECKING
             }
         case STATIC_REPO_CHECK_RECEIVE:
             const { alreadyImported } = action.payload

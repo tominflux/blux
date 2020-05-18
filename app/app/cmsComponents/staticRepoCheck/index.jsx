@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import NeedsInitModal from './needsInitModal'
 import {
     staticRepoCheckSend,
     staticRepoCheckReceive,
@@ -9,11 +8,10 @@ import {
 } from '../../redux/actions'
 import { STATIC_REPO_STATE } from '../../redux/reducer/staticRepo'
 import ImportingCover from './importingCover'
+import FatalError from '../covers/fatalError'
 
 const mapStateToProps = (state) => ({
-    checking: state.StaticRepo.checking,
-    initialised: state.StaticRepo.initialised,
-    initialising: state.StaticRepo.initialising
+    staticRepoState: state.StaticRepo.staticRepoState
 })
 
 const mapDispatchToProps = {
@@ -75,6 +73,10 @@ function StaticRepoCheck(props) {
                 <FatalError>
                     Failed to import static content.
                 </FatalError>
+            )
+        default:
+            throw new Error(
+                `Unrecognised static repo state: ${props.staticRepoState}`
             )
     }
 }
