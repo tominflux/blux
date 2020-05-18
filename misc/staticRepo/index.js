@@ -1,5 +1,6 @@
 const simpleGit = require("simple-git/promise")
 const { getConfig } = require("../config")
+const { getConfidentialsExists, getConfidentials } = require("../confidentials")
 
 
 const checkCredentialsConfigured = () => {
