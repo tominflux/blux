@@ -14,36 +14,26 @@ const checkCredentialsConfigured = () => {
     )
 }
 
-const getStaticPathAndRepo = () => {
-    const { staticPath, staticRepo } = getConfig()
-    if (staticPath === null) {
+const getPublicPathAndRepo = () => {
+    const { publicPath, publicRepo } = getConfig()
+    if (publicPath === null) {
         throw new Error(
-            "Static content path not configured."
+            "Public build path not configured."
         )
     }
-    if (staticRepo === null) {
+    if (publicRepo === null) {
         throw new Error(
-            "Static repo location not configured."
+            "Public repo location not configured."
         )
     }
-    return { staticPath, staticRepo }
-}
-
-const getAdminEmail = () => {
-    const { adminEmail } = getConfig()
-    if (adminEmail === null) {
-        throw new Error(
-            "Admin email not configured."
-        )
-    }
-    return adminEmail
+    return { publicPath, publicRepo }
 }
 
 
-const checkStaticRepoCloned = async () => {
-    const { staticPath, staticRepo } = getStaticPathAndRepo()
+const checkPublicRepoCloned = async () => {
+    const { publicPath, publicRepo } = getPublicPathAndRepo()
     try {      
-        const git = simpleGit(staticPath)
+        const git = simpleGit(publicPath)
         await git.status()
         return true
     } catch (err) {
@@ -51,53 +41,55 @@ const checkStaticRepoCloned = async () => {
     }
 }
 
-const cloneStaticRepo = async () => {
+
+const clonePublicRepo = async () => {
     if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
-    const { staticPath, staticRepo } = getStaticPathAndRepo()
-    console.log(`Cloning static repo: https://${staticRepo}`)
+    const { publicPath, publicRepo } = getPublicPathAndRepo()
+    console.log(`Cloning static repo: https://${publicRepo}`)
     const git = simpleGit()
     const gitUser = getConfidentials().gitUser
     const gitPass = getConfidentials().gitPass
-    const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
-    await git.clone(authRepo, staticPath)
+    const authRepo = `https://${gitUser}:${gitPass}@${publicRepo}`
+    await git.clone(authRepo, publicPath)
     console.log("Finished cloning.")
 }
 
-const pullStaticRepo = async () => {
+
+const pullPublicRepo = async () => {
     if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
-    const { staticPath, staticRepo } = getStaticPathAndRepo()
-    const git = simpleGit(staticPath)
+    const { pbulicPath, publicRepo } = getStaticPathAndRepo()
+    const git = simpleGit(pbulicPath)
     const gitUser = getConfidentials().gitUser
     const gitPass = getConfidentials().gitPass
-    const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
+    const authRepo = `https://${gitUser}:${gitPass}@${publicRepo}`
     await git.pull(authRepo)
 }
 
-const pushStaticRepo = async () => {
+const pushPublicRepo = async () => {
     if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
-    const { staticPath, staticRepo } = getStaticPathAndRepo()
+    const { publicPath, publicRepo } = getPublicPathAndRepo()
     const adminEmail = getAdminEmail()
-    const git = simpleGit(staticPath)
+    const git = simpleGit(publicPath)
     const gitUser = getConfidentials().gitUser
     const gitPass = getConfidentials().gitPass
     await git.add("./*")
     await git.addConfig('user.name', 'BluxCMS Admin')
     await git.addConfig('user.email', adminEmail)
     await git.commit(
-        "CMS Save State\n" + 
-        "Automated commit of all app state changes."
+        "CMS Publish\n" + 
+        "Automated commit of updated public build."
     )
-    const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
+    const authRepo = `https://${gitUser}:${gitPass}@${publicRepo}`
     await git.push(authRepo)
 }
 
-exports.checkStaticRepoCloned = checkStaticRepoCloned
-exports.cloneStaticRepo = cloneStaticRepo
-exports.pullStaticRepo = pullStaticRepo
-exports.pushStaticRepo = pushStaticRepo
+exports.checkPublicRepoCloned = checkPublicRepoCloned
+exports.clonePublicRepo = clonePublicRepo
+exports.pullPublicRepo = pullPublicRepo
+exports.pushPublicRepo = pushPublicRepo

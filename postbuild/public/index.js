@@ -6,6 +6,8 @@ const { renderRoutesToFiles } = require("../renderRoutes")
 const { readConfidentials } = require("../../misc/confidentials")
 const { readConfig, getConfig } = require("../../misc/config")
 const { checkStaticRepoCloned, cloneStaticRepo } = require("../../misc/staticRepo")
+const { checkPublicRepoCloned, clonePublicRepo } = require("../../misc/publicRepo")
+
 
 async function copyPagesJson(pagesData) {
     const destFolder = "public/content/"
@@ -23,10 +25,18 @@ async function ensureStaticRepoCloned() {
     }
 }
 
+async function ensurePublicRepoCloned() {
+    const isCloned = await checkPublicRepoCloned()
+    if (!isCloned) {
+        await clonePublicRepo()
+    }
+}
+
 async function postbuild() {
     await readConfidentials()
     await readConfig()
     await ensureStaticRepoCloned()
+    await ensurePublicRepoCloned()
     const routes = await discoverPages()
     await renderRoutesToFiles("public", routes)  
     const pagesData = await readPages(routes)

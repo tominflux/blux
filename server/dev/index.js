@@ -1,6 +1,7 @@
 const { readConfidentials: readConfidentials, getConfidentials } = require("../../misc/confidentials")
 const { readConfig } = require("../../misc/config")
 const { checkStaticRepoCloned, cloneStaticRepo } = require("../../misc/staticRepo")
+const { checkPublicRepoCloned, clonePublicRepo } = require("../../misc/publicRepo")
 const express = require("express")
 const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
@@ -20,10 +21,18 @@ async function ensureStaticRepoCloned() {
     }
 }
 
+async function ensurePublicRepoCloned() {
+    const isCloned = await checkPublicRepoCloned()
+    if (!isCloned) {
+        await clonePublicRepo()
+    }
+}
+
 async function run() {
     await readConfidentials()
     await readConfig()
     await ensureStaticRepoCloned()
+    await ensurePublicRepoCloned()
     const signedCookieSecret = getConfidentials().signedCookieSecret
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))
