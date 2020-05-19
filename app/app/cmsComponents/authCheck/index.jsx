@@ -27,13 +27,17 @@ function AuthCheck(props) {
     //Events
     const onCheckResponse = (configured, validSession) => {
         props.authCheckReceive(configured, validSession)
+        if (configured && validSession)
+            props.onPass()
     }
     const onLoginSubmit = async (user, pass) => {
         props.authLoginSend()
         performLogin(user, pass)
     }
-    const onLoginReceive = async (authValid, sessionAvailable) => {
-        props.authLoginReceive(authValid, sessionAvailable)
+    const onLoginReceive = async (authValid) => {
+        props.authLoginReceive(authValid)
+        if (authValid)
+            props.onPass()
     }
     //Functions
     const performCheck = async () => {
@@ -55,8 +59,8 @@ function AuthCheck(props) {
             }
         )
         const json = await response.json()
-        const { authValid, sessionAvailable } = json
-        onLoginReceive(authValid, sessionAvailable)
+        const { authValid } = json
+        onLoginReceive(authValid)
     }
     //
     switch (props.authState) {

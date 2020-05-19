@@ -86,29 +86,13 @@ function BluxContent(props) {
         const pages = await loadPageStates() 
         props.receivePages(pages)
     }
-    //
-    if (!isCMS()) {
-        React.useEffect(() => {
-            acquirePages()
-        }, [])
-        return (
-            (props.pages !== null) ? 
-                getCurrentPage(props) :
-                getLoadingPage(props)
-        )
-    }
-    //
-    const onStaticRepoCheckPass = () => {
-        acquirePages()
-    }
-    //
     return (<>
-        <AuthCheck />
-        {
-            (props.authState === AUTH_STATE.LOGGED_IN) ?
-                <StaticRepoCheck
-                    onPass={() => onStaticRepoCheckPass()}
-                /> : null
+        { 
+            isCMS() ? 
+                <AuthCheck 
+                    onPass={() => acquirePages()}
+                /> : 
+                null 
         }
         {
             (props.pages !== null) ? 
