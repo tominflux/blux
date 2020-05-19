@@ -4,7 +4,8 @@ const express = require("express")
 const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
 const api = require("../api")
-const routes = require("./routes")
+const routes = require("../routes")
+
 
 const app = express()
 const port = parseInt(process.env.PORT) || 3000
@@ -17,7 +18,7 @@ async function run() {
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))
     app.use(fileUpload())
-    routes.serve(app)
+    routes.serve(app, "./cms-prod")
     app.use(express.static("./cms-prod"))
     app.use(express.static(config.staticPath))
     api.configure(app)
