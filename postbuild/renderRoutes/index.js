@@ -20,7 +20,6 @@ async function renderRouteHtml(buildFolder, isCms) {
     const data = await fs.readFile(htmlLocation)
     const preHtml = data.toString()
     const postHtml = await processHtml(preHtml, isCms)
-    console.log(postHtml)
     return postHtml
 }
 

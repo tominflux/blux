@@ -1,16 +1,21 @@
 const { discoverPages } = require("../../../misc/pages")
 const { renderRouteHtml } = require("../../../postbuild/renderRoutes")
-
+const path = require("path")
 
 async function serve(expressApp) {
-    const routes = await discoverPages()
-    for (const route of routes) {
-        const requestHandler = (req, res) => {
-            const routeHtml = renderRouteHtml("cms-prod", true)
-            res.send(routeHtml)
+    expressApp.get("/*", async (req, res, next) => {
+        const routes = await discoverPages()
+        routes.push("/")
+        for (const route of routes) {
+            const routeUrl = path.join("/", route)
+            if (req.url === routeUrl) {
+                const routeHtml = await renderRouteHtml("cms-prod", true)
+                res.send(routeHtml)
+                return
+            }
         }
-        expressApp.get(route, requestHandler)
-    }
+        next()
+    })
 }
 
 exports.serve = serve

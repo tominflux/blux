@@ -17,10 +17,10 @@ async function run() {
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))
     app.use(fileUpload())
+    routes.serve(app)
     app.use(express.static("./cms-prod"))
     app.use(express.static(config.staticPath))
     api.configure(app)
-    routes.serve(app)
     app.listen(
         port, () => {
             console.log(
