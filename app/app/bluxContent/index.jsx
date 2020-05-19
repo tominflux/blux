@@ -87,6 +87,17 @@ function BluxContent(props) {
         props.receivePages(pages)
     }
     //
+    if (!isCMS()) {
+        React.useEffect(() => {
+            acquirePages()
+        }, [])
+        return (
+            (props.pages !== null) ? 
+                getCurrentPage(props) :
+                getLoadingPage(props)
+        )
+    }
+    //
     const onStaticRepoCheckPass = () => {
         acquirePages()
     }
