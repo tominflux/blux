@@ -11,6 +11,16 @@ const { pullPublicRepo } = require("../../misc/publicRepo")
 
 const app = express()
 const port = parseInt(process.env.PORT) || 3000
+const env = process.env.NODE_ENV || 'development';
+
+const forceSsl = (req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+        const redirectUrl = 
+            ['https://', req.get('Host'), req.url].join('')
+        return res.redirect(redirectUrl)
+    }
+    return next()
+}
 
 async function run() {
     await readConfidentials()
@@ -22,6 +32,8 @@ async function run() {
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))
     app.use(fileUpload())
+    if (env !== "development")
+        app.use(forceSsl)
     routes.serve(app, "./cms-prod")
     app.use(express.static("./cms-prod"))
     app.use(express.static(config.staticPath))
