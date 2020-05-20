@@ -5,29 +5,41 @@ const CONFIDENTIALS_PATH = "./blux-confidentials.json"
 
 let _confidentials = null
 
-async function inheritConfidentials() {
-    const confidentials = {
-        signedCookieSecret: passGen.generate({
-            length: 12, numbers: true
-        }),
-        authUser: process.env.AUTH_USER || null,
-        authPassHash: process.env.AUTH_PASS_HASH || null,
-        gitUser: process.env.GIT_USER || null,
-        gitPass: process.env.GIT_PASS || null
-    }
-    return confidentials
-}
-
-async function readConfidentials() {
+const getFileConfidentials = async () => {
     const exists = await fs.exists(CONFIDENTIALS_PATH)
     if (exists) {
         const rawData = await fs.readFile(CONFIDENTIALS_PATH)
         const text = rawData.toString()
         const confidentials = JSON.parse(text)
-        _confidentials = confidentials
+        return confidentials
     } else {
-        _confidentials = await inheritConfidentials()
+        return {}
     }
+}
+
+const getEnvConfidentials = () => ({
+    authUser: process.env.AUTH_USER || null,
+    authPassHash: process.env.AUTH_PASS_HASH || null,
+    gitUser: process.env.GIT_USER || null,
+    gitPass: process.env.GIT_PASS || null
+})
+
+const getGeneratedConfidentials = () => ({
+    signedCookieSecret: passGen.generate({
+        length: 12, numbers: true
+    })
+})
+
+async function readConfidentials() {
+    const fileConfidentials = await getFileConfidentials()
+    const envConfidentials = getEnvConfidentials()
+    const generatedConfidentials = getGeneratedConfidentials()
+    const confidentials = {
+        ...envConfidentials,
+        ...fileConfidentials,
+        ...generatedConfidentials
+    }
+    _confidentials = confidentials
 }
 
 const getConfidentialsExists = () => {
