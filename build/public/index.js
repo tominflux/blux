@@ -6,8 +6,8 @@ const readPages = require("../../misc/pages").readPages
 const { renderRoutesToFiles } = require("../../misc/renderRoutes")
 const { readConfidentials } = require("../../misc/confidentials")
 const { readConfig, getConfig } = require("../../misc/config")
-const { checkStaticRepoCloned, cloneStaticRepo } = require("../../misc/staticRepo")
-const { checkPublicRepoCloned, clonePublicRepo } = require("../../misc/publicRepo")
+const { checkStaticRepoCloned, cloneStaticRepo, pullStaticRepo } = require("../../misc/staticRepo")
+const { checkPublicRepoCloned, clonePublicRepo, pullPublicRepo } = require("../../misc/publicRepo")
 
 
 async function copyPagesJson(pagesData) {
@@ -24,6 +24,7 @@ async function ensureStaticRepoCloned() {
     if (!isCloned) {
         await cloneStaticRepo()
     }
+    await pullStaticRepo()
 }
 
 async function ensurePublicRepoCloned() {
@@ -31,6 +32,7 @@ async function ensurePublicRepoCloned() {
     if (!isCloned) {
         await clonePublicRepo()
     }
+    await pullPublicRepo()
 }
 
 async function postbuild() {

@@ -20,6 +20,7 @@ const publish = async () => {
 
 
 const postHandler = async (req, res, next) => {
+    res.setTimeout(120000)
     try {
         await buildPublic.build()
         await publish()
