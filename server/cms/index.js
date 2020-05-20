@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
 const api = require("../api")
 const routes = require("../routes")
+const { pullStaticRepo } = require("../../misc/staticRepo")
+const { pullPublicRepo } = require("../../misc/publicRepo")
 
 
 const app = express()
@@ -13,6 +15,8 @@ const port = parseInt(process.env.PORT) || 3000
 async function run() {
     await readConfidentials()
     await readConfig()
+    await pullStaticRepo()
+    await pullPublicRepo()
     const signedCookieSecret = getConfidentials().signedCookieSecret
     const config = getConfig()
     app.use(express.json())
