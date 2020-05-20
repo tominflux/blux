@@ -86,6 +86,12 @@ function BluxContent(props) {
         const pages = await loadPageStates() 
         props.receivePages(pages)
     }
+    //Effects
+    if (!isCMS()) {
+        React.useEffect(() => {
+            acquirePages()
+        }, [])
+    }
     return (<>
         { 
             isCMS() ? 
