@@ -1,5 +1,5 @@
 const { discoverPages } = require("../../misc/pages")
-const { renderRouteHtml } = require("../../postbuild/renderRoutes")
+const { renderRouteHtml } = require("../../misc/renderRoutes")
 const path = require("path")
 const fs = require("fs-extra")
 

@@ -1,8 +1,9 @@
+const child = require("child_process")
 const fs = require("fs-extra")
 const path = require("path")
 const discoverPages = require("../../misc/pages").discoverPages
 const readPages = require("../../misc/pages").readPages
-const { renderRoutesToFiles } = require("../renderRoutes")
+const { renderRoutesToFiles } = require("../../misc/renderRoutes")
 const { readConfidentials } = require("../../misc/confidentials")
 const { readConfig, getConfig } = require("../../misc/config")
 const { checkStaticRepoCloned, cloneStaticRepo } = require("../../misc/staticRepo")
@@ -33,10 +34,7 @@ async function ensurePublicRepoCloned() {
 }
 
 async function postbuild() {
-    await readConfidentials()
-    await readConfig()
     await ensureStaticRepoCloned()
-    await ensurePublicRepoCloned()
     const routes = await discoverPages()
     await renderRoutesToFiles("public", routes)  
     const pagesData = await readPages(routes)
@@ -48,4 +46,33 @@ async function postbuild() {
     fs.copy(contentPath, "public/content")
 }
 
-postbuild()
+const runParcelBuild = () => (
+    new Promise((resolve, reject) => {
+        const publicPath = getConfig().publicPath
+        const command = (
+            `npx parcel build blux/app/public/index.html ` +
+            `-d ${publicPath}`
+        )
+        const callback = (error, stdout, stderr) => {
+            if (stdout) console.log(stdout)
+            if (stderr) console.log(stderr)
+            if (error) console.error(error)
+        }
+        const parcelProcess = child.exec(
+            command, callback
+        )
+        parcelProcess.addListener("error", reject)
+        parcelProcess.addListener("exit", resolve)
+    })
+)
+
+async function build() {
+    console.log("Performing public build...")
+    await readConfidentials()
+    await readConfig()
+    await ensurePublicRepoCloned()
+    await runParcelBuild()
+    await postbuild()
+}
+
+exports.build = build

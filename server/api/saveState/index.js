@@ -1,10 +1,5 @@
-const simpleGit = require("simple-git/promise")
-const { getConfig } = require("../../../misc/config")
-const {
-    pushStaticRepo
-} = require("../../../misc/staticRepo")
-const path = require("path")
 const { HTTP_METHOD, configureAuthApi } = require("../auth")
+const { pushStaticRepo } = require("../../../misc/staticRepo")
 
 const API_PATH = "/api/save-state"
 
@@ -13,7 +8,7 @@ const API_PATH = "/api/save-state"
 /////////
 
 const saveState = async () => {
-    console.log("Pushing app state changes to master Git repository...")
+    console.log("Pushing app state changes to static Git repository...")
     await pushStaticRepo()
     console.log("Save state complete.")
 }

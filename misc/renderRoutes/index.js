@@ -1,6 +1,6 @@
 const fs = require("fs-extra")
 const path = require("path")
-const { getConfig } = require("../../misc/config")
+const { getConfig } = require("../config")
 
 async function processHtml(html, isCms=false) {
     const config = getConfig()

@@ -29,6 +29,15 @@ const getPublicPathAndRepo = () => {
     return { publicPath, publicRepo }
 }
 
+const getAdminEmail = () => {
+    const { adminEmail } = getConfig()
+    if (adminEmail === null) {
+        throw new Error(
+            "Admin email not configured."
+        )
+    }
+    return adminEmail
+}
 
 const checkPublicRepoCloned = async () => {
     const { publicPath, publicRepo } = getPublicPathAndRepo()
@@ -47,7 +56,7 @@ const clonePublicRepo = async () => {
         throw new Error("Git credentials not configured.")
     }
     const { publicPath, publicRepo } = getPublicPathAndRepo()
-    console.log(`Cloning static repo: https://${publicRepo}`)
+    console.log(`Cloning public repo: https://${publicRepo}`)
     const git = simpleGit()
     const gitUser = getConfidentials().gitUser
     const gitPass = getConfidentials().gitPass
