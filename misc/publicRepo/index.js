@@ -70,8 +70,8 @@ const pullPublicRepo = async () => {
     if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }
-    const { pbulicPath, publicRepo } = getStaticPathAndRepo()
-    const git = simpleGit(pbulicPath)
+    const { publicPath, publicRepo } = getPublicPathAndRepo()
+    const git = simpleGit(publicPath)
     const gitUser = getConfidentials().gitUser
     const gitPass = getConfidentials().gitPass
     const authRepo = `https://${gitUser}:${gitPass}@${publicRepo}`
