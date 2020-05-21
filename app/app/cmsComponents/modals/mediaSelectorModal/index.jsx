@@ -5,7 +5,6 @@ import MediaNavigator, { API_ROOT } from '../../navigators/mediaNavigator'
 import { cmsify } from '../../cmsify'
 const path = require("path")
 import './styles.css'
-import { slugify, slugifyFilename } from '../../../misc'
 
 function MediaSelectorModal(props) {
     const [externalMostRecentFetch, setExternalMostRecentFetch]
