@@ -12,6 +12,7 @@ export default function Navigator(props) {
     const [navigation, setNavigation] = React.useState("")
     const [fetching, setFetching] = React.useState(false)
     const [received, setReceived] = React.useState(false)
+    const [mostRecentFetch, setMostRecentFetch] = React.useState(null)
     const [thumbPropsCollection, setThumbPropsCollection] = React.useState([])
     const [dragOver, setDragOver] = React.useState(false)
     const [selected, setSelected] = React.useState(null) //Thumb Name
@@ -25,10 +26,11 @@ export default function Navigator(props) {
     }
     const notifyThumbDeletion = () => {
         setReceived(false)
+        setThumbPropsCollection([])
     }
     const notifyThumbRename = () => {
-        console.log("Rename")
         setReceived(false)
+        setThumbPropsCollection([])
     }
     const selectThumb = (thumbProps) => {
         setSelected(thumbProps)
@@ -72,7 +74,10 @@ export default function Navigator(props) {
         }
         const files = getFiles()
         props.onDrop(files, navigation)
-        .then(() => setReceived(false))
+        .then(() => {
+            setReceived(false)
+            setThumbPropsCollection([])
+        })
     }
     const onFolderNavigate = (thumbProps) => {
         const newNavigation = path.join(navigation, thumbProps.name)
@@ -128,6 +133,7 @@ export default function Navigator(props) {
                 ) : intermediateThumbProps
         )
         const fetchAndGenerateThumbs = async () => {
+            setMostRecentFetch(Date.now())
             setFetching(true)
             const response = await fetchApiResponse()
             setFetching(false)
@@ -138,11 +144,17 @@ export default function Navigator(props) {
         }  
         //
         const fetchRequired = (
-            fetching === false && 
-            received === false
+            (
+                fetching === false && 
+                received === false
+            ) || (
+                props.externalMostRecentFetch &&
+                props.externalMostRecentFetch > mostRecentFetch
+            )
         )
         if (fetchRequired) {
             fetchAndGenerateThumbs()
+            setThumbPropsCollection([])
         }
     })
     //

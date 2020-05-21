@@ -3,21 +3,42 @@ import Modal from '../../abstract/modal'
 import Footer from './footer'
 import MediaNavigator from '../../navigators/mediaNavigator'
 import { cmsify } from '../../cmsify'
+const path = require("path")
 
 function MediaSelectorModal(props) {
+    const [externalMostRecentFetch, setExternalMostRecentFetch]
+        = React.useState(null)
     //State
     const [navigation, setNavigation] = React.useState("./")
     const [selected, setSelected] = React.useState(null)
-    //Events
+    //Functions 
+    const refreshNavigator = () => {
+        setExternalMostRecentFetch(Date.now())
+    }
+    //Navigator Events
     const onNavigate = (navigation) => {
         setNavigation(navigation)
     }
     const onSelect = (thumbProps) => {
         setSelected(thumbProps)
     }
+    //Modal Events
     const onConfirm = () => {
         if (props.onConfirm)
             props.onConfirm(selected, navigation)
+    }
+    const onCreateNewFolderClick = async () => {
+        const requestPath = path.join(
+            "/api/media", navigation
+        )
+        const response = await fetch(
+            requestPath, 
+            { method: "POST" }
+        )
+        if (!response.ok) {
+            alert("Could not create new folder.")
+        }
+        refreshNavigator()
     }
     //
     return (
@@ -27,7 +48,9 @@ function MediaSelectorModal(props) {
             heading={navigation}
             footer={
                 <Footer
-                    confirmDisable={props.selected === null}
+                    onUploadFileClick={() => onUploadFileClick()}
+                    onCreateNewFolderClick={() => onCreateNewFolderClick()}
+                    confirmDisabled={props.selected === null}
                     onConfirm={() => onConfirm()}
                 />
             }
@@ -44,6 +67,7 @@ function MediaSelectorModal(props) {
                 canRename={props.canRename}
                 canDelete={props.canDelete}
                 canDrop={props.canDrop}
+                externalMostRecentFetch={externalMostRecentFetch}
             />
         </Modal>
     )

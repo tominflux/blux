@@ -1,21 +1,29 @@
 import React from 'react'
+import { IconContext } from "react-icons";
 import Button from '../../../abstract/button'
+import { AiOutlineUpload, AiOutlineFolderAdd } from 'react-icons/ai'
 import './styles.css'
 
 
 export default function MediaSelectorFooter(props) {
     return (
-        <div className="row">
+        <div className="row align-items-center">
             <div className="col-4">
                 <Button
                     className="blux-media-selector-modal__upload-media-button"
+                    onClick={props.onUploadFileClick}
                 >
-                    OK
+                    <IconContext.Provider value={{ size: "32pt" }}>
+                        <AiOutlineUpload/>
+                    </IconContext.Provider>
                 </Button>
                 <Button
                     className="blux-media-selector-modal__new-folder-button"
+                    onClick={props.onCreateNewFolderClick}
                 >
-                    OK
+                    <IconContext.Provider value={{ size: "32pt" }}>
+                        <AiOutlineFolderAdd/>
+                    </IconContext.Provider>
                 </Button>
             </div>
             <div className="col-4">

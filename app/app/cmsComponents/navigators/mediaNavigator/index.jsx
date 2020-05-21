@@ -108,6 +108,7 @@ export default function MediaNavigator(props) {
             canDelete={props.canDelete}
             canRename={props.canRename}
             canDrop={props.canDrop}
+            externalMostRecentFetch={props.externalMostRecentFetch}
         />
     )
 }

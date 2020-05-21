@@ -14,11 +14,14 @@ const getAbsPath = mediaPath => path.join(getMediaRoot(), mediaPath)
 const getMediaPath = absPath => path.relative(getMediaRoot(), absPath)
 
 
+////////
+////////
+
+
 const checkIfFolder = async absPath => {
     const stat = await fs.lstat(absPath)
     return stat.isDirectory()
 }
-
 
 async function writeFile(mediaPath, file) {
     const absPath = getAbsPath(mediaPath)
@@ -63,39 +66,64 @@ async function deleteFileOrFolder(mediaPath) {
     fs.remove(absPath)
 }
 
+async function handleFileUpload(reqFiles, mediaPath) {
+    if (!reqFiles.media) {
+        throw new Error(
+            "No media file supplied."
+        )
+    }
+    const file = reqFiles.media
+    const absPath = getAbsPath(mediaPath)
+    const exists = await fs.exists(absPath)
+    if (exists) {
+        throw new Error(
+            "File at given path already exists.",
+            mediaPath
+        )
+    }
+    await writeFile(mediaPath, file)
+    return {
+        name: file.name,
+        mimetype: file.mimetype,
+        size: file.size
+    }
+}
+
+async function createNewFolder(mediaPath, count=0) {
+    const suffix = (count > 0) ? `-${count}` : ""
+    const name = `new-folder${suffix}` 
+    const absPath = getAbsPath(mediaPath)
+    const newFolderAbsPath = path.join(absPath, name)
+    const exists = await fs.exists(newFolderAbsPath)
+    if (exists) {
+        return createNewFolder(mediaPath, count + 1)
+    } else {
+        await fs.mkdir(newFolderAbsPath)
+        return name
+    }
+}
+
 /////////
 /////////
 
 
 async function createHandler(req, res, next) {
     const mediaPath = req.params[0]
-    const absPath = getAbsPath(mediaPath)
-    const exists = await fs.exists(absPath)
-    if (exists) {
-        const err = new Error(
-            "File at given path already exists.",
-            mediaPath
-        )
-        console.error(err)
-        next(err)
-        return
+    if (req.files) {
+        try {
+            const responseBody = await handleFileUpload(req.files, mediaPath)
+            res.send(responseBody)
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        try {
+            const responseBody = await createNewFolder(mediaPath)
+            res.send(responseBody)
+        } catch (err) {
+            next(err)
+        }
     }
-    if (!req.files) {
-        const err = new Error(
-            "No file uploaded",
-            mediaPath
-        )
-        console.error(err)
-        next(err)
-        return
-    }
-    const file = req.files.media
-    await writeFile(mediaPath, file)
-    res.send({
-        name: file.name,
-        mimetype: file.mimetype,
-        size: file.size
-    })
 }
 
 

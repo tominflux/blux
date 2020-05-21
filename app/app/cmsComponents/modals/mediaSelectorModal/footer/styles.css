@@ -1,5 +1,15 @@
 
 
+
+.blux-media-selector-modal__upload-media-button {
+    margin-right: 22pt;
+}
+
+.blux-media-selector__new-folder-button {
+    margin-left: 22pt;
+}
+
+
 .blux-media-selector-modal__confirm-button {
     min-width: 80pt;
 }
