@@ -8,7 +8,7 @@ import './styles.css'
 export default function MediaSelectorFooter(props) {
     return (
         <div className="row align-items-center">
-            <div className="col-4">
+            <div className="col-5">
                 <Button
                     type="file"
                     className="blux-media-selector-modal__upload-media-button"
@@ -27,7 +27,9 @@ export default function MediaSelectorFooter(props) {
                     </IconContext.Provider>
                 </Button>
             </div>
-            <div className="col-4">
+            <div className="col-2">
+            </div>
+            <div className="col-5">
                 <Button
                     disabled={props.confirmDisabled}
                     onClick={props.onConfirm}
@@ -35,9 +37,6 @@ export default function MediaSelectorFooter(props) {
                 >
                     OK
                 </Button>
-            </div>
-            <div className="col-4">
-            
             </div>
         </div>
     )
