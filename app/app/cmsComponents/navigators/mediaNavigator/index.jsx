@@ -15,13 +15,16 @@ export default function MediaNavigator(props) {
         const uploadPath = path.join(
             API_ROOT, navigation, file.name
         )
-        await fetch(
+        const response = await fetch(
             uploadPath, 
             {
                 method: "POST",
                 body: formData
             }
         )
+        if (!response.ok) {
+            alert("Could not upload file.")
+        }
     }
     //Events
     const onDrop = async (files, navigation) => {

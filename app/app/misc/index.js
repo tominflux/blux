@@ -1,14 +1,14 @@
 
 const path = require("path")
 
-export function getElementPosition(element, position={x: 0, y: 0}) {
+export function getElementPosition(element, position = { x: 0, y: 0 }) {
     if (!element)
         return { ...position }
-    const scrollX = (element.tagName === "BODY") ? 
-        (element.scrollLeft || document.documentElement.scrollLeft) : 
+    const scrollX = (element.tagName === "BODY") ?
+        (element.scrollLeft || document.documentElement.scrollLeft) :
         element.scrollLeft
-    const scrollY = (element.tagName === "BODY") ? 
-        (element.scrollLeft || document.documentElement.scrollLeft) : 
+    const scrollY = (element.tagName === "BODY") ?
+        (element.scrollLeft || document.documentElement.scrollLeft) :
         element.scrollLeft
     const elementPosX = element.offsetLeft - scrollX + element.clientLeft
     const elementPosY = element.offsetTop - scrollY + element.clientTop
@@ -67,7 +67,7 @@ export function immutableDelete(index, array) {
 
 export function splitIntoGroups(array, groupSize) {
     const groups = []
-    for (let i=0, limit=array.length; i<limit; i+=groupSize) {
+    for (let i = 0, limit = array.length; i < limit; i += groupSize) {
         const start = i
         const end = (i + groupSize < limit) ? i + groupSize : limit
         const group = array.slice(start, end)
@@ -80,20 +80,20 @@ export const getExtension = (mediaPath) => (
     path.basename(mediaPath).split('.').pop()
 )
 
-export const MEDIA_IMAGE   =   "MEDIA_IMAGE"
-export const MEDIA_VIDEO   =   "MEDIA_VIDEO"
-export const MEDIA_AUDIO   =   "MEDIA_AUDIO"
-export const MEDIA_MISC    =   "MEDIA_MISC"
+export const MEDIA_IMAGE = "MEDIA_IMAGE"
+export const MEDIA_VIDEO = "MEDIA_VIDEO"
+export const MEDIA_AUDIO = "MEDIA_AUDIO"
+export const MEDIA_MISC = "MEDIA_MISC"
 
 export const getMediaType = (extension) => {
     const lExt = extension.toLowerCase()
     if (
-        lExt === "jpg"  ||
+        lExt === "jpg" ||
         lExt === "jpeg" ||
-        lExt === "gif"  ||
-        lExt === "png"  ||
+        lExt === "gif" ||
+        lExt === "png" ||
         lExt === "webp" ||
-        lExt === "bmp"  ||
+        lExt === "bmp" ||
         lExt === "tiff"
     ) {
         return MEDIA_IMAGE
@@ -134,7 +134,7 @@ export const getMousePosition = () => {
 
 //Animation Loop
 const loopHandleMap = new Map()
-export function startLoop(onLoop, onLoopKey=onLoop) {
+export function startLoop(onLoop, onLoopKey = onLoop) {
     let loopHandle = { id: null }
     loopHandleMap.set(onLoopKey, loopHandle)
     //
@@ -153,7 +153,7 @@ export function startLoop(onLoop, onLoopKey=onLoop) {
         }
     }
 }
-export function endLoop(onLoop, onLoopKey=null) {
+export function endLoop(onLoop, onLoopKey = null) {
     const _key = onLoopKey || onLoop
     const loopHandle = loopHandleMap.get(_key)
     if (loopHandle.id !== null) {
@@ -174,7 +174,7 @@ export const setRunType = (newRunType) => {
     if (runType !== null) {
         throw new Error(
             "Run-type already set. " +
-            "(" + runType + ")" 
+            "(" + runType + ")"
         )
     }
     if (
@@ -182,7 +182,7 @@ export const setRunType = (newRunType) => {
         newRunType !== RUN_TYPE.PUBLIC
     ) {
         throw new Error(
-            "Invalid run-type. " + 
+            "Invalid run-type. " +
             "(" + newRunType + ")"
         )
     }
@@ -196,5 +196,33 @@ export const isCMS = () => (getRunType() === RUN_TYPE.CMS)
 //
 
 export const inheritClasses = (props, newClass) => (
-    newClass + (props.className ? " " + props.className : "")  
+    newClass + (props.className ? " " + props.className : "")
 )
+
+
+//
+//Taken From...
+//https://gist.github.com/hagemann/382adfc57adbd5af078dc93feef01fe1
+//
+export function slugify(string) {
+    const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+    const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+    const p = new RegExp(a.split('').join('|'), 'g')
+    return string.toString().toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with 'and'
+        .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, '') // Trim - from end of text
+}
+//
+export function slugifyFilename(filename) {
+    const split = filename.split('.')
+    const extension = split.pop()
+    const name = split.pop()
+    const slugifiedName = slugify(name)
+    const slugifiedFilename = `${slugifiedName}.${extension}`
+    return slugifiedFilename
+}

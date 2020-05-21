@@ -5,7 +5,7 @@ import './styles.css'
 export default function Button(props) {
     return (
         <button
-            type="button"
+            type={props.type || "button"}
             className={
                 "blux-button" + (
                     (props.disabled === true) ? 

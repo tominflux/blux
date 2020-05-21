@@ -10,6 +10,7 @@ export default function MediaSelectorFooter(props) {
         <div className="row align-items-center">
             <div className="col-4">
                 <Button
+                    type="file"
                     className="blux-media-selector-modal__upload-media-button"
                     onClick={props.onUploadFileClick}
                 >

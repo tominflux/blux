@@ -1,13 +1,16 @@
 import React from 'react'
 import Modal from '../../abstract/modal'
 import Footer from './footer'
-import MediaNavigator from '../../navigators/mediaNavigator'
+import MediaNavigator, { API_ROOT } from '../../navigators/mediaNavigator'
 import { cmsify } from '../../cmsify'
 const path = require("path")
+import './styles.css'
+import { slugify, slugifyFilename } from '../../../misc'
 
 function MediaSelectorModal(props) {
     const [externalMostRecentFetch, setExternalMostRecentFetch]
         = React.useState(null)
+    const fileInputRef = React.createRef(fileInputRef)
     //State
     const [navigation, setNavigation] = React.useState("./")
     const [selected, setSelected] = React.useState(null)
@@ -27,9 +30,32 @@ function MediaSelectorModal(props) {
         if (props.onConfirm)
             props.onConfirm(selected, navigation)
     }
+    const onUploadFileClick = async () => {
+        fileInputRef.current.click()
+    }
+    const onUploadFileConfirm = async (e) => {
+        const file = e.target.files[0]
+        const formData = new FormData()
+        formData.append("media", file)
+        const nameSlug = slugifyFilename(file.name)
+        const uploadPath = path.join(
+            API_ROOT, navigation, nameSlug
+        )
+        const response = await fetch(
+            uploadPath, 
+            {
+                method: "POST",
+                body: formData
+            }
+        )
+        if (!response.ok) {
+            alert("Could not upload file.")
+        }
+        refreshNavigator()
+    }
     const onCreateNewFolderClick = async () => {
         const requestPath = path.join(
-            "/api/media", navigation
+            API_ROOT, navigation
         )
         const response = await fetch(
             requestPath, 
@@ -68,6 +94,12 @@ function MediaSelectorModal(props) {
                 canDelete={props.canDelete}
                 canDrop={props.canDrop}
                 externalMostRecentFetch={externalMostRecentFetch}
+            />
+            <input
+                ref={fileInputRef}
+                type="file"
+                className="blux-media-selector-modal__file-input"
+                onChange={(e) => onUploadFileConfirm(e)}
             />
         </Modal>
     )
