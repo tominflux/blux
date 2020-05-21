@@ -4,6 +4,7 @@ import Octicon, { Check } from '@primer/octicons-react'
 import DeleteThumb from './deleteThumb'
 import ConfigureThumb from './configureThumb'
 import { inheritClasses } from '../../../misc'
+import Textbox from '../textbox'
 
 const Thumb = (props) => {
     //
@@ -18,9 +19,17 @@ const Thumb = (props) => {
     )
     const nameElement = () => (
         props.name ? (
-            <span className="blux-thumb__name">
+            <Textbox 
+                className="blux-thumb__name"
+                onClick={(e) => e.stopPropagation()}
+                onEnter={
+                    props.onRename ?
+                        (e) => props.onRename(e.target.value) : null
+                }
+                readOnly={(!props.canRename)}
+            >
                 {props.name}
-            </span>
+            </Textbox>
         ) : null
     )
     const selectedElement = () => (
@@ -52,7 +61,9 @@ const Thumb = (props) => {
         onMouseEnter,
         onMouseLeave,
         bgUrl,
+        canRename,
         showDelete,
+        onRename,
         onDelete,
         showConfigure,
         onConfigure,

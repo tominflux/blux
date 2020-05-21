@@ -26,6 +26,10 @@ export default function Navigator(props) {
     const notifyThumbDeletion = () => {
         setReceived(false)
     }
+    const notifyThumbRename = () => {
+        console.log("Rename")
+        setReceived(false)
+    }
     const selectThumb = (thumbProps) => {
         setSelected(thumbProps)
     }
@@ -79,6 +83,18 @@ export default function Navigator(props) {
     const onThumbSelect = (thumbProps) => {
         selectThumb(thumbProps)
         props.onSelect(thumbProps, navigation)
+    }
+    const onThumbRename = async (thumbProps, newName) => {
+        const currentName = thumbProps.name
+        if (currentName === newName) 
+            return
+        const response = await props.onRename(thumbProps, navigation, newName)
+        if (!response.ok) {
+            alert(
+                `Could not rename.`
+            )
+        }
+        notifyThumbRename()
     }
     const onThumbDelete = async (thumbProps) => {
         await props.onDelete(thumbProps, navigation)
@@ -158,10 +174,12 @@ export default function Navigator(props) {
                             thumbPropsCollection={thumbPropsRow}
                             //Flags
                             canSelect={props.canSelect}
+                            canRename={props.canRename}
                             canDelete={props.canDelete}
                             //Events
                             onFolderNavigate={(thumbProps) => onFolderNavigate(thumbProps)}
                             onThumbSelect={(thumbProps) => onThumbSelect(thumbProps)}
+                            onThumbRename={(thumbProps, newName) => onThumbRename(thumbProps, newName)}
                             onThumbDelete={(thumbProps) => onThumbDelete(thumbProps)}
                             //
                             selected={selected}

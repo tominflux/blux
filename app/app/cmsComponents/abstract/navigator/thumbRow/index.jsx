@@ -18,10 +18,12 @@ export default function ThumbRow(props) {
                             thumbProps={thumbProps}
                             //Flags
                             canSelect={props.canSelect}
+                            canRename={props.canRename}
                             canDelete={props.canDelete}
                             //Events
                             onFolderNavigate={props.onFolderNavigate}
                             onThumbSelect={props.onThumbSelect}
+                            onThumbRename={props.onThumbRename}
                             onThumbDelete={props.onThumbDelete}
                             //
                             selected={props.selected}

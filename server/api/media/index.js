@@ -113,6 +113,50 @@ async function readHandler(req, res) {
     res.send(response)
 }
 
+async function updateHandler(req, res, next) {
+    const mediaPath = req.params[0]
+    const absPath = getAbsPath(mediaPath)
+    const newPath = req.body.newPath
+    if (!newPath) {
+        const err = new Error(
+            "No new path specified."
+        )
+        console.error(err)
+        next(err)
+        return
+    }
+    const newAbsPath = getAbsPath(newPath)
+    const exists = await fs.exists(newAbsPath)
+    if (exists) {
+        const err = new Error(
+            "File at new path already exists.",
+            mediaPath
+        )
+        console.error(err)
+        next(err)
+        return
+    }
+    const extensionsMatch = (
+        path.extname(absPath) === path.extname(newAbsPath)
+    )
+    if (!extensionsMatch) {
+        const err = new Error(
+            "Cannot change file extension."
+        )
+        console.error(err)
+        next(err)
+        return
+    }
+    try {
+        await fs.rename(absPath, newAbsPath)
+    } catch (err) {
+        console.error(err)
+        next(err)
+        return
+    }
+    res.send(newPath)
+}
+
 async function deleteHandler(req, res) {
     const mediaPath = req.params[0]
     deleteFileOrFolder(mediaPath)
@@ -136,6 +180,12 @@ function configure(expressApp) {
         HTTP_METHOD.GET,
         API_PATH,
         readHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.PUT,
+        API_PATH,
+        updateHandler
     )
     configureAuthApi(
         expressApp,

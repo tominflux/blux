@@ -12,6 +12,8 @@ function ImageBlock(props) {
     const [showSelector, setShowSelector] = React.useState(false)
     //Events
     const onConfirm = (thumbProps, navigation) => {
+        if (thumbProps === null) //No image selected
+            return
         setShowSelector(false)
         const mediaId = path.join(
             navigation, thumbProps.name
@@ -55,6 +57,7 @@ function ImageBlock(props) {
             mediaFilter={{
                 types: [ MEDIA_IMAGE ]
             }}
+            canRename
             canDelete
             canDrop
         />

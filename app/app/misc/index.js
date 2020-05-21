@@ -196,5 +196,5 @@ export const isCMS = () => (getRunType() === RUN_TYPE.CMS)
 //
 
 export const inheritClasses = (props, newClass) => (
-    (props.className ? props.className + " " : "") + newClass
+    newClass + (props.className ? " " + props.className : "")  
 )

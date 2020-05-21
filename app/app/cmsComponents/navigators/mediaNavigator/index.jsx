@@ -38,6 +38,26 @@ export default function MediaNavigator(props) {
         if (props.onSelect)
             props.onSelect(thumbProps, navigation)
     }
+    const onRename = async (thumbProps, navigation, newName) => {
+        const apiPath = path.join(
+            API_ROOT, navigation, thumbProps.name
+        )
+        const newMediaPath = path.join(
+            navigation, newName
+        )
+        const requestBody = { newPath: newMediaPath }
+        const response = await fetch(
+            apiPath,
+            { 
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            }
+        )
+        return response
+    }
     const onDelete = async (thumbProps, navigation) => {
         const deletePath = path.join(
             API_ROOT, navigation, thumbProps.name
@@ -49,6 +69,7 @@ export default function MediaNavigator(props) {
     }
     //Functions
     const processApiResponse = async (response) => {
+        console.log("Proccesing API response.")
         const thumbPropsCollection = 
             await generateThumbPropsCollection(response)
         const filteredThumbPropsCollection = 
@@ -75,12 +96,17 @@ export default function MediaNavigator(props) {
                 async (thumbProps, navigation) => 
                     await onSelect(thumbProps, navigation)
             }
+            onRename={
+                async (thumbProps, navigation, newName) =>
+                    await onRename(thumbProps, navigation, newName)
+            }
             onDelete={
                 async (thumbProps, navigation) =>
                     await onDelete(thumbProps, navigation)
             }
             canSelect={props.canSelect}
             canDelete={props.canDelete}
+            canRename={props.canRename}
             canDrop={props.canDrop}
         />
     )

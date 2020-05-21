@@ -42,23 +42,15 @@ export default function AuthModal(props) {
                 <Textbox
                     className="blux-auth-modal__user"
                     onChange={(e) => onUserChange(e)}
-                >
-                    {
-                        props.userPrompt || 
-                        "Username"
-                    }
-                </Textbox>
+                    placeholder={props.userPrompt || "Username"}
+                />
             </div>
             <div>
                 <Password
                     className="blux-auth-modal__pass"
                     onChange={(e) => onPassChange(e)}
-                >
-                    {
-                        props.passPrompt || 
-                        "Password"
-                    }
-                </Password>
+                    placeholder={props.passPrompt || "Password"}
+                />   
             </div>
             {
                 props.note ? 

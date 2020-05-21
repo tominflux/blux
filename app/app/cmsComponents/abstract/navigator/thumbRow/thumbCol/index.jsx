@@ -12,8 +12,10 @@ export default function ThumbCol(props) {
         const {type, ...thumbProps} = props.thumbProps
         const mutualProps = {
             //Flags
+            canRename: props.canRename,
             canDelete: props.canDelete,
             //Events
+            onThumbRename: props.onThumbRename,
             onThumbDelete: props.onThumbDelete
         }
         const folderThumbProps = {

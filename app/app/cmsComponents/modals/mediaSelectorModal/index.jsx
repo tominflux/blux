@@ -1,9 +1,8 @@
 import React from 'react'
 import Modal from '../../abstract/modal'
-import Button from '../../abstract/button'
+import Footer from './footer'
 import MediaNavigator from '../../navigators/mediaNavigator'
 import { cmsify } from '../../cmsify'
-import './styles.css'
 
 function MediaSelectorModal(props) {
     //State
@@ -27,13 +26,10 @@ function MediaSelectorModal(props) {
             show={props.show}
             heading={navigation}
             footer={
-                <Button
-                    disabled={props.selected === null}
-                    onClick={() => onConfirm()}
-                    className="blux-media-selector-modal__confirm-button"
-                >
-                    OK
-                </Button>
+                <Footer
+                    confirmDisable={props.selected === null}
+                    onConfirm={() => onConfirm()}
+                />
             }
         >
             <MediaNavigator 
@@ -45,6 +41,7 @@ function MediaSelectorModal(props) {
                 }
                 mediaFilter={props.mediaFilter}
                 canSelect={true}
+                canRename={props.canRename}
                 canDelete={props.canDelete}
                 canDrop={props.canDrop}
             />
