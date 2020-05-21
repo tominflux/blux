@@ -1,10 +1,9 @@
 import React from 'react'
 import Save from './save'
 import Publish from './publish'
-import { cmsify } from '../cmsify'
 import './styles.css'
 
-function SaveAndPublish(props) {
+export default function SaveAndPublish(props) {
     //State
     const [savingOrPublishing, setSavingOrPublishing] = React.useState(false)
     //
@@ -21,5 +20,3 @@ function SaveAndPublish(props) {
         </div>
     )
 }
-
-export default cmsify(SaveAndPublish)

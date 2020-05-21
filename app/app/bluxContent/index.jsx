@@ -4,17 +4,12 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getPageById } from '../redux/reducer/pageCollection'
 import { fetchPages, receivePages } from '../redux/actions'
-import "regenerator-runtime/runtime"
 import CreateBlockButton from '../blocks/blockify/cmsComponents/createBlockButton'
-import MediaBrowser from '../cmsComponents/mediaBrowser'
-import PageBrowser from '../cmsComponents/pageBrowser'
 import { savePageState } from '../persister'
 import { loadPageStates } from '../persister'
 import { isCMS } from '../misc'
-import SaveAndPublish from '../cmsComponents/saveAndPublish'
-import StaticRepoCheck from '../cmsComponents/staticRepoCheck'
 import AuthCheck from '../cmsComponents/authCheck'
-import { AUTH_STATE } from '../redux/reducer/auth'
+import SiteControls from '../cmsComponents/siteControls'
 
 
 //Useful functions
@@ -51,9 +46,7 @@ const getCurrentPage = props => {
             {
                 isCMS() ? (
                     <>
-                        <MediaBrowser /> 
-                        <PageBrowser />
-                        <SaveAndPublish />
+                        <SiteControls />
                     </>
                 ) : null
             }

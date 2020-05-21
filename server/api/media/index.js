@@ -209,9 +209,10 @@ async function updateHandler(req, res, next) {
     const mediaPath = req.params[0]
     const newPath = req.body.newPath
     try {
-        renameFileOrFolder(mediaPath, newPath)
+        await renameFileOrFolder(mediaPath, newPath)
     } catch (err) {
         next(err)
+        return
     }
     res.send(newPath)
 }

@@ -1,0 +1,14 @@
+
+.blux-browser-controls {
+    position: fixed;
+    bottom: 22pt;
+    left: 33pt;
+}
+
+.blux-browser-controls__button {
+    padding-left: 12pt;
+    padding-right: 12pt;
+    padding-bottom: 6.6pt;
+    margin-left: 12pt;
+    margin-right: 12pt;
+}

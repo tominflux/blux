@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from "../../abstract/button";
+import Button from "../../../abstract/button";
 import Octicon, { Globe } from "@primer/octicons-react";
 
 
