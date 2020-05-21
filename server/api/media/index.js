@@ -14,6 +14,43 @@ const getAbsPath = mediaPath => path.join(getMediaRoot(), mediaPath)
 const getMediaPath = absPath => path.relative(getMediaRoot(), absPath)
 
 
+//
+//Taken From...
+//https://gist.github.com/hagemann/382adfc57adbd5af078dc93feef01fe1
+//
+function slugify(string) {
+    const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+    const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+    const p = new RegExp(a.split('').join('|'), 'g')
+    return string.toString().toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with 'and'
+        .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, '') // Trim - from end of text
+}
+//
+function slugifyFilename(filename) {
+    const split = filename.split('.')
+    const extension = (split.length > 1) ? "." + split.pop() : ""
+    const name = split.pop()
+    const slugifiedName = slugify(name)
+    const slugifiedFilename = `${slugifiedName}${extension}`
+    return slugifiedFilename
+}
+function slugifyFilepath(filepath) {
+    const filename = path.basename(filepath)
+    const parentDirectory = path.dirname(filepath)
+    const slugifiedFilename = slugifyFilename(filename)
+    const slugifiedFilepath = path.join(
+        parentDirectory, slugifiedFilename
+    )
+    return slugifiedFilepath
+}
+
+
 ////////
 ////////
 
@@ -73,7 +110,8 @@ async function handleFileUpload(reqFiles, mediaPath) {
         )
     }
     const file = reqFiles.media
-    const absPath = getAbsPath(mediaPath)
+    const slugifiedPath = slugifyFilepath(mediaPath)
+    const absPath = getAbsPath(slugifiedPath)
     const exists = await fs.exists(absPath)
     if (exists) {
         throw new Error(
@@ -81,7 +119,7 @@ async function handleFileUpload(reqFiles, mediaPath) {
             mediaPath
         )
     }
-    await writeFile(mediaPath, file)
+    await writeFile(slugifiedPath, file)
     return {
         name: file.name,
         mimetype: file.mimetype,
@@ -103,6 +141,32 @@ async function createNewFolder(mediaPath, count=0) {
     }
 }
 
+async function renameFileOrFolder(mediaPath, newPath) {
+    const absPath = getAbsPath(mediaPath)
+    if (!newPath) {
+        throw new Error(
+            "No new path specified."
+        )
+    }
+    const newAbsPath = getAbsPath(newPath)
+    const exists = await fs.exists(newAbsPath)
+    if (exists) {
+        throw new Error(
+            "File at new path already exists.",
+            mediaPath
+        )
+    }
+    const extensionsMatch = (
+        path.extname(absPath) === path.extname(newAbsPath)
+    )
+    if (!extensionsMatch) {
+        throw new Error(
+            "Cannot change file extension."
+        )
+    }
+    const slugifiedPath = slugifyFilepath(newAbsPath)
+    await fs.rename(absPath, slugifiedPath)
+}
 /////////
 /////////
 
@@ -143,44 +207,11 @@ async function readHandler(req, res) {
 
 async function updateHandler(req, res, next) {
     const mediaPath = req.params[0]
-    const absPath = getAbsPath(mediaPath)
     const newPath = req.body.newPath
-    if (!newPath) {
-        const err = new Error(
-            "No new path specified."
-        )
-        console.error(err)
-        next(err)
-        return
-    }
-    const newAbsPath = getAbsPath(newPath)
-    const exists = await fs.exists(newAbsPath)
-    if (exists) {
-        const err = new Error(
-            "File at new path already exists.",
-            mediaPath
-        )
-        console.error(err)
-        next(err)
-        return
-    }
-    const extensionsMatch = (
-        path.extname(absPath) === path.extname(newAbsPath)
-    )
-    if (!extensionsMatch) {
-        const err = new Error(
-            "Cannot change file extension."
-        )
-        console.error(err)
-        next(err)
-        return
-    }
     try {
-        await fs.rename(absPath, newAbsPath)
+        renameFileOrFolder(mediaPath, newPath)
     } catch (err) {
-        console.error(err)
         next(err)
-        return
     }
     res.send(newPath)
 }

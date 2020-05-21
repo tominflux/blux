@@ -37,9 +37,8 @@ function MediaSelectorModal(props) {
         const file = e.target.files[0]
         const formData = new FormData()
         formData.append("media", file)
-        const nameSlug = slugifyFilename(file.name)
         const uploadPath = path.join(
-            API_ROOT, navigation, nameSlug
+            API_ROOT, navigation, file.name
         )
         const response = await fetch(
             uploadPath, 
