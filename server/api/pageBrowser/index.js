@@ -2,6 +2,11 @@ const path = require("path")
 const fs = require("fs-extra")
 const { getConfig } = require("../../../misc/config")
 const { HTTP_METHOD, configureAuthApi } = require("../auth")
+const {
+    slugify,
+    slugifyFilename,
+    slugifyFilepath
+} = require("../../../misc/slugify")
 
 const API_PATH = /\/api\/page-browser\/?(.*)/
 
@@ -13,9 +18,6 @@ const getPageRoot = () => (
 
 const getAbsPath = pagePath => path.join(getPageRoot(), pagePath)
 const getPagePath = absPath => path.relative(getPageRoot(), absPath)
-
-//async function createNewPage(id, )
-
 
 const checkIfFolder = async absPath => {
     const stat = await fs.lstat(absPath)
@@ -49,7 +51,6 @@ async function readFolder(pagePath) {
     return listings
 } 
 
-
 async function readFile(pagePath) {
     const absPath = getAbsPath(pagePath)
     const fileName = path.basename(absPath)
@@ -62,6 +63,27 @@ async function readFile(pagePath) {
     }
 }
 
+async function renamePageOrFolder(pagePath, newPath) {
+    const absPath = getAbsPath(pagePath)
+    const newAbsPath = getAbsPath(newPath)
+    const exists = await fs.exists(newAbsPath)
+    if (exists) {
+        throw new Error(
+            "File at new path already exists.",
+            pagePath
+        )
+    }
+    const extensionsMatch = (
+        path.extname(absPath) === path.extname(newAbsPath)
+    )
+    if (!extensionsMatch) {
+        throw new Error(
+            "Cannot change file extension."
+        )
+    }
+    const slugifiedPath = slugifyFilepath(newAbsPath)
+    await fs.rename(absPath, slugifiedPath)
+}
 
 /////////
 /////////
@@ -81,6 +103,17 @@ async function readHandler(req, res) {
     res.send(response)
 }
 
+async function updateHandler(req, res) {
+    const pagePath = req.params[0]
+    const newPath = req.body.newPath
+    try {
+        await renamePageOrFolder(pagePath, newPath)
+    } catch (err) {
+        next(err)
+        return
+    }
+}
+
 
 /////////
 /////////
@@ -92,6 +125,12 @@ function configure(expressApp) {
         HTTP_METHOD.GET,
         API_PATH,
         readHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.PUT,
+        API_PATH,
+        updateHandler
     )
 }
 

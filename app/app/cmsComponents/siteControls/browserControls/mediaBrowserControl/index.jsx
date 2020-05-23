@@ -22,6 +22,7 @@ export default function OpenMediaBrowser(props) {
             show={showSelector}
             onClickAway={() => setShowSelector(false)}
             onConfirm={() => setShowSelector(false)}
+            canSelect={false}
             canRename
             canDelete
             canDrop

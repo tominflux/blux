@@ -7,12 +7,12 @@ const path = require("path")
 import './styles.css'
 
 function MediaSelectorModal(props) {
-    const [externalMostRecentFetch, setExternalMostRecentFetch]
-        = React.useState(null)
-    const fileInputRef = React.createRef(fileInputRef)
     //State
     const [navigation, setNavigation] = React.useState("./")
     const [selected, setSelected] = React.useState(null)
+    const [externalMostRecentFetch, setExternalMostRecentFetch]
+        = React.useState(null)
+    const fileInputRef = React.createRef(fileInputRef)
     //Functions 
     const refreshNavigator = () => {
         setExternalMostRecentFetch(Date.now())
@@ -87,7 +87,7 @@ function MediaSelectorModal(props) {
                     (thumbProps) => onSelect(thumbProps)
                 }
                 mediaFilter={props.mediaFilter}
-                canSelect={true}
+                canSelect={props.canSelect || true}
                 canRename={props.canRename}
                 canDelete={props.canDelete}
                 canDrop={props.canDrop}

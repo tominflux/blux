@@ -72,7 +72,6 @@ export default function MediaNavigator(props) {
     }
     //Functions
     const processApiResponse = async (response) => {
-        console.log("Proccesing API response.")
         const thumbPropsCollection = 
             await generateThumbPropsCollection(response)
         const filteredThumbPropsCollection = 

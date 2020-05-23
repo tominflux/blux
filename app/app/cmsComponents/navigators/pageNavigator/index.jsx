@@ -1,41 +1,81 @@
 import React from 'react'
 import Navigator from '../../abstract/navigator'
-import { NAVIGATOR_THUMB_TYPE } from '../../abstract/navigator/thumbRow/thumbCol'
-import Octicon, { File } from '@primer/octicons-react'
+import { generateThumbPropsCollection } from './processApiResponse'
 
 const API_ROOT = "/api/page-browser/"
 
 export default function PageNavigator(props) {
-    const genereateThumbProps = (responseContent) => {
-        const getType = () => {
-            switch (responseContent.isFolder) {
-                case true:
-                    return NAVIGATOR_THUMB_TYPE.FOLDER
-                case false:
-                    return NAVIGATOR_THUMB_TYPE.ITEM
-                default:
-                    throw new Error(
-                        "'isFolder' neither true or false"
-                    )
-            }
-        }
-        return {
-            type: getType(),
-            name: responseContent.name,
-            children: <Octicon icon={File} size='large' />
-        }
+    //Events
+    const onNavigate = async (navigation) => {
+        if (props.onNavigate)
+            props.onNavigate(navigation)
     }
-    const processApiResponse = (response) => (
-        response.contents.map(
-            (content) => genereateThumbProps(content)
+    const onSelect = async (thumbProps, navigation) => {
+        if (props.onSelect)
+            props.onSelect(thumbProps, navigation)
+    }
+    const onRename = async (thumbProps, navigation, newName) => {
+        const apiPath = path.join(
+            API_ROOT, navigation, thumbProps.name
         )
+        const newPagePath = path.join(
+            navigation, newName
+        )
+        const requestBody = { newPath: newPagePath }
+        const response = await fetch(
+            apiPath,
+            { 
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+            }
+        )
+        return response
+    }
+    const onDelete = async (thumbProps, navigation) => {
+        const deletePath = path.join(
+            API_ROOT, navigation, thumbProps.name
+        )
+        await fetch(
+            deletePath,
+            { method: "DELETE" }
+        )
+    }
+    //
+    const processApiResponse = async (response) => (
+        await generateThumbPropsCollection(response)
     )
+    //
     return (
         <Navigator
             apiPath={API_ROOT}
             processApiResponse={
-                (response) => processApiResponse(response)
+                async (response) => 
+                    await processApiResponse(response)
             }
+            onNavigate={
+                async (navigation) =>
+                    await onNavigate(navigation)
+            }
+            onSelect={
+                async (thumbProps, navigation) => 
+                    await onSelect(thumbProps, navigation)
+            }
+            onRename={
+                async (thumbProps, navigation, newName) =>
+                    await onRename(thumbProps, navigation, newName)
+            }
+            onDelete={
+                async (thumbProps, navigation) =>
+                    await onDelete(thumbProps, navigation)
+            }
+            canSelect={props.canSelect}
+            canDelete={props.canDelete}
+            canRename={props.canRename}
+            canDrop={false}
+            externalMostRecentFetch={props.externalMostRecentFetch}
         />
     )
 }
