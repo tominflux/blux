@@ -10,17 +10,31 @@ const blankPage = () => ({
     blocks: []
 })
 
+const getPageRoot = () => (
+    path.join(
+        getConfig().staticPath, "content/page"
+    )
+)
+const getAbsPath = pagePath => path.join(getPageRoot(), pagePath)
 const getFilePath = id => path.join(
     getConfig().staticPath, "content/page", id + ".json"
 )
 
-async function createNewPage(id) {
-    const page = blankPage()
-    const pageJson = JSON.stringify(page)
-    const filePath = getFilePath(id)
-    await fs.writeFile(filePath, pageJson)
-    const onFilePageState = await fs.readFile(filePath)
-    return onFilePageState
+async function createNewPage(pagePath, count=0) {
+    const suffix = (count > 0) ? `-${count}` : ""
+    const name = `new-page${suffix}.json` 
+    const absPath = getAbsPath(pagePath)
+    const newPageAbsPath = path.join(absPath, name)
+    const exists = await fs.exists(newPageAbsPath)
+    if (exists) {
+        return createNewFolder(mediaPath, count + 1)
+    } else {
+        const page = blankPage()
+        const pageJson = JSON.stringify(page)
+        console.log(newPageAbsPath)
+        await fs.writeFile(newPageAbsPath, pageJson)
+        return name
+    }
 }
 
 function validatePageUpdate(id, pageState) {
@@ -54,16 +68,14 @@ async function updatePage(id, pageState) {
 /////////
 
 
-function createHandler(req, res) {
-    const id = req.params[0]
-    createNewPage(id)
-    .then(
-        onFilePageState => res.send(onFilePageState)
-    )
-    .catch(err => { 
-        console.error(err)
+const createHandler = async (req, res, next) => {
+    const pagePath = req.params[0]
+    try {
+        const responseBody = await createNewPage(pagePath)
+        res.send(responseBody)
+    } catch (err) {
         next(err)
-    })
+    }
 }
 
 function updateHandler(req, res, next) {

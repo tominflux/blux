@@ -69,7 +69,7 @@ async function readFile(mediaPath) {
 
 async function deleteFileOrFolder(mediaPath) {
     const absPath = getAbsPath(mediaPath)
-    fs.remove(absPath)
+    await fs.remove(absPath)
 }
 
 async function handleFileUpload(reqFiles, mediaPath) {
@@ -186,10 +186,14 @@ async function updateHandler(req, res, next) {
     res.send(newPath)
 }
 
-async function deleteHandler(req, res) {
+async function deleteHandler(req, res, next) {
     const mediaPath = req.params[0]
-    deleteFileOrFolder(mediaPath)
-    res.send(mediaPath)
+    try {
+        await deleteFileOrFolder(mediaPath)
+        res.send(mediaPath)
+    } catch (err) {
+        next(err)
+    }
 }
 
 

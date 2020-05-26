@@ -1,25 +1,25 @@
 import React from 'react'
 import Button from '../../../abstract/button'
 import { IconContext } from "react-icons";
-import { AiOutlineUpload, AiOutlineFolderAdd } from 'react-icons/ai'
+import { AiOutlineFileAdd, AiOutlineFolderAdd } from 'react-icons/ai'
 import './styles.css'
 
 
-export default function MediaSelectorFooter(props) {
+export default function PageSelectorModal(props) {
     return (
         <div className="row align-items-center">
             <div className="col-5">
                 <Button
-                    className="blux-media-selector-modal__upload-media-button"
-                    onClick={props.onUploadFileClick}
+                    className="blux-page-selector-modal__new-page-button"
+                    onClick={props.onNewPageClick}
                 >
                     <IconContext.Provider value={{ size: "32pt" }}>
-                        <AiOutlineUpload/>
+                        <AiOutlineFileAdd/>
                     </IconContext.Provider>
                 </Button>
                 <Button
-                    className="blux-media-selector-modal__new-folder-button"
-                    onClick={props.onCreateNewFolderClick}
+                    className="blux-page-selector-modal__new-folder-button"
+                    onClick={props.onNewFolderClick}
                 >
                     <IconContext.Provider value={{ size: "32pt" }}>
                         <AiOutlineFolderAdd/>
@@ -27,12 +27,13 @@ export default function MediaSelectorFooter(props) {
                 </Button>
             </div>
             <div className="col-2">
+                
             </div>
             <div className="col-5">
                 <Button
                     disabled={props.confirmDisabled}
                     onClick={props.onConfirm}
-                    className="blux-media-selector-modal__confirm-button"
+                    className="blux-page-selector-modal__confirm-button"
                 >
                     OK
                 </Button>

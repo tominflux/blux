@@ -29,6 +29,25 @@ const getPageId = (pagePath, pageName) => (
         pageName : path.join(pagePath, pageName)
 )
 
+
+/////////
+/////////
+
+
+async function createNewFolder(pagePath, count=0) {
+    const suffix = (count > 0) ? `-${count}` : ""
+    const name = `new-folder${suffix}` 
+    const absPath = getAbsPath(pagePath)
+    const newFolderAbsPath = path.join(absPath, name)
+    const exists = await fs.exists(newFolderAbsPath)
+    if (exists) {
+        return createNewFolder(mediaPath, count + 1)
+    } else {
+        await fs.mkdir(newFolderAbsPath)
+        return name
+    }
+}
+
 async function readFolder(pagePath) {
     const absPath = getAbsPath(pagePath)
     const fileNames = await fs.readdir(absPath)
@@ -64,13 +83,26 @@ async function readFile(pagePath) {
 }
 
 async function renamePageOrFolder(pagePath, newPath) {
-    const absPath = getAbsPath(pagePath)
-    const newAbsPath = getAbsPath(newPath)
-    const exists = await fs.exists(newAbsPath)
-    if (exists) {
+    const absPathFolder = getAbsPath(pagePath)
+    const absPathPage = absPathFolder + ".json"
+    const existsFolder = await fs.exists(absPathFolder)
+    const existsFile = await fs.exists(absPathPage)
+    if (!existsFolder && !existsFile) {
         throw new Error(
-            "File at new path already exists.",
+            "Specified page or folder does not exist. " +
             pagePath
+        )
+    }
+    const isFolder = existsFolder
+    const absPath = isFolder ? absPathFolder : absPathPage
+    const newAbsPath = getAbsPath(newPath) + (
+        isFolder ? "" : ".json"
+    )
+    const newExists = await fs.exists(newAbsPath)
+    if (newExists) {
+        throw new Error(
+            "Page or folder at new path already exists. " +
+            newPath
         )
     }
     const extensionsMatch = (
@@ -78,16 +110,44 @@ async function renamePageOrFolder(pagePath, newPath) {
     )
     if (!extensionsMatch) {
         throw new Error(
-            "Cannot change file extension."
+            "Cannot change file extension." + 
+            `Old: ${path.extname(absPath)} ` +
+            `New: ${path.extname(newAbsPath)}` 
         )
     }
     const slugifiedPath = slugifyFilepath(newAbsPath)
     await fs.rename(absPath, slugifiedPath)
 }
 
+
+async function deletePageOrFolder(pagePath) {
+    const absPathFolder = getAbsPath(pagePath)
+    const absPathPage = absPathFolder + ".json"
+    const existsFolder = await fs.exists(absPathFolder)
+    const existsFile = await fs.exists(absPathPage)
+    if (!existsFolder && !existsFile) {
+        throw new Error(
+            "Specified page or folder does not exist. " +
+            pagePath
+        )
+    }
+    const isFolder = existsFolder
+    const absPath = isFolder ? absPathFolder : absPathPage
+    await fs.remove(absPath)
+}
+
 /////////
 /////////
 
+async function createHandler(req, res, next) {
+    const pagePath = req.params[0]
+    try {
+        const responseBody = await createNewFolder(pagePath)
+        res.send(responseBody)
+    } catch (err) {
+        next(err)
+    }
+}
 
 async function readHandler(req, res) {
     const pagePath = req.params[0]
@@ -103,14 +163,26 @@ async function readHandler(req, res) {
     res.send(response)
 }
 
-async function updateHandler(req, res) {
+async function updateHandler(req, res, next) {
     const pagePath = req.params[0]
     const newPath = req.body.newPath
     try {
         await renamePageOrFolder(pagePath, newPath)
+        res.send()
     } catch (err) {
         next(err)
         return
+    }
+}
+
+
+async function deleteHandler(req, res, next) {
+    const pagePath = req.params[0]
+    try {
+        await deletePageOrFolder(pagePath)
+        res.send(pagePath)
+    } catch (err) {
+        next(err)
     }
 }
 
@@ -122,6 +194,12 @@ async function updateHandler(req, res) {
 function configure(expressApp) {
     configureAuthApi(
         expressApp,
+        HTTP_METHOD.POST,
+        API_PATH,
+        createHandler
+    )
+    configureAuthApi(
+        expressApp,
         HTTP_METHOD.GET,
         API_PATH,
         readHandler
@@ -131,6 +209,12 @@ function configure(expressApp) {
         HTTP_METHOD.PUT,
         API_PATH,
         updateHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.DELETE,
+        API_PATH,
+        deleteHandler
     )
 }
 

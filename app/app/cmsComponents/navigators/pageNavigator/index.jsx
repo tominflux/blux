@@ -1,8 +1,9 @@
 import React from 'react'
 import Navigator from '../../abstract/navigator'
 import { generateThumbPropsCollection } from './processApiResponse'
+const path = require("path")
 
-const API_ROOT = "/api/page-browser/"
+export const API_ROOT = "/api/page-browser/"
 
 export default function PageNavigator(props) {
     //Events
