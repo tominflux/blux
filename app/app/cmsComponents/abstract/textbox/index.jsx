@@ -9,17 +9,27 @@ export default function Textbox(props) {
             e.target.blur()
         }
     }
+    const readonlyProps = {
+        readOnly: true,
+        value: props.children
+    }
+    const editableProps = {
+        readOnly: false,
+        defaultValue: props.children
+    }
+    const dynamicProps = {
+        ...(props.readOnly ? readonlyProps : editableProps)
+    }
     return (
         <input
             className={inheritClasses(props, "blux-textbox")}
             type="text"
             placeholder={props.placeholder}
-            defaultValue={props.children}
             onClick={props.onClick}
             onChange={props.onChange}
             onBlur={props.onEnter}
             onKeyPress={(e) => onKeyUp(e)}
-            readOnly={props.readOnly || false}
+            {...dynamicProps}
         />   
     )
 }
