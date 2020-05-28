@@ -79,6 +79,7 @@ const pullPublicRepo = async () => {
 }
 
 const pushPublicRepo = async () => {
+    console.log("Pushing updated public build to public Git repository...")
     if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }

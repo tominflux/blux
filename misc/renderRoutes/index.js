@@ -41,7 +41,7 @@ async function renderRoutesToFiles(buildFolder, routes, isCms=false) {
                 path.join(buildFolder, "/index.html") :
                 path.join(routeDir, "/index.html")
         )
-        console.log(newHtmlPath)
+        //console.log(newHtmlPath)
         await fs.writeFile(newHtmlPath, postHtml)
     }
 }

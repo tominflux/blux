@@ -78,6 +78,7 @@ const pullStaticRepo = async () => {
 }
 
 const pushStaticRepo = async () => {
+    console.log("Pushing app state changes to static Git repository...")
     if (!checkCredentialsConfigured()) {
         throw new Error("Git credentials not configured.")
     }

@@ -9,9 +9,7 @@ const API_PATH = "/api/publish"
 /////////
 
 const publish = async () => {
-    console.log("Pushing updated public build to public Git repository...")
     await pushPublicRepo()
-    console.log("Publish complete.")
 }
 
 
@@ -22,8 +20,10 @@ const publish = async () => {
 const postHandler = async (req, res, next) => {
     res.setTimeout(120000)
     try {
+        console.log("\n --- PUBLISHING --- \n")
         await buildPublic.build()
         await publish()
+        console.log("\n ✓ Publish complete.\n")
         res.send()
     } catch (err) {
         console.error(err)

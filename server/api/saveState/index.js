@@ -8,9 +8,7 @@ const API_PATH = "/api/save-state"
 /////////
 
 const saveState = async () => {
-    console.log("Pushing app state changes to static Git repository...")
     await pushStaticRepo()
-    console.log("Save state complete.")
 }
 
 
@@ -20,7 +18,9 @@ const saveState = async () => {
 
 const postHandler = async (req, res, next) => {
     try {
+        console.log("\n --- SAVING STATE --- \n")
         await saveState()
+        console.log("\n ✓ Save state complete.")
     } catch (err) {
         console.error(err)
         next(err)
