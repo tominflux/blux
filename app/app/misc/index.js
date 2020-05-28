@@ -226,3 +226,57 @@ export function slugifyFilename(filename) {
     const slugifiedFilename = `${slugifiedName}.${extension}`
     return slugifiedFilename
 }
+
+
+
+///////
+////////
+
+const videoThumbDataUrls = new Map()
+
+const generateVideoThumbDataUrl = async (videoSrc) => {
+    console.log("Generating video thumb data URL...")
+    const canvas = document.createElement("canvas")
+    const video = document.createElement("video")
+    video.src = videoSrc
+    video.load()
+    const onLoadMetadata = () => (
+        new Promise(
+            (resolve) => video.addEventListener(
+                "loadedmetadata", () => resolve()
+            )
+        )
+    )
+    await onLoadMetadata()
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
+    const onLoadVideo = () => (
+        new Promise(
+            (resolve) => video.addEventListener(
+                "canplay", () => resolve()
+            )
+        )
+    )
+    await onLoadVideo()
+    canvas.getContext('2d').drawImage(
+        video, 
+        0, 
+        0, 
+        video.videoWidth, 
+        video.videoHeight
+    )
+    console.log("Complete.")
+    return canvas.toDataURL()
+}
+
+export const getVideoThumbDataUrl = async (videoSrc) => {
+    const alreadyExists = videoThumbDataUrls.has(videoSrc)
+    if (alreadyExists) {
+        return videoThumbDataUrls.get(videoSrc)
+    } else {
+        videoThumbDataUrls.set(videoSrc, null)
+        const dataUrl = await generateVideoThumbDataUrl(videoSrc)
+        videoThumbDataUrls.set(videoSrc, dataUrl)
+        return dataUrl
+    }
+}
