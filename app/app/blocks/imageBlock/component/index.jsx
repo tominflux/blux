@@ -1,13 +1,13 @@
 import React from 'react'
-import { blockify } from '../blockify'
+import { blockify } from '../../blockify'
 import NewImage from './cmsComponents/newImage'
 import EditImage from './cmsComponents/editImage'
-import MediaSelectorModal from '../../cmsComponents/modals/mediaSelectorModal'
-import { MEDIA_IMAGE } from '../../misc'
+import MediaSelectorModal from '../../../cmsComponents/modals/mediaSelectorModal'
+import { MEDIA_IMAGE } from '../../../misc'
 const path = require("path")
 import './styles.css'
 
-function ImageBlock(props) {
+function ImageComponent(props) {
     //State
     const [showSelector, setShowSelector] = React.useState(false)
     //Events
@@ -64,4 +64,4 @@ function ImageBlock(props) {
     </>)
 }
 
-export default blockify(ImageBlock)
+export default blockify(ImageComponent)

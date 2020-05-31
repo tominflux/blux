@@ -1,6 +1,6 @@
 import React from 'react'
 import { RichUtils } from 'draft-js'
-import Toggle from '../../../../../cmsComponents/abstract/toggle'
+import Toggle from '../../../../../../cmsComponents/abstract/toggle'
 
 const isToggled = (styleIdentidier, editorState) => {
     const styles = editorState.getCurrentInlineStyle().toArray()

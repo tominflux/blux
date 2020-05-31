@@ -1,7 +1,7 @@
 import React from 'react'
-import Thumb from '../../../../cmsComponents/abstract/thumb'
+import Thumb from '../../../../../cmsComponents/abstract/thumb'
 import Octicon, { Play } from '@primer/octicons-react'
-import { cmsify } from '../../../../cmsComponents/cmsify'
+import { cmsify } from '../../../../../cmsComponents/cmsify'
 import './styles.css'
 
 function NewVideo(props) {

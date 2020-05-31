@@ -1,8 +1,8 @@
 import React from 'react'
-import Thumb from '../../../../cmsComponents/abstract/thumb'
+import Thumb from '../../../../../cmsComponents/abstract/thumb'
 import Octicon, { Play } from '@primer/octicons-react'
-import { inheritClasses } from '../../../../misc'
-import { cmsify, hideable } from '../../../../cmsComponents/cmsify'
+import { inheritClasses } from '../../../../../misc'
+import { cmsify, hideable } from '../../../../../cmsComponents/cmsify'
 import './styles.css'
 
 function EditVideo(props) {

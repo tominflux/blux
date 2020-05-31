@@ -1,13 +1,13 @@
 import React from 'react'
-import { blockify } from '../blockify'
+import { blockify } from '../../blockify'
 import { Editor } from 'draft-js'
 import { blockStyles } from './blockStyles'
-import './styles.css'
 import Toolbar from './cmsComponents/toolbar'
-import { getElementPosition, isCMS } from '../../misc'
-import { TEXT_BLOCK_ALIGNMENT_STATES } from './redux/actionTypes'
+import { getElementPosition, isCMS } from '../../../misc'
+import { TEXT_ALIGNMENT_STATES } from '../redux/actionTypes'
+import './styles.css'
 
-const TextBlock = (props) => {
+const TextComponent = (props) => {
     const ref = React.useRef(null)
     const [toolbarFixed, setToolbarFixed] = React.useState(false)
     //
@@ -26,13 +26,13 @@ const TextBlock = (props) => {
     React.useEffect(() => { onMount(); return onUnmount()}, [])
     //
     const alignmentClass = (
-        (props.alignment === TEXT_BLOCK_ALIGNMENT_STATES.LEFT) ?
+        (props.alignment === TEXT_ALIGNMENT_STATES.LEFT) ?
             " blux-text-block--left" : 
-        (props.alignment === TEXT_BLOCK_ALIGNMENT_STATES.CENTER) ?
+        (props.alignment === TEXT_ALIGNMENT_STATES.CENTER) ?
             " blux-text-block--center" :
-        (props.alignment === TEXT_BLOCK_ALIGNMENT_STATES.RIGHT) ?
+        (props.alignment === TEXT_ALIGNMENT_STATES.RIGHT) ?
             " blux-text-block--right" :
-        (props.alignment === TEXT_BLOCK_ALIGNMENT_STATES.JUSTIFIED) ?
+        (props.alignment === TEXT_ALIGNMENT_STATES.JUSTIFIED) ?
             " blux-text-block--justified" :
         //default if alignment state is missing
             " blux-text-block--left"
@@ -63,4 +63,4 @@ const TextBlock = (props) => {
     )
 }
 
-export default blockify(TextBlock)
+export default blockify(TextComponent)

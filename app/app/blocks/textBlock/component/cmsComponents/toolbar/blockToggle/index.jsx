@@ -1,6 +1,6 @@
 import React from 'react'
 import { EditorState, Modifier } from 'draft-js'
-import Toggle from '../../../../../cmsComponents/abstract/toggle'
+import Toggle from '../../../../../../cmsComponents/abstract/toggle'
 
 const getBlockSelectionState = (editorState) => {
     const contentState = editorState.getCurrentContent()

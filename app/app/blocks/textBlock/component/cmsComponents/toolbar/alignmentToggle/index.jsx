@@ -1,10 +1,10 @@
 import React from 'react'
-import Toggle from '../../../../../cmsComponents/abstract/toggle'
-import { TEXT_BLOCK_ALIGNMENT_STATES } from '../../../redux/actionTypes'
+import Toggle from '../../../../../../cmsComponents/abstract/toggle'
+import { TEXT_ALIGNMENT_STATES } from '../../../../redux/actionTypes'
 
 
 const isToggled = (alignmentType, alignmentState) => (
-    (!alignmentState && alignmentType===TEXT_BLOCK_ALIGNMENT_STATES.LEFT) 
+    (!alignmentState && alignmentType===TEXT_ALIGNMENT_STATES.LEFT) 
     || alignmentState === alignmentType
 )
 

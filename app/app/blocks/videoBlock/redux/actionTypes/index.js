@@ -1,6 +1,6 @@
 
-const VIDEO_BLOCK_ACTION_TYPES = {
+const VIDEO_ACTION_TYPES = {
     UPDATE_SRC: "UPDATE_SRC"
 }
 
-export default VIDEO_BLOCK_ACTION_TYPES
+export default VIDEO_ACTION_TYPES

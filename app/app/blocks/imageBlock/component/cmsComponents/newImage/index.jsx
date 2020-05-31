@@ -1,9 +1,9 @@
 import React from 'react'
-import Thumb from '../../../../cmsComponents/abstract/thumb'
+import Thumb from '../../../../../cmsComponents/abstract/thumb'
 import Octicon, { FileMedia } from '@primer/octicons-react'
-import { cmsify } from '../../../../cmsComponents/cmsify'
+import { cmsify } from '../../../../../cmsComponents/cmsify'
 import './styles.css'
-import { inheritClasses } from '../../../../misc'
+import { inheritClasses } from '../../../../../misc'
 
 function NewImage(props) {
     return (

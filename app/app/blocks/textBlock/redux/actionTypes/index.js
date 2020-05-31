@@ -1,6 +1,6 @@
 
 //
-export const TEXT_BLOCK_ALIGNMENT_STATES = {
+export const TEXT_ALIGNMENT_STATES = {
     LEFT: "LEFT",
     CENTER: "CENTER",
     RIGHT: "RIGHT",
@@ -8,9 +8,9 @@ export const TEXT_BLOCK_ALIGNMENT_STATES = {
 }
 //
 
-const TEXT_BLOCK_ACTION_TYPES = {
+const TEXT_ACTION_TYPES = {
     UPDATE_EDITOR_STATE: "UPDATE_EDITOR_STATE",
     SET_ALIGNMENT: "SET_ALIGNMENT"
 }
 
-export default TEXT_BLOCK_ACTION_TYPES
+export default TEXT_ACTION_TYPES

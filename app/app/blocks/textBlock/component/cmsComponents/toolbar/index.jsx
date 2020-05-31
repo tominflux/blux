@@ -6,10 +6,9 @@ import Separator from './separator'
 import { 
     GrTextAlignLeft, 
     GrTextAlignCenter, 
-    GrTextAlignRight, 
-    GrTextAlignFull 
+    GrTextAlignRight
 } from 'react-icons/gr'
-import { TEXT_BLOCK_ALIGNMENT_STATES } from '../../redux/actionTypes'
+import { TEXT_ALIGNMENT_STATES } from '../../../redux/actionTypes'
 import './styles.css'
 
 export default function Toolbar(props) {
@@ -53,19 +52,19 @@ export default function Toolbar(props) {
                 </InlineToggle>
                 <Separator />
                 <AlignmentToggle 
-                    alignmentType={TEXT_BLOCK_ALIGNMENT_STATES.LEFT}
+                    alignmentType={TEXT_ALIGNMENT_STATES.LEFT}
                     {...alignmentToggleProps}
                 >
                     <GrTextAlignLeft />
                 </AlignmentToggle>
                 <AlignmentToggle 
-                    alignmentType={TEXT_BLOCK_ALIGNMENT_STATES.CENTER}
+                    alignmentType={TEXT_ALIGNMENT_STATES.CENTER}
                     {...alignmentToggleProps}
                 >
                     <GrTextAlignCenter />
                 </AlignmentToggle>
                 <AlignmentToggle 
-                    alignmentType={TEXT_BLOCK_ALIGNMENT_STATES.RIGHT}
+                    alignmentType={TEXT_ALIGNMENT_STATES.RIGHT}
                     {...alignmentToggleProps}
                 >
                     <GrTextAlignRight />

@@ -1,4 +1,4 @@
-import TEXT_BLOCK_ACTION_TYPES, { TEXT_BLOCK_ALIGNMENT_STATES } from "../actionTypes"
+import TEXT_ACTION_TYPES, { TEXT_ALIGNMENT_STATES } from "../actionTypes"
 import { newBlockInitialState } from "../../../../block/redux/reducer" 
 import { EditorState, ContentBlock, ContentState } from "draft-js"
 
@@ -18,23 +18,23 @@ export const initialEditorState = () => (
     )
 )
 
-export const newTextBlockInitialState = () => ({
+export const newTextInitialState = () => ({
     ...newBlockInitialState("text"),
     editorState: initialEditorState(),
-    alignment: TEXT_BLOCK_ALIGNMENT_STATES.LEFT
+    alignment: TEXT_ALIGNMENT_STATES.LEFT
 })
 
-export default function TextBlockReducer(
+export default function TextReducer(
     state = initialState, action
 ) {
     switch (action.type) {
-        case TEXT_BLOCK_ACTION_TYPES.UPDATE_EDITOR_STATE:
+        case TEXT_ACTION_TYPES.UPDATE_EDITOR_STATE:
             const { newEditorState } = action.payload
             return {
                 ...state,
                 editorState: newEditorState
             }
-        case TEXT_BLOCK_ACTION_TYPES.SET_ALIGNMENT:
+        case TEXT_ACTION_TYPES.SET_ALIGNMENT:
             const { newAlignmentState } = action.payload
             return {
                 ...state,

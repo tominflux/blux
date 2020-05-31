@@ -1,13 +1,13 @@
-import VIDEO_BLOCK_ACTION_TYPES from "../actionTypes";
+import VIDEO_ACTION_TYPES from "../actionTypes";
 
 
 const updateVideoSrc = newSrc => ({
-    type: VIDEO_BLOCK_ACTION_TYPES.UPDATE_SRC,
+    type: VIDEO_ACTION_TYPES.UPDATE_SRC,
     payload: { newSrc }
 })
 
-const VIDEO_BLOCK_ACTIONS = {
+const VIDEO_ACTIONS = {
     updateVideoSrc
 }
 
-export default VIDEO_BLOCK_ACTIONS
+export default VIDEO_ACTIONS

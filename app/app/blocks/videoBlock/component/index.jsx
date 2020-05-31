@@ -2,10 +2,10 @@ import React from 'react'
 import Plyr from 'plyr';
 import NewVideo from './cmsComponents/newVideo'
 import EditVideo from './cmsComponents/editVideo'
-import MediaSelectorModal from '../../cmsComponents/modals/mediaSelectorModal'
+import MediaSelectorModal from '../../../cmsComponents/modals/mediaSelectorModal'
+import { MEDIA_VIDEO } from '../../../misc';
+import { blockify } from '../../blockify';
 const path = require("path")
-import { MEDIA_VIDEO } from '../../misc';
-import { blockify } from '../blockify';
 import './styles.css'
 
 function VideoBlock(props) {

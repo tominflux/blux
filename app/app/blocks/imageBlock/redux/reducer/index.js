@@ -1,23 +1,23 @@
-import IMAGE_BLOCK_ACTION_TYPES from "../actionTypes"
+import IMAGE_ACTION_TYPES from "../actionTypes"
 import { newBlockInitialState } from "../../../../block/redux/reducer"
 
-export const newImageBlockInitialState = () => ({
+export const newImageInitialState = () => ({
     ...newBlockInitialState("image"),
     src: null,
     alt: null
 })
 
-export default function ImageBlockReducer(
+export default function ImageReducer(
     state, action
 ) {
     switch (action.type) {
-        case IMAGE_BLOCK_ACTION_TYPES.UPDATE_SRC:
+        case IMAGE_ACTION_TYPES.UPDATE_SRC:
             const { newSrc } = action.payload
             return {
                 ...state,
                 src: newSrc
             }
-        case IMAGE_BLOCK_ACTION_TYPES.UPDATE_ALT:
+        case IMAGE_ACTION_TYPES.UPDATE_ALT:
             const { newAlt } = action.payload
             return {
                 ...state,

@@ -52,8 +52,8 @@ const unpersistify = (persistifiedTextBlockState) => {
     return unpersistifiedState
 }
 
-const textBlockPersistifier = {
+const textPersistifier = {
     persistify, unpersistify
 }
 
-export default textBlockPersistifier
+export default textPersistifier

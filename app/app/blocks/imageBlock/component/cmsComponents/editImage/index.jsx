@@ -1,9 +1,10 @@
-
+//
 import React from 'react'
-import Thumb from '../../../../cmsComponents/abstract/thumb'
 import Octicon, { FileMedia } from '@primer/octicons-react'
-import { inheritClasses } from '../../../../misc'
-import { cmsify, hideable } from '../../../../cmsComponents/cmsify'
+//
+import Thumb from '../../../../../cmsComponents/abstract/thumb'
+import { inheritClasses } from '../../../../../misc'
+import { cmsify, hideable } from '../../../../../cmsComponents/cmsify'
 import './styles.css'
 
 function EditImage(props) {
