@@ -1,12 +1,14 @@
-import DefaultPage from '../pages/default'
 import LoadingPage from '../pages/loading'
-import WorkPage from '../pages/work'
+import DefaultPage from '../pages/default'
+import ContainedPage from '../pages/contained'
+import BlogPage from '../pages/blog'
 
 
 const defaultPageMap = new Map([
-    ["default", DefaultPage],
     ["loading", LoadingPage],
-    ["work", WorkPage]
+    ["default", DefaultPage],
+    ["contained", ContainedPage],
+    ["blog", BlogPage]
 ])
 let customPageMap = new Map()
 export function registerCustomPages(pageDescriptors) {

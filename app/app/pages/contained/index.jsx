@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function DefaultPage(props) {
+export default function ContainedPage(props) {
     return (
-        <div>
+        <div className="container">
             { props.children }
         </div>
     )

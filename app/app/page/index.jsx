@@ -39,11 +39,12 @@ export default function Page(props) {
             "does not exist."
         )
     const ThemedPage = pageMap.get(pageType)
+    const { header, footer, blocks, ...themedPageProps } = props
     return (
-        <ThemedPage>
-            { props.header || null }
+        <ThemedPage {...themedPageProps}>
+            { header || null }
             {
-                props.blocks.map(
+                blocks.map(
                     (blockProps, index) => {
                         const blockDispatchers = 
                             prepareDispatchersForBlock(

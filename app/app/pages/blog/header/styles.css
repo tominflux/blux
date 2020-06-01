@@ -1,0 +1,22 @@
+
+
+.blux-blog-header {
+    position: relative;
+    padding-top: 33pt;
+    padding-bottom: 33pt;
+    margin-bottom: 33pt;
+}
+
+.blux-blog-header__title {
+    font-size: 38pt;
+    padding-right: 44pt;
+}
+
+.blux-blog-header:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 11%;
+    width: 44%;
+    border-bottom: 3.3pt solid black; 
+}
