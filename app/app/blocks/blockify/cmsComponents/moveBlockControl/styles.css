@@ -2,7 +2,7 @@
 
 .blux-move-block {
     position: absolute;
-    z-index: 9999;
+    z-index: 100;
     top: 50%;
     left: 22pt;
     transform: translateY(-50%) scale(1.0);

@@ -2,7 +2,7 @@
 
 .blux-delete-block {
     position: absolute;
-    z-index: 9999;
+    z-index: 100;
     top: 50%;
     right: 22pt;
     line-height: 10pt;
