@@ -6,10 +6,10 @@ export default function LoginModal(props) {
         <AuthModal
             show
             onClickAway={null}
-            heading="Log In"
+            //heading="Log In"
             onSubmit={props.onSubmit}
         >
-            Please login with your BluxCMS credentials.
+            Please login with your credentials.
         </AuthModal>
     )
 }

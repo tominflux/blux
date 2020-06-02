@@ -37,6 +37,20 @@ async function createNewPage(pagePath, count=0) {
     }
 }
 
+async function readPage(pagePath) {
+    const absPath = getAbsPath(pagePath)
+    const exists = await fs.exists(absPath)
+    if (!exists) {
+        throw new Error(
+            `Requested page does not exist. ${pagePath}`
+        )
+    }
+    const pageData = await fs.readFile(absPath).toS
+    const pageString = pageData.toString()
+    const page = JSON.parse(pageString)
+    return page
+}
+
 function validatePageUpdate(id, pageState) {
     if (typeof pageState === "undefined")
         throw new Error("Page Update failed: new page state is undefined.")
@@ -73,6 +87,17 @@ const createHandler = async (req, res, next) => {
     try {
         const responseBody = await createNewPage(pagePath)
         res.send(responseBody)
+    } catch (err) {
+        next(err)
+    }
+}
+
+const readHandler = async (req, res, next) => {
+    const id = req.params[0] 
+    try {
+        const page = await readPage(id)
+        const pageJson = JSON.stringify(page)
+        res.send(pageJson)
     } catch (err) {
         next(err)
     }
