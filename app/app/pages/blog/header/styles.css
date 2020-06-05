@@ -8,6 +8,7 @@
 }
 
 .blux-blog-header__title {
+    text-align: center;
     font-size: 38pt;
     padding-right: 44pt;
 }
@@ -16,7 +17,8 @@
     content: '';
     position: absolute;
     bottom: 0;
-    right: 11%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 44%;
     border-bottom: 3.3pt solid black; 
 }

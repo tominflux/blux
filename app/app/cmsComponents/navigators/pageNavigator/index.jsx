@@ -46,7 +46,7 @@ export default function PageNavigator(props) {
     }
     //
     const processApiResponse = async (response) => (
-        await generateThumbPropsCollection(response)
+        await generateThumbPropsCollection(response, props.onlyFolders)
     )
     //
     return (

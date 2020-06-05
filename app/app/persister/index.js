@@ -18,9 +18,9 @@ const persistify = (pageState) => ({
                 )
             const blockDescriptor = blockMap.get(block.type)
             if (blockDescriptor.persistifier) {
-                const persistifiedBlockState = 
+                const persistifiedBlockState =
                     blockDescriptor.persistifier
-                    .persistify(block)
+                        .persistify(block)
                 return persistifiedBlockState
             } else {
                 return block
@@ -43,9 +43,9 @@ const unpersistify = (persistifiedPageState) => ({
                 persistifiedBlock.type
             )
             if (blockDescriptor.persistifier) {
-                const unpersistifiedBlockState = 
+                const unpersistifiedBlockState =
                     blockDescriptor.persistifier
-                    .unpersistify(persistifiedBlock)
+                        .unpersistify(persistifiedBlock)
                 return unpersistifiedBlockState
             } else {
                 return persistifiedBlock
@@ -55,32 +55,51 @@ const unpersistify = (persistifiedPageState) => ({
 })
 
 
-export async function savePageState(pageState){
+export async function savePageState(pageState) {
     const pageId = pageState.id
     const pageApiPath = path.join(API_PATH, pageId)
     const persistifiedPageState = persistify(pageState)
     const pageJson = JSON.stringify(persistifiedPageState)
     const response = await fetch(pageApiPath, {
-      method: "PUT",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: pageJson
+        method: "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: pageJson
     })
+    if (!response.ok) {
+        alert("Could not save page state.")
+        console.error(pageState)
+        throw new Error(
+            "Could not save page state."
+        )
+    }
 }
 
 export async function loadPageStates() {
     const pagesLocation = (
-        getRunType() === RUN_TYPE.CMS ? 
+        getRunType() === RUN_TYPE.CMS ?
             "/api/pages" : "/content/pages.json"
     )
     const response = await fetch(pagesLocation)
-    const persistifiedPageStates = await response.json()
-    const pageStates = persistifiedPageStates.map(
-        persistifiedPageState => unpersistify(
-            persistifiedPageState
+    if (!response.ok) {
+        alert("Could not load page states.")
+        throw new Error(
+            "Could not load page states.\n" +
+            response.body
         )
-    )
-    return pageStates
+    }
+    try {
+        const persistifiedPageStates = await response.json()
+        const pageStates = persistifiedPageStates.map(
+            persistifiedPageState => unpersistify(
+                persistifiedPageState
+            )
+        )
+        return pageStates
+    } catch (err) {
+        alert("Could not load page states.")
+        throw err
+    }
 }

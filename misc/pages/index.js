@@ -44,12 +44,20 @@ async function readPages(pageIds) {
         const pagePath = pageIdToFilepath(pageId)
         const fileContent = await fs.readFile(pagePath)
         const textContent = fileContent.toString()
-        const objContent = JSON.parse(textContent)
-        const page = {
-            ...objContent,
-            id: pageId,
+        try {
+            const objContent = JSON.parse(textContent)
+            const page = {
+                ...objContent,
+                id: pageId,
+            }
+            pages.push(page)
+        } catch (err) {
+            throw new Error(
+                `Could not parse page. \n ` + 
+                `${err}\n` + 
+                `${textContent}`
+            )
         }
-        pages.push(page)
     }
     return pages
 }

@@ -1,0 +1,26 @@
+
+
+.blux-post-preview__container {
+    padding-top: 44pt;
+    padding-bottom: 22pt;
+    border-bottom: 0.66pt solid rgba(0, 0, 0, 0.66);
+}
+
+.blux-post-preview:link,
+.blux-post-preview:visited {
+    color: inherit;
+    outline: none;
+}
+
+.blux-post-preview:hover {
+    text-decoration: none;
+}
+
+.blux-post-preview__header {
+    margin-bottom: 11pt;
+}
+
+.blux-post-preview__title {
+    font-size: 22pt;
+    margin-bottom: 0;
+}

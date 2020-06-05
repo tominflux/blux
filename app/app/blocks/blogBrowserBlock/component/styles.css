@@ -1,0 +1,12 @@
+
+
+.blux-blog-browser {
+    padding-top: 22pt;
+}
+
+.blux-blog-browser__heading {
+    font-size: 38pt;
+    text-align: center;
+    padding-bottom: 26.66pt;
+    border-bottom: 0.66pt solid rgba(0, 0, 0, 0.66);
+}

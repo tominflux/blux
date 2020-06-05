@@ -60,8 +60,6 @@ export default function PageCollection(
                 activeRequest: false,
                 requestedPageIds: []
             }
-        //CREATE PAGE (request & confirm)
-        //DELETE PAGE (request & confirm)
         case PAGE_ACTION:
             const { pageId, pageAction } = action.payload
             const pageState = getPageById(pageId, state.pages)

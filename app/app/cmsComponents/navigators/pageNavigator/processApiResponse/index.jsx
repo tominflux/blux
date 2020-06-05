@@ -15,7 +15,7 @@ const getThumbType = (isFolder) => {
     }
 }
 
-export const getThumbChildren = (isFolder, thumbName) => {
+export const getThumbChildren = (isFolder) => {
     const type = getThumbType(isFolder)
     switch (type) {
         case NAVIGATOR_THUMB_TYPE.FOLDER:
@@ -43,12 +43,19 @@ export const generateThumbProps = async (apiResponseItem) => {
     }
 }
 
-export const generateThumbPropsCollection = async (apiResponse) => {
+export const generateThumbPropsCollection = async (apiResponse, onlyFolders=false) => {
     const thumbPropsCollection = []
     for (const apiResponseItem of apiResponse.contents) {
         const thumbProps = 
             await generateThumbProps(apiResponseItem)
         thumbPropsCollection.push(thumbProps)
     }
-    return thumbPropsCollection
+    if (onlyFolders) {
+        const filteredThumbPropsCollection = thumbPropsCollection.filter(
+            thumbProps => thumbProps.isFolder === true
+        )
+        return filteredThumbPropsCollection
+    } else {
+        return thumbPropsCollection
+    }
 }

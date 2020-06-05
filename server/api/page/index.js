@@ -20,57 +20,81 @@ const getFilePath = id => path.join(
     getConfig().staticPath, "content/page", id + ".json"
 )
 
-async function createNewPage(pagePath, count=0) {
+function validatePageState(pageId, pageState) {
+    const throwInvalid = (msg) => {
+        throw new Error(
+            `Invalid Page State: ${msg}. [pageId=${pageId}]`
+        )
+    }
+    if (!pageState)
+        throwInvalid("no page state provided")
+    if (!pageState.type) 
+        throwInvalid("no page type specified.")
+    if (!Array.isArray(pageState.blocks)) 
+        throwInvalid(`no page blocks array provided`)
+    if (pageId !== pageState.id)
+        throwInvalid(
+            `ID from API path does not math ID in page state `
+            `[pageState.id=${pageState.id}]`
+        )
+}
+
+//////////
+//////////
+
+
+async function createNewPage(parentPath, pageState, count=0) {
+    //
     const suffix = (count > 0) ? `-${count}` : ""
-    const name = `new-page${suffix}.json` 
-    const absPath = getAbsPath(pagePath)
-    const newPageAbsPath = path.join(absPath, name)
+    const baseId = `new-page${suffix}`
+    const name = `${baseId}.json`
+    const absParentPath = getAbsPath(parentPath)
+    const newPageId = path.join(absParentPath, baseId)
+    const newPageAbsPath = path.join(absParentPath, name)
+    //
     const exists = await fs.exists(newPageAbsPath)
     if (exists) {
-        return createNewFolder(mediaPath, count + 1)
+        return createNewPage(mediaPath, pageState, count + 1)
     } else {
-        const page = blankPage()
-        const pageJson = JSON.stringify(page)
-        console.log(newPageAbsPath)
+        const pageStateWithId = {
+            id: newPageId,
+            ...pageState
+        }
+        validatePageState(newPageId, pageStateWithId)
+        const pageJson = JSON.stringify(pageStateWithId)
         await fs.writeFile(newPageAbsPath, pageJson)
         return name
     }
 }
 
-async function readPage(pagePath) {
-    const absPath = getAbsPath(pagePath)
+async function readPage(pageId) {
+    const absPath = getFilePath(pageId)
     const exists = await fs.exists(absPath)
     if (!exists) {
         throw new Error(
-            `Requested page does not exist. ${pagePath}`
+            `Requested page does not exist. ${absPath}`
         )
     }
-    const pageData = await fs.readFile(absPath).toS
+    const pageData = await fs.readFile(absPath)
     const pageString = pageData.toString()
     const page = JSON.parse(pageString)
     return page
 }
 
-function validatePageUpdate(id, pageState) {
-    if (typeof pageState === "undefined")
-        throw new Error("Page Update failed: new page state is undefined.")
-    if (pageState === null)
-        throw new Error("Page Update failed: new page state is null.")
-    if (id !== pageState.id)
+async function updatePage(pageId, pageState) {
+    const absPath = getFilePath(pageId)
+    const exists = await fs.exists(absPath)
+    if (!exists) {
         throw new Error(
-            "Page Update failed: ID in API path does not match ID in " +
-                "page state.\n" +
-            "API ID: " + id + " | Page State ID: " + pageState.id
+            `Requested page does not exist. ${absPath}`
         )
-}
-
-async function updatePage(id, pageState) {
+    }
     try {
-        validatePageUpdate(id, pageState)
+        validatePageState(pageId, pageState)
     } catch (err) {
         throw new Error(err)
     }
-    const filePath = getFilePath(id)
+    const filePath = getFilePath(pageId)
     const pageJson = JSON.stringify(pageState)
     await fs.writeFile(filePath, pageJson)
     const onFilePageState = await fs.readFile(filePath)
@@ -83,9 +107,10 @@ async function updatePage(id, pageState) {
 
 
 const createHandler = async (req, res, next) => {
-    const pagePath = req.params[0]
+    const parentPath = req.params[0]
+    const pageState = req.body
     try {
-        const responseBody = await createNewPage(pagePath)
+        const responseBody = await createNewPage(parentPath, pageState)
         res.send(responseBody)
     } catch (err) {
         next(err)
@@ -93,10 +118,10 @@ const createHandler = async (req, res, next) => {
 }
 
 const readHandler = async (req, res, next) => {
-    const id = req.params[0] 
+    const pageId = req.params[0] 
     try {
-        const page = await readPage(id)
-        const pageJson = JSON.stringify(page)
+        const pageState = await readPage(pageId)
+        const pageJson = JSON.stringify(pageState)
         res.send(pageJson)
     } catch (err) {
         next(err)
@@ -104,8 +129,8 @@ const readHandler = async (req, res, next) => {
 }
 
 function updateHandler(req, res, next) {
-    const id = req.params[0] 
-    updatePage(id, req.body)
+    const pageId = req.params[0] 
+    updatePage(pageId, req.body)
     .then(
         onFilePageState => res.send(onFilePageState)
     )
@@ -126,6 +151,12 @@ function configure(expressApp) {
         HTTP_METHOD.POST,
         API_PATH,
         createHandler
+    )
+    configureAuthApi(
+        expressApp,
+        HTTP_METHOD.GET,
+        API_PATH,
+        readHandler
     )
     configureAuthApi(
         expressApp,
