@@ -23,14 +23,16 @@ export default function PostPreview(props) {
                         <i>Draft</i>
                     </div>
                 </div>
-                {
-                    editorState ? 
-                        <Editor
-                            editorState={editorState}
-                            blockStyleFn={blockStyles}
-                            readOnly={true}
-                        /> : null
-                }
+                <div className="blux-post-preview__body">
+                    {
+                        editorState ? 
+                            <Editor
+                                editorState={editorState}
+                                blockStyleFn={blockStyles}
+                                readOnly={true}
+                            /> : null
+                    }
+                </div>
             </div>
         </Link>
     )

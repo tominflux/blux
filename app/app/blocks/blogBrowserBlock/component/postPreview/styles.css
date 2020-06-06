@@ -24,3 +24,8 @@
     font-size: 22pt;
     margin-bottom: 0;
 }
+
+.blux-post-preview__body {
+    padding-left: 11pt;
+    padding-right: 11pt;
+}

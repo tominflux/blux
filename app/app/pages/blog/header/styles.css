@@ -10,7 +10,25 @@
 .blux-blog-header__title {
     text-align: center;
     font-size: 38pt;
-    padding-right: 44pt;
+}
+
+.blux-blog-header__title-textbox {    
+    text-align: center;
+}
+
+.blux-blog-header__published-col {
+    text-align: right;
+    padding-right: 22pt;
+}
+
+.blux-blog-header__modified-col {
+    text-align: left;
+    padding-left: 22pt;
+}
+
+.blux-blog-header__draft {
+    color: rgb(244, 111, 0);
+    font-style: italic;
 }
 
 .blux-blog-header:after {

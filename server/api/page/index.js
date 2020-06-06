@@ -54,7 +54,7 @@ async function createNewPage(parentPath, pageState, count=0) {
     //
     const exists = await fs.exists(newPageAbsPath)
     if (exists) {
-        return createNewPage(mediaPath, pageState, count + 1)
+        return createNewPage(parentPath, pageState, count + 1)
     } else {
         const pageStateWithId = {
             id: newPageId,

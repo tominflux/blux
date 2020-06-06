@@ -1,0 +1,8 @@
+
+
+.blux-autogrow-textarea {
+    resize: none;
+    width: 100%;
+    border: none;
+    overflow: hidden;
+}
