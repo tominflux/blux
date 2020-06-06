@@ -37,8 +37,7 @@ export default function AutoGrowTextArea(props) {
             style={processedStyle}
             onKeyUp={(e) => onTextAreaKeyUp(e)}
             {...inheritedProps}
-        >
-            {props.children}
-        </textarea>
+            value={props.children}
+        />
     )
 }

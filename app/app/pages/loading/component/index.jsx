@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default function LoadingPage(props) {
+export default function LoadingPageComponent(props) {
     return (
         <div className="container">
             {props.children}

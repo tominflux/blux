@@ -1,13 +1,11 @@
-import LoadingPage from '../pages/loading'
-import DefaultPage from '../pages/default'
-import ContainedPage from '../pages/contained'
+import LoadingPage from '../pages/loading/'
+import DefaultPage from '../pages/default/'
 import BlogPage from '../pages/blog'
 
 
 const defaultPageMap = new Map([
     ["loading", LoadingPage],
     ["default", DefaultPage],
-    ["contained", ContainedPage],
     ["blog", BlogPage]
 ])
 let customPageMap = new Map()

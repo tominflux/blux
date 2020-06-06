@@ -14,7 +14,7 @@ export default function PostPreview(props) {
         <Link to={url} className="blux-post-preview">
             <div className="blux-post-preview__container">
                 <div className="row align-items-end blux-post-preview__header">
-                    <div className="col-4">
+                    <div className="col-6">
                         <h1 className="blux-post-preview__title">
                             {props.title}
                         </h1>

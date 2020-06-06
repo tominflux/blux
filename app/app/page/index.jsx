@@ -4,7 +4,30 @@ import Block from '../block'
 import { getPageMap } from '../pageMap'
 import { getBlockMap } from '../blockMap'
 import { createBlockAction as blockActionToAction } from '../block/redux/actions'
+import { createActionFromPageAction } from './redux/reducer'
 
+
+function prepareDispatchersForPage(page, pageId) {
+    if (!page.redux) 
+        return { }
+    const pageActionFns = page.redux.actions
+    let pageDispatchers = {}
+    for (const key in pageActionFns) {
+        const pageActionFn = pageActionFns[key]
+        const pageDispatcher = (...params) => {
+            const pageAction = pageActionFn(...params)
+            const action = createActionFromPageAction(
+                pageId, pageAction
+            )
+            store.dispatch(action)
+        }
+        pageDispatchers = {
+            ...pageDispatchers,
+            [key]: pageDispatcher
+        }
+    }
+    return pageDispatchers
+}
 
 function prepareDispatchersForBlock(blockProps, pageId) {
     const blockMap = getBlockMap()
@@ -38,10 +61,15 @@ export default function Page(props) {
             "Page type '" + pageType + "' " + 
             "does not exist."
         )
-    const ThemedPage = pageMap.get(pageType)
-    const { header, footer, blocks, ...themedPageProps } = props
+    const page = pageMap.get(pageType)
+    const PageComponent = page.component
+    const { header, footer, blocks, ...pageProps } = props
+    const pageDispatchers = prepareDispatchersForPage(page, pageId)
     return (
-        <ThemedPage {...themedPageProps}>
+        <PageComponent 
+            {...pageProps}
+            {...pageDispatchers}
+        >
             { header || null }
             {
                 blocks.map(
@@ -62,6 +90,6 @@ export default function Page(props) {
                 )
             }
             { props.footer || null }
-        </ThemedPage>
+        </PageComponent>
     )
 }

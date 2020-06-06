@@ -13,6 +13,11 @@ const updateImageAlt = newAlt => ({
     payload: { newAlt }
 })
 
+
+/////////
+/////////
+
+
 const IMAGE_ACTIONS = {
     updateImageSrc, updateImageAlt
 }

@@ -7,6 +7,8 @@ import {
 } from "../actionTypes"
 import BlockReducer from "../../../block/redux/reducer"
 import { immutableInsert, immutableSwap } from "../../../misc"
+import { PAGE_ACTION } from "../../../redux/actionTypes"
+import { getPageMap } from "../../../pageMap"
 
 export const getBlockById = (id, blocks) => (
     blocks.filter(
@@ -38,6 +40,11 @@ const insertBlock = (newBlock, blockBeforeId, blocks) => {
     const blockBeforeIndex = blocks.indexOf(blockBefore)
     return immutableInsert(newBlock, blockBeforeIndex, blocks)
 }
+
+
+///////////
+///////////
+
 
 export default function PageReducer(
     pageState, pageAction
@@ -120,6 +127,43 @@ export default function PageReducer(
                     )
             }
         default:
+            const pageMap = getPageMap()
+            const pageType = pageState.type
+            const throwError = (msg) => {
+                const errMsg = (
+                    `Could not reduce page.\n` +
+                    `${msg}\n` +
+                    `[pageId=${pageState.id}]`
+                )
+                alert(errMsg)
+                throw new Error(errMsg)
+            }
+            if (!pageType) {
+                const msg = `No page type.`
+                throwError(msg)
+            }
+            if (!pageMap.has(pageType)) {
+                const msg = (
+                    `Could not reduce page.\n` +
+                    `Invalid page type [type=${pageType}].\n`
+                )
+                throwError(msg)
+            }
+            const pageRedux = pageMap.get(pageType).redux
+            if (pageRedux) {
+                const pageReducer = pageRedux.reducer
+                return pageReducer(pageState, pageAction)
+            }
             return pageState
     }
 }
+
+
+///////////
+///////////
+
+
+export const createActionFromPageAction = (pageId, pageAction) => ({
+    type: PAGE_ACTION,
+    payload: { pageId, pageAction }
+})

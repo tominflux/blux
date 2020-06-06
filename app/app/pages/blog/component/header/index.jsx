@@ -1,5 +1,5 @@
 import React from 'react'
-import AutoGrowTextArea from '../../../cmsComponents/abstract/autoGrowTextarea'
+import AutoGrowTextArea from '../../../../cmsComponents/abstract/autoGrowTextarea'
 import './styles.css'
 
 export default function BlogHeader(props) {
@@ -19,6 +19,7 @@ export default function BlogHeader(props) {
     //Events
     const onTitleChange = (e) => {
         const newTitle = e.target.value
+        props.onTitleChange(newTitle)
     }
     //
     return (
