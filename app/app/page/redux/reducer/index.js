@@ -12,6 +12,7 @@ import BlockReducer from "../../../block/redux/reducer"
 import { immutableInsert, immutableSwap } from "../../../misc"
 import { PAGE_ACTION } from "../../../redux/actionTypes"
 import { getPageMap } from "../../../pageMap"
+import { getBlockMap } from "../../../blockMap"
 
 
 ///////////
@@ -74,7 +75,8 @@ export default function PageReducer(
             const { idToDelete } = pageAction.payload
             return {
                 ...pageState,
-                blocks: removeBlock(idToDelete, pageState.blocks)
+                blocks: removeBlock(idToDelete, pageState.blocks),
+                modifiedDate: Date.now()
             }
         case MOVE_BLOCK_UP:
             const { idToMoveUp } = pageAction.payload
@@ -122,7 +124,7 @@ export default function PageReducer(
             const { blockId, blockAction } = pageAction.payload
             const blockState = getBlockById(blockId, pageState.blocks)
             const updatedBlockState = 
-                BlockReducer(blockState, blockAction)
+                BlockReducer(blockState, blockAction)            
             return {
                 ...pageState,
                 blocks: 
@@ -144,12 +146,14 @@ export default function PageReducer(
             return {
                 ...pageState,
                 isDraft: false,
+                modifiedDate: publishedDate,
                 publishedDate
             }
         case UNPUBLISH:
             return {
                 ...pageState,
                 isDraft: true,
+                modifiedDate: publishedDate,
                 publishedDate: null
             }
         //

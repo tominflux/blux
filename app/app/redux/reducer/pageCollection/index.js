@@ -2,6 +2,7 @@ import PageReducer from "../../../page/redux/reducer"
 import { 
     FETCH_PAGES, 
     RECEIVE_PAGES, 
+    PAGE_REMOVED,
     PAGE_ACTION 
 } from "../../actionTypes"
 
@@ -51,6 +52,15 @@ export default function PageCollection(
                 ...state,
                 activeRequest: true,
                 requestedPageIds
+            }
+        case PAGE_REMOVED: 
+            const { removedPageId } = action.payload
+            const pagesWithoutPage = removePage(
+                removedPageId, state.pages
+            )
+            return {
+                ...state,
+                pages: pagesWithoutPage
             }
         case RECEIVE_PAGES:
             const { receivedPageStates } = action.payload

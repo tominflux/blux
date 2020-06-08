@@ -3,6 +3,8 @@ import Modal from '../../abstract/modal'
 import Footer from './footer'
 import PageNavigator, { API_ROOT as API_ROOT_PAGE_BROWSER } from '../../navigators/pageNavigator'
 import { cmsify } from '../../cmsify'
+import defaultPageInitialState from '../../../pages/default/initialState'
+import refreshPages from '../../../tasks/refreshPages'
 const path = require("path")
 
 const API_ROOT_PAGE = "/api/page/"
@@ -33,13 +35,19 @@ function PageSelectorModal(props) {
         const requestPath = path.join(
             API_ROOT_PAGE, navigation
         )
+        const requestBody = defaultPageInitialState()
         const response = await fetch(
             requestPath,
-            { method: "POST" }
+            { 
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(requestBody)
+            }
         )
         if (!response.ok) {
             alert("Could not create new page.")
         }
+        await refreshPages()
         refreshNavigator()
     }
     const onNewFolderClick = async () => {

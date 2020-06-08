@@ -1,7 +1,7 @@
 import pageInitialState from "../../../page/redux/initialState";
 
 
-const defaultPageInitialState = (type) => ({
+const defaultPageInitialState = () => ({
     ...pageInitialState("default")
 })
 

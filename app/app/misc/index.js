@@ -280,3 +280,15 @@ export const getVideoThumbDataUrl = async (videoSrc) => {
         return dataUrl
     }
 }
+
+
+///////
+///////
+
+
+export const quickObjectCompare = (objA, objB) => {
+    const jsonStrA = JSON.stringify(objA)
+    const jsonStrB = JSON.stringify(objB)
+    const isTheSame = (jsonStrA === jsonStrB)
+    return isTheSame
+}

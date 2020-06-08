@@ -7,6 +7,7 @@ import PageFolderSelectorModal from '../../../cmsComponents/modals/pageFolderSel
 import NewPost from './cmsComponents/newPost'
 import createNewPost from './createNewPost'
 import './styles.css'
+import refreshPages from '../../../tasks/refreshPages'
 
 function BlogBrowserComponent(props) {
     //State
@@ -32,8 +33,10 @@ function BlogBrowserComponent(props) {
         props.setPostsFolder(navigation)
         refreshPosts(navigation)
     }
-    const onNewPostClick = () => {
-        createNewPost(props.postsFolder)
+    const onNewPostClick = async () => {
+        await createNewPost(props.postsFolder)
+        await refreshPages()
+        await refreshPosts()        
     }
     //
     React.useEffect(() => {
