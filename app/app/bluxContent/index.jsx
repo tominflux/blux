@@ -10,6 +10,7 @@ import { loadPageStates } from '../persister'
 import { isCMS } from '../misc'
 import AuthCheck from '../cmsComponents/authCheck'
 import SiteControls from '../cmsComponents/siteControls'
+import refreshPages from '../tasks/refreshPages'
 
 
 //Useful functions
@@ -73,23 +74,17 @@ const mapDispatchToProps = {
 }
 
 function BluxContent(props) {
-    //Functions
-    const acquirePages = async () => {
-        props.fetchPages([])
-        const pages = await loadPageStates() 
-        props.receivePages(pages)
-    }
     //Effects
     if (!isCMS()) {
         React.useEffect(() => {
-            acquirePages()
+            refreshPages()
         }, [])
     }
     return (<>
         { 
             isCMS() ? 
                 <AuthCheck 
-                    onPass={() => acquirePages()}
+                    onPass={() => refreshPages()}
                 /> : 
                 null 
         }
