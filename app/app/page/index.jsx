@@ -1,6 +1,7 @@
 import React from 'react'
 import store from '../redux/store'
 import Block from '../block'
+import PageControls from './cmsComponents/controls'
 import { getPageMap } from '../pageMap'
 import { getBlockMap } from '../blockMap'
 import { createBlockAction as blockActionToAction } from '../block/redux/actions'
@@ -89,6 +90,12 @@ export default function Page(props) {
                     }
                 )
             }
+            <PageControls 
+                pageId={pageId}
+                isDraft={props.isDraft}
+                publish={props.publish}
+                unpublish={props.unpublish}
+            />
             { props.footer || null }
         </PageComponent>
     )

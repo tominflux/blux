@@ -3,12 +3,20 @@ import {
     DELETE_BLOCK, 
     BLOCK_ACTION, 
     MOVE_BLOCK_UP,
-    MOVE_BLOCK_DOWN
+    MOVE_BLOCK_DOWN,
+    MODIFIED,
+    PUBLISH,
+    UNPUBLISH
 } from "../actionTypes"
 import BlockReducer from "../../../block/redux/reducer"
 import { immutableInsert, immutableSwap } from "../../../misc"
 import { PAGE_ACTION } from "../../../redux/actionTypes"
 import { getPageMap } from "../../../pageMap"
+
+
+///////////
+///////////
+
 
 export const getBlockById = (id, blocks) => (
     blocks.filter(
@@ -50,6 +58,9 @@ export default function PageReducer(
     pageState, pageAction
 ) {
     switch (pageAction.type) {
+        //
+        // Reduce page block-collection actions
+        //
         case CREATE_BLOCK:
             const { blockBeforeId, newBlockState } = pageAction.payload
             const newBlocks = insertBlock(
@@ -112,13 +123,6 @@ export default function PageReducer(
             const blockState = getBlockById(blockId, pageState.blocks)
             const updatedBlockState = 
                 BlockReducer(blockState, blockAction)
-            /*
-            console.log(blockAction)
-            console.log("BLOCK STATE")
-            console.log(blockState)
-            console.log("UPDATED BLOCK STATE")
-            console.log(updatedBlockState)
-            */
             return {
                 ...pageState,
                 blocks: 
@@ -126,6 +130,31 @@ export default function PageReducer(
                         blockId, updatedBlockState, pageState.blocks
                     )
             }
+        //
+        // Reduce page meta-data actions.
+        //
+        case MODIFIED:
+            const { modifiedDate } = pageAction.payload
+            return {
+                ...pageState,
+                modifiedDate
+            }
+        case PUBLISH:
+            const { publishedDate } = pageAction.payload
+            return {
+                ...pageState,
+                isDraft: false,
+                publishedDate
+            }
+        case UNPUBLISH:
+            return {
+                ...pageState,
+                isDraft: true,
+                publishedDate: null
+            }
+        //
+        // Reduce page type specific actions (if any).
+        //
         default:
             const pageMap = getPageMap()
             const pageType = pageState.type

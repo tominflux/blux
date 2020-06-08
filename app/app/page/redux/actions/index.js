@@ -1,11 +1,18 @@
 import { 
+    //
     CREATE_BLOCK, 
     DELETE_BLOCK,
     MOVE_BLOCK_UP,
-    MOVE_BLOCK_DOWN
+    MOVE_BLOCK_DOWN,
+    //
+    MODIFIED,
+    PUBLISH,
+    UNPUBLISH
 } from "../actionTypes"
 import { PAGE_ACTION } from "../../../redux/actionTypes"
 
+
+// BLOCKS
 
 export const createBlock = (pageId, blockBeforeId, newBlockState) => ({
     type: PAGE_ACTION,
@@ -49,6 +56,44 @@ export const moveBlockDown = (pageId, idToMoveDown) => ({
         pageAction: {
             type: MOVE_BLOCK_DOWN,
             payload: { idToMoveDown }
+        }
+    }
+})
+
+
+
+// PAGE
+
+
+export const modified = (pageId, modifiedDate) => ({
+    type: PAGE_ACTION,
+    payload: {
+        pageId,
+        pageAction: {
+            type: MODIFIED,
+            payload: { modifiedDate }
+        }
+    }
+})
+
+export const publish = (pageId, publishedDate) => ({
+    type: PAGE_ACTION,
+    payload: {
+        pageId,
+        pageAction: {
+            type: PUBLISH,
+            payload: { publishedDate }
+        }
+    }
+})
+
+export const unpublish = (pageId) => ({
+    type: PAGE_ACTION,
+    payload: {
+        pageId,
+        pageAction: {
+            type: UNPUBLISH,
+            payload: { }
         }
     }
 })

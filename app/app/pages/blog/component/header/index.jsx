@@ -1,6 +1,7 @@
 import React from 'react'
 import AutoGrowTextArea from '../../../../cmsComponents/abstract/autoGrowTextarea'
 import './styles.css'
+import { isCMS } from '../../../../misc'
 
 export default function BlogHeader(props) {
     //Getters
@@ -26,12 +27,18 @@ export default function BlogHeader(props) {
         <div className="blux-blog-header">
             <div className="container">
                 <h1 className="blux-blog-header__title">
-                    <AutoGrowTextArea
-                        className="blux-blog-header__title-textbox"
-                        onChange={(e) => onTitleChange(e)}
-                    >
-                        {props.title}
-                    </AutoGrowTextArea>
+                    {
+                        isCMS() ?
+                            <AutoGrowTextArea
+                                className="blux-blog-header__title-textbox"
+                                onChange={(e) => onTitleChange(e)}
+                            >
+                                {props.title}
+                            </AutoGrowTextArea> :
+                            <h1>
+                                {props.title}
+                            </h1>
+                    }
                 </h1>
                 <div className="row">
                     <div className="col-6 blux-blog-header__published-col">

@@ -1,13 +1,10 @@
 import BLOG_PAGE_ACTION_TYPES from "../actionTypes"
+import pageInitialState from "../../../../page/redux/initialState"
 
 export const blogPageInitialState = () => ({
-    type: "blog",
+    ...pageInitialState("blog"),
     title: "Untitled Post",
-    draft: true,
-    modifiedDate: Date.now(),
-    publishedDate: null,
     imgSrc: null,
-    blocks: []
 })
 
 export default function BlogPageReducer(state, action) {
@@ -23,25 +20,6 @@ export default function BlogPageReducer(state, action) {
             return {
                 ...state,
                 imgSrc: newImgSrc
-            }
-        case BLOG_PAGE_ACTION_TYPES.HAS_MODIFIED:
-            const { modifiedDate } = action.payload
-            return {
-                ...state,
-                modifiedDate
-            }
-        case BLOG_PAGE_ACTION_TYPES.PUBLISH:
-            const { publishedDate } = action.payload
-            return {
-                ...state,
-                draft: false,
-                publishedDate
-            }
-        case BLOG_PAGE_ACTION_TYPES.UNPUBLISH:
-            return {
-                ...state,
-                draft: true,
-                publishedDate: null
             }
         default:
             return state

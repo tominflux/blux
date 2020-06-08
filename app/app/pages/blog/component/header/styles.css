@@ -19,11 +19,13 @@
 .blux-blog-header__published-col {
     text-align: right;
     padding-right: 22pt;
+    border-right: 0.33pt solid rgba(0,0,0,0.44);
 }
 
 .blux-blog-header__modified-col {
     text-align: left;
     padding-left: 22pt;
+    border-left: 0.33pt solid rgba(0,0,0,0.44);
 }
 
 .blux-blog-header__draft {

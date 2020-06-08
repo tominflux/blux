@@ -11,7 +11,7 @@ export default function BlogPageComponent(props) {
         <div className="blux-blog-page">
             <BlogHeader
                 title={props.title}
-                isDraft={props.draft}
+                isDraft={props.isDraft}
                 publishedDate={props.publishedDate}
                 modifiedDate={props.modifiedDate}
                 //
