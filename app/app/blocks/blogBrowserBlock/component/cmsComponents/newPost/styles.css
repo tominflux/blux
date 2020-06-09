@@ -1,7 +1,14 @@
 
 
 .blux-blog-browser__new-post {
-    padding-top: 33pt;
-    padding-bottom: 33pt;
+    position: absolute;
+    display: inline-block;
+    top: 11pt;
+    left: 11pt;
     text-align: center;
+}
+
+.blux-blog-browser__new-post-icon {
+    margin-left: 2pt;
+    margin-right: 2pt;
 }

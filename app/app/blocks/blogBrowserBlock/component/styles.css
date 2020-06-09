@@ -4,6 +4,10 @@
     padding-top: 22pt;
 }
 
+.blux-blog-browser__container {
+    position: relative;
+}
+
 .blux-blog-browser__heading {
     font-size: 38pt;
     text-align: center;

@@ -6,8 +6,6 @@ import { isCMS } from '../../../../misc'
 export default function BlogHeader(props) {
     //Getters
     const getPublishedStr = () => {
-        if (!props.published)
-            return null
         const publishedDate = new Date(props.publishedDate)
         const publishedStr = publishedDate.toDateString()
         return publishedStr

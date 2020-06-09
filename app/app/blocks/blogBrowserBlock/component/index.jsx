@@ -46,10 +46,14 @@ function BlogBrowserComponent(props) {
     const postPreviews = getPostPreviews()
     return (<>
         <div className="blux-blog-browser">
-            <div className="container">
+            <div className="container blux-blog-browser__container">
                 <h1 className="blux-blog-browser__heading">
                     Recent Posts
                 </h1>
+                <NewPost 
+                    onClick={() => onNewPostClick()}
+                    show={props.showCms}
+                />
                 { 
                     (postPreviews.length > 0) ?
                         postPreviews : (
@@ -61,9 +65,6 @@ function BlogBrowserComponent(props) {
                 <ConfigureButton 
                     show={props.showCms}
                     onClick={() => setShowSelector(true)}
-                />
-                <NewPost 
-                    onClick={() => onNewPostClick()}
                 />
             </div>
         </div>
