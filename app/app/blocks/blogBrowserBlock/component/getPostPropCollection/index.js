@@ -5,7 +5,7 @@ const path = require("path")
 const PAGE_BROWSER_API_PATH = "/api/page-browser"
 const PAGE_API_PATH = "/api/page"
 
-
+/*
 const getPostPageIds = async (postsFolder) => {
     if (postsFolder === null)
         return []
@@ -30,18 +30,31 @@ const getPostPageIds = async (postsFolder) => {
         alert("Could not get blog posts.")
     }
 }
+*/
+
+/*
+const getPostPageIds = async (postsFolder, pages) => {
+    const postPages = pages.filter((page) => {
+        const isBlogPage = (page.type === "blog")
+        const parentDir = path.dirname(page.id)
+        const isInPostsFolder = (parentDir === postsFolder)
+        return (isBlogPage && isInPostsFolder)
+    })
+    const postPageIds = postPages.map(postPage => postPage.id)
+    return postPageIds
+}
+*/
 
 const getPreviewTextContentState = (postPage) => {
     const blocks = postPage.blocks
-    const persistifiedTextBlocks = blocks.filter(
+    const textBlocks = blocks.filter(
         block => (
             block.type === "text" || 
             block.type === "contained-text"
         )
     )
-    if (persistifiedTextBlocks.length > 0) {
-        const persistifiedBlock = persistifiedTextBlocks[0]
-        const textBlock = textPersistifier.unpersistify(persistifiedBlock)
+    if (textBlocks.length > 0) {
+        const textBlock = textBlocks[0]
         const editorState = textBlock.editorState
         const contentState = editorState.getCurrentContent()
         const firstBlock = contentState.getFirstBlock()
@@ -54,19 +67,19 @@ const getPreviewTextContentState = (postPage) => {
     }
 }
 
-const getPostProps = (postPageId, postPageJson) => {
-    const getTitle = () => (postPageJson.title)
-    const isDraft = () => (postPageJson.isDraft)
-    const getModifiedDate = () => (postPageJson.modifiedDate)
+const getPostProps = (postPageId, postPage) => {
+    const getTitle = () => (postPage.title)
+    const isDraft = () => (postPage.isDraft)
+    const getModifiedDate = () => (postPage.modifiedDate)
     const getPublishedDate = () => (
-        (postPageJson.publishedDate && !isDraft()) ? 
-            postPageJson.publishedDate : "N/A"
+        (postPage.publishedDate && !isDraft()) ? 
+            postPage.publishedDate : "N/A"
     )
     const getImgSrc = () => {
-        if (postPageJson.imgSrc) {
-            return postPageJson.imgSrc
+        if (postPage.imgSrc) {
+            return postPage.imgSrc
         } else {
-            for (const block of postPageJson.blocks) {
+            for (const block of postPage.blocks) {
                 if (block.type === "image") {
                     const imgSrc = block.src
                     return imgSrc
@@ -83,46 +96,21 @@ const getPostProps = (postPageId, postPageJson) => {
         modifiedDate: getModifiedDate(),
         publishedDate: getPublishedDate(),
         imgSrc: getImgSrc(),
-        previewTextContentState: getPreviewTextContentState(postPageJson)
+        previewTextContentState: getPreviewTextContentState(postPage)
     }
     return postProps
 }
 
-export default async function getPostPropCollection(postsFolder) {
-    const postPageIds = await getPostPageIds(postsFolder)
-    const postPropsCollection = []
-    for (const postPageId of postPageIds) {
-        const postPageUrl = path.join(
-            PAGE_API_PATH, postPageId
-        )
-        const response = await fetch(postPageUrl)
-        if (!response.ok) {
-            const msg = `Could not fetch page ${postPageId}.`
-            alert(msg)
-            console.error(msg, response)
-        } else {
-            const getPageJson = async () => {
-                try {
-                    const json = await response.json()
-                    return json
-                } catch (err) {
-                    const msg = `Could not parse page '${postPageId}'`
-                    alert(msg)
-                    console.log(`Response from '${postPageUrl}`, response)
-                    throw err
-                }
-            }
-            try {
-                const postPageJson = await getPageJson()
-                if (postPageJson.type === "blog") {
-                    const postProps = getPostProps(postPageId, postPageJson)
-                    postPropsCollection.push(postProps)
-                }
-            } catch (err) {
-                console.log(`Skipping page ${postPageId}.`)
-                console.error(err)
-            }
-        }
-    }
+export default async function getPostPropCollection(postsFolder, pages) {
+    const postPages = pages.filter((page) => {
+        const isBlogPage = (page.type === "blog")
+        const parentDir = path.dirname(page.id)
+        const isInPostsFolder = (parentDir === postsFolder)
+        console.log(parentDir, postsFolder)
+        return (isBlogPage && isInPostsFolder)
+    })
+    const postPropsCollection = postPages.map(
+        (postPage) => getPostProps(postPage.id, postPage)
+    )
     return postPropsCollection
 }

@@ -8,6 +8,11 @@ import NewPost from './cmsComponents/newPost'
 import createNewPost from './createNewPost'
 import './styles.css'
 import refreshPages from '../../../tasks/refreshPages'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({
+    pages: state.PageCollection.pages
+})
 
 function BlogBrowserComponent(props) {
     //State
@@ -17,7 +22,7 @@ function BlogBrowserComponent(props) {
     //Functions
     const refreshPosts = async (postsFolder=props.postsFolder) => {
         const freshPostPropCollection = await getPostPropCollection(
-            postsFolder
+            postsFolder, props.pages
         )
         setPostPropCollection(freshPostPropCollection)
     }
@@ -81,4 +86,6 @@ function BlogBrowserComponent(props) {
     </>)
 }
 
-export default blockify(BlogBrowserComponent)
+const connected = connect(mapStateToProps, null)(BlogBrowserComponent)
+const blockified = blockify(connected)
+export default blockified
