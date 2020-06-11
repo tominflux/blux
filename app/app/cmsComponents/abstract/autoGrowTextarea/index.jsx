@@ -3,18 +3,24 @@ import './styles.css'
 import { inheritClasses } from '../../../misc'
 
 export default function AutoGrowTextArea(props) {
+    //Ref
+    const ref = React.createRef()
     //State 
     const [absoluteHeight, setAbsoluteHeight] = React.useState(null)
     //Events
     const onTextAreaKeyUp = (e) => {
-        const element = e.target
-        if (element.clientHeight < element.scrollHeight) {
-            setAbsoluteHeight(`${element.scrollHeight}px`)
-        }
+        setAbsoluteHeight(`0px`)
         if (props.onKeyUp) {
             props.onKeyUp(e)
         }
     }
+    //Effects
+    React.useEffect(() => {
+        const element = ref.current
+        if (element.clientHeight < element.scrollHeight) {
+            setAbsoluteHeight(`${element.scrollHeight}px`)
+        }
+    })
     //
     const {
         className,
@@ -31,6 +37,7 @@ export default function AutoGrowTextArea(props) {
     }
     return (
         <textarea
+            ref={ref}
             className={inheritClasses(props, "blux-autogrow-textarea")}
             rows={props.rows || 1}
             cols={props.cols || 22}

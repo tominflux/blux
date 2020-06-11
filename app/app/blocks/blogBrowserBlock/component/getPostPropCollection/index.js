@@ -106,7 +106,6 @@ export default async function getPostPropCollection(postsFolder, pages) {
         const isBlogPage = (page.type === "blog")
         const parentDir = path.dirname(page.id)
         const isInPostsFolder = (parentDir === postsFolder)
-        console.log(parentDir, postsFolder)
         return (isBlogPage && isInPostsFolder)
     })
     const postPropsCollection = postPages.map(

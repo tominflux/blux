@@ -1,11 +1,4 @@
 
-
-.blux-post-preview__container {
-    padding-top: 44pt;
-    padding-bottom: 22pt;
-    border-bottom: 0.66pt solid rgba(0, 0, 0, 0.66);
-}
-
 .blux-post-preview:link,
 .blux-post-preview:visited {
     color: inherit;
@@ -14,6 +7,33 @@
 
 .blux-post-preview:hover {
     text-decoration: none;
+}
+
+.blux-post-preview__container {
+    padding-top: 22pt;
+    padding-bottom: 22pt;
+    border-bottom: 0.66pt solid rgba(0, 0, 0, 0.66);
+}
+
+.blux-post-preview__image-col {
+    text-align: center;
+    overflow: hidden;
+    max-height: 180pt;
+    padding: unset;
+}
+
+.blux-post-preview__image {
+    position: relative;
+    max-height: 180pt;
+}
+
+.blux-post-preview__image--portrait {
+    width: 100%;
+    max-height: none;
+}
+
+.blux-post-preview__text-col {
+    padding-left: 22pt;
 }
 
 .blux-post-preview__header {
@@ -25,7 +45,31 @@
     margin-bottom: 0;
 }
 
+.blux-post-preview__date-row {
+    text-align: right;
+    padding-right: 33pt;
+    margin-bottom: 3.3pt;
+}
+
+.blux-post-preview__draft,
+.blux-post-preview__published {
+    font-weight: bold;
+    font-size: 13pt;
+}
+
+
+.blux-post-preview__draft {
+    color: rgb(244, 111, 0);
+    font-style: italic;
+}
+
+.blux-post-preview__modified {
+    font-size: 10pt;
+    font-style: italic;
+}
+
 .blux-post-preview__body {
+    padding-top: 9pt;
     padding-left: 11pt;
     padding-right: 11pt;
 }
