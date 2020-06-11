@@ -8,7 +8,7 @@ const getPageDirectory = () => (
     )
 )
 
-async function discoverPages(relativeDirectory="") {
+async function discoverPages(onlyPublic=false, relativeDirectory="") {
     const jsonFilter = /\.json$/
     const absDirectory = path.join(
         getPageDirectory(), relativeDirectory
@@ -20,7 +20,7 @@ async function discoverPages(relativeDirectory="") {
         const stat = await fs.lstat(filePath)
         if (stat.isDirectory()) {
             const nextDirectory = path.join(relativeDirectory, fileName)
-            const nextPageFilePaths = await discoverPages(nextDirectory)
+            const nextPageFilePaths = await discoverPages(onlyPublic, nextDirectory)
             accumulatedFileIds = [
                 ...accumulatedFileIds,
                 ...nextPageFilePaths
@@ -28,7 +28,19 @@ async function discoverPages(relativeDirectory="") {
         } else if (jsonFilter.test(filePath)) {
             const relativeFilePath = path.join(relativeDirectory, fileName)
             const fileId = relativeFilePath.replace(".json", "")
-            accumulatedFileIds.push(fileId)
+            if (onlyPublic) {
+                const pageData = await fs.readFile(filePath)
+                const pageJson = pageData.toString()
+                const page = JSON.parse(pageJson)
+                const isPublic = (!page.isDraft)
+                console.log(page)
+                console.log("isPublic: " + isPublic)
+                if (isPublic) {
+                    accumulatedFileIds.push(fileId)
+                }
+            } else {
+                accumulatedFileIds.push(fileId)
+            }
         }
     }
     return accumulatedFileIds

@@ -66,7 +66,7 @@ const runParcelBuild = async () => {
 
 async function postbuild() {
     await ensureStaticRepoCloned()
-    const routes = await discoverPages()
+    const routes = await discoverPages(true)
     const buildPath = getBuildPath()
     console.log("Rendering routes...")
     await renderRoutesToFiles(buildPath, routes)  
