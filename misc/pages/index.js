@@ -33,8 +33,6 @@ async function discoverPages(onlyPublic=false, relativeDirectory="") {
                 const pageJson = pageData.toString()
                 const page = JSON.parse(pageJson)
                 const isPublic = (!page.isDraft)
-                console.log(page)
-                console.log("isPublic: " + isPublic)
                 if (isPublic) {
                     accumulatedFileIds.push(fileId)
                 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import './styles.css'
 
 export default function DefaultPageComponent(props) {
     return (
-        <div>
+        <div className="blux-default-page">
             { props.children }
         </div>
     )
