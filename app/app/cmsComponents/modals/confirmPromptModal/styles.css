@@ -1,0 +1,25 @@
+
+.blux-confirm-modal__message {
+    margin-top: 33pt;
+    margin-bottom: 22pt;
+}
+
+.blux-confirm-modal__buttons-container {
+    padding-top: 9pt;
+    padding-bottom: 9pt;
+}
+
+
+.blux-confirm-modal__yes-button,
+.blux-confirm-modal__no-button {
+    padding-left: 9pt;
+    padding-right: 9pt;
+}
+
+.blux-confirm-modal__yes-button {
+    margin-right: 11pt;
+}
+
+.blux-confirm-modal__no-button {
+    margin-left: 11pt;
+}

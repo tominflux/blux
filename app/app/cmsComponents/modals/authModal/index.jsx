@@ -4,8 +4,9 @@ import Textbox from '../../abstract/textbox'
 import Password from '../../abstract/password'
 import Button from '../../abstract/button'
 import './styles.css'
+import { cmsify } from '../../cmsify'
 
-export default function AuthModal(props) {
+function AuthModal(props) {
     //State
     const [user, setUser] = React.useState(null)
     const [pass, setPass] = React.useState(null)
@@ -69,3 +70,5 @@ export default function AuthModal(props) {
         </Modal>
     )
 }
+
+export default cmsify(AuthModal)

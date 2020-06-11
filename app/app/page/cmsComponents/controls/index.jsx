@@ -1,13 +1,18 @@
 import React from 'react'
+//
 import DeleteButton from './deleteButton'
 import PublishButton from './publishButton'
+import ConfirmPromptModal from '../../../cmsComponents/modals/confirmPromptModal'
+//
 import removePage from '../../../tasks/removePage'
 import refreshPages from '../../../tasks/refreshPages'
 import { publish, unpublish } from '../../redux/actions'
-import { Redirect } from 'react-router-dom'
+//
 import { cmsify } from '../../../cmsComponents/cmsify'
 import { connect } from 'react-redux'
+//
 import './styles.css'
+
 
 //Redux mappers
 const mapDispatchToProps = {
@@ -15,14 +20,17 @@ const mapDispatchToProps = {
 }
 
 const PageControls = (props) => {
-    //const [redirect, setRedirect] = React.useState(null)
-    //
-    const onDeleteClick = async () => {
+    //State
+    const [showDeletePrompt, setShowDeletePrompt] = React.useState(false)
+    const [showPublishPrompt, setShowPublishPrompt] = React.useState(false)
+    const [showUnpublishPrompt, setShowUnpublishPrompt] = React.useState(false)
+    //Functions
+    const deletePage = async () => {
         await removePage(props.pageId)
         await refreshPages()
-        alert("Page deleted.")
-        //setRedirect("/")
+        //alert("Page deleted.")
     }
+    //Events
     const onPublishClick = () => {
         if (props.isDraft === true) {
             const publishedDate = Date.now()
@@ -38,22 +46,26 @@ const PageControls = (props) => {
             throw new Error(msg)
         }
     }
-    //
+    //Render
     return (<>
-        {/*
-            redirect ? 
-                <Redirect to={redirect} /> :
-                null
-        */}
         <div className="blux-page-controls">
             <DeleteButton 
-                onClick={() => onDeleteClick()}
+                onClick={() => setShowDeletePrompt(true)}
             />
             <PublishButton 
                 isDraft={props.isDraft}
                 onClick={() => onPublishClick()}
             />
         </div>
+        <ConfirmPromptModal
+            show={showDeletePrompt}
+            onConfirm={() => deletePage()}
+            onCancel={() => setShowDeletePrompt(false)}
+            onClickAway={() => setShowDeletePrompt(false)}
+        >
+            Are you sure you want to delete the page 
+            '{props.pageId}'? It will not be retrievable later.
+        </ConfirmPromptModal>
     </>)
 }
 
