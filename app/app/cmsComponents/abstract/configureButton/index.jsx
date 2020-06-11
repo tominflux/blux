@@ -12,6 +12,7 @@ const ConfigureButton = (props) => {
                 )
             }
             onClick={() => props.onClick()}
+            tooltip={props.tooltip}
         >
             <Octicon icon={Gear}/>
         </Button>

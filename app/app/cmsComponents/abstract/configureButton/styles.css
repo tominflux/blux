@@ -2,7 +2,7 @@
 
 .blux-configure-button {
     position: absolute;
-    z-index: 9999;
+    z-index: 300;
     top: 22pt;
     right: 22pt;
     line-height: 10pt;

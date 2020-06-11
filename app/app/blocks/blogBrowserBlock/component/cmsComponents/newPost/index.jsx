@@ -14,6 +14,7 @@ function NewPost(props) {
         >
             <Button
                 onClick={props.onClick}
+                tooltip="Create New Post"
             >
                 <Octicon 
                     className="blux-blog-browser__new-post-icon"

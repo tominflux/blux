@@ -32,3 +32,25 @@ export const hideable = (component) => {
         )
     }
 }
+
+export const hoverable = (component) => {
+    const InnerComponent = component
+    return (props) => {
+        //State
+        const [isHovering, setHovering] = React.useState(false)
+        //Events
+        const onMouseEnter = () => setHovering(true)
+        const onMouseLeave = () => setHovering(false)
+        //Render
+        return (
+            <InnerComponent
+                hoverEvents={{
+                    onMouseEnter: () => onMouseEnter(),
+                    onMouseLeave: () => onMouseLeave()
+                }}
+                isHovering={isHovering}
+                {...props}
+            />
+        )
+    }
+}

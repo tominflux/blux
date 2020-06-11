@@ -16,6 +16,7 @@ export default function PageBrowserControl(props) {
         <Button
             className="blux-browser-controls__button"
             onClick={() => onClick()}
+            tooltip="Page Browser"
         >
             <Octicon icon={File} size={44}/>
         </Button>

@@ -19,6 +19,7 @@ const DeleteBlockButton = (props) => {
                 )
             }
             onClick={() => onClick(props)}
+            tooltip="Delete Block"
         >
             <Octicon icon={X} />
         </Button>

@@ -4,6 +4,8 @@
     text-align: center;
     height: 166pt;
     padding-top: 44pt;
+    z-index: 100;
+    position: relative;
 }
 
 

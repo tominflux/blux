@@ -22,6 +22,7 @@ export default function Publish(props) {
             className="blux-save-and-publish__button"
             disabled={props.savingOrPublishing}
             onClick={() => onClick()}    
+            tooltip="Publish"
         >
             <Octicon icon={Globe} size="medium"/>
         </Button>

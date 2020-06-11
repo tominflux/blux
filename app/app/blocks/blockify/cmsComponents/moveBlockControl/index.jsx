@@ -42,7 +42,7 @@ const MoveBlockControl = (props) => {
                         "" : " blux-move-block__button--hidden"    
                     )
                 }
-                onClick={(e) => onDownClick(e, props)}
+                onClick={(e) => onDownClick(e, props)} 
             >
                 <Octicon icon={ChevronDown} size={22} />
             </Button>

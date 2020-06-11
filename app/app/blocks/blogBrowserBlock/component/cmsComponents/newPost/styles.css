@@ -6,6 +6,7 @@
     top: 11pt;
     left: 11pt;
     text-align: center;
+    z-index: 100;
 }
 
 .blux-blog-browser__new-post-icon {

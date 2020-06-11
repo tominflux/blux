@@ -1,0 +1,21 @@
+
+
+.blux-tooltip {
+    position: absolute;
+    transform: translate(-50%, 11pt);
+    padding: 3.66pt;
+    border-radius: 6pt;
+    border: 1.22pt solid rgba(48, 48, 95, 0.22);
+    box-shadow:
+        0pt 1.66pt 3pt rgba(22, 22, 88, 0.33);
+    font-size: 11pt;
+    z-index: 1300;
+    background-color: rgba(246, 246, 255, 0.5);
+    pointer-events: none;
+}
+
+.blux-tooltip__content {
+    display: inline-block;
+    opacity: 0.75;
+    max-width: 166pt;
+}

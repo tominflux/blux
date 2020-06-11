@@ -70,6 +70,7 @@ function BlogBrowserComponent(props) {
                 <ConfigureButton 
                     show={props.showCms}
                     onClick={() => setShowSelector(true)}
+                    tooltip="Configure Blog Stream"
                 />
             </div>
         </div>

@@ -27,7 +27,7 @@ export const createThumbProps = (
 export default function DragAndSwap(props) {
     const [thumbPositions, setThumbPositions] =
         React.useState(
-            props.thumbs.map(() => ({ x: null, y: null}))
+            props.thumbs.map(() => ({ x: null, y: null }))
         )
     const [thumbsShrink, setThumbsShrink] =
         React.useState(

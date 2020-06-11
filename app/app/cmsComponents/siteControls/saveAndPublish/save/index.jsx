@@ -22,6 +22,7 @@ export default function Save(props) {
             className="blux-save-and-publish__button"
             disabled={props.savingOrPublishing}
             onClick={() => onClick()}    
+            tooltip={"Save State"}
         >
             <Octicon icon={CloudUpload} size="medium"/>
         </Button>

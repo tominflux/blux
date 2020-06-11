@@ -15,6 +15,7 @@ export default function OpenMediaBrowser(props) {
         <Button
             className="blux-browser-controls__button"
             onClick={() => onClick()}
+            tooltip="Media Browser"
         >
             <Octicon icon={FileMedia} size={44}/>
         </Button>

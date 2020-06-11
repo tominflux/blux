@@ -96,6 +96,7 @@ const CreateBlockButton = (props) => {
                         () => setOpened(false)
                     )
                 }}
+                tooltip="Create New Block"
             >
                 +
             </Button>
