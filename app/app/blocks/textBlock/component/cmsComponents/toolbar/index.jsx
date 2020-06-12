@@ -2,28 +2,46 @@ import React from 'react'
 import BlockToggle from './blockToggle'
 import AlignmentToggle from './alignmentToggle'
 import InlineToggle from './inlineToggle'
-import LinkToggle from './linkToggle'
+import PageLinkToggle from './linkToggle/pageToggle'
+import UrlLinkToggle from './linkToggle/urlToggle'
 import Separator from './separator'
+import PageSelectorModal from '../../../../../cmsComponents/modals/pageSelectorModal'
 import UrlPromptModal from '../../../../../cmsComponents/modals/urlPromptModal'
+import { applyEntity } from './linkToggle/editorControls'
+import { ENTITY_PAGE_LINK } from '../../decorators/pageLink'
+import { ENTITY_URL_LINK } from '../../decorators/urlLink'
 import { 
     GrTextAlignLeft, 
     GrTextAlignCenter, 
     GrTextAlignRight
 } from 'react-icons/gr'
 import { TEXT_ALIGNMENT_STATES } from '../../../redux/actionTypes'
+const path = require("path")
 import './styles.css'
-import { applyLink } from './linkToggle/editorControls'
 
 
 export default function Toolbar(props) {
     //State
+    const [showPageSelector, setShowPageSelector] = React.useState(false)
     const [showUrlPrompt, setShowUrlPrompt] = React.useState(false)
     //Events
     const onConfirmUrl = (url) => {
-        const newEditorState = applyLink(props.editorState, url)
+        const newEditorState = applyEntity(
+            props.editorState, ENTITY_URL_LINK, { url }
+        )
         props.updateEditorState(newEditorState)
         setShowUrlPrompt(false)
     }
+    const onConfirmPage = (thumbProps, navigation) => {
+        const pageId = path.join(
+            navigation, thumbProps.name
+        )
+        const newEditorState = applyEntity(
+            props.editorState, ENTITY_PAGE_LINK, { pageId }
+        )
+        props.updateEditorState(newEditorState)
+        setShowPageSelector(false)
+    } 
     //Constants
     const editorToggleProps = {
         editorState: props.editorState,
@@ -65,7 +83,11 @@ export default function Toolbar(props) {
                     <span style={{fontStyle: "italic"}}>I</span>
                 </InlineToggle>
                 <Separator />
-                <LinkToggle 
+                <PageLinkToggle
+                    {...editorToggleProps}
+                    showPrompt={() => setShowPageSelector(true)}
+                />
+                <UrlLinkToggle 
                     {...editorToggleProps}
                     showPrompt={() => setShowUrlPrompt(true)}
                 />
@@ -102,6 +124,16 @@ export default function Toolbar(props) {
             show={showUrlPrompt}
             onClickAway={() => setShowUrlPrompt(false)}
             onConfirm={(url) => onConfirmUrl(url)}
+        />
+        <PageSelectorModal
+            show={showPageSelector}
+            onClickAway={() => setShowPageSelector(false)}
+            onConfirm={
+                (thumbProps, navigation) => 
+                    onConfirmPage(thumbProps, navigation)
+            }
+            canRename
+            canDelete
         />
     </>)
 }

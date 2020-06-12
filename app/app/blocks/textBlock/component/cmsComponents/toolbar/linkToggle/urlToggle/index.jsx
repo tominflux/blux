@@ -1,16 +1,19 @@
 import React from 'react'
 import Octicon, { LinkExternal } from '@primer/octicons-react'
-import { isToggled, removeSelectedLinks, checkOnlyOneBlockSelected } from './editorControls'
-import Toggle from '../../../../../../cmsComponents/abstract/toggle'
+import { isToggled, removeSelectedEntities, checkOnlyOneBlockSelected } from '../editorControls'
+import { ENTITY_URL_LINK } from '../../../../decorators/urlLink/index' 
+import Toggle from '../../../../../../../cmsComponents/abstract/toggle'
 
-export default function LinkToggle(props) {
+export default function UrlLinkToggle(props) {
     //Functions
     const toggle = async () => {
         const onlyOneBlockSelected = checkOnlyOneBlockSelected(props.editorState)
         if (!onlyOneBlockSelected)
             return
-        if (isToggled(props.editorState)) {
-            const newEditorState = removeSelectedLinks(props.editorState)
+        if (isToggled(props.editorState, ENTITY_URL_LINK)) {
+            const newEditorState = removeSelectedEntities(
+                props.editorState, ENTITY_URL_LINK
+            )
             props.updateEditorState(newEditorState)
         } else {
             props.showPrompt()
@@ -19,7 +22,7 @@ export default function LinkToggle(props) {
     //
     return (<>
         <Toggle
-            isToggled={() => isToggled(props.editorState)}
+            isToggled={() => isToggled(props.editorState, ENTITY_URL_LINK)}
             toggle={() => toggle()}
             tooltip="External Link"
         >

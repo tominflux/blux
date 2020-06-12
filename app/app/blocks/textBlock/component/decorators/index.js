@@ -1,9 +1,11 @@
 import { CompositeDecorator } from "draft-js"
-import LinkDecorator from './link'
+import PageLinkDecorator from "./pageLink"
+import UrlLinkDecorator from './urlLink'
 
 
 const compositeDecorator = new CompositeDecorator([
-    LinkDecorator
+    PageLinkDecorator,
+    UrlLinkDecorator
 ])
 
 export default compositeDecorator

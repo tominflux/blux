@@ -5,24 +5,6 @@ import { EditorState, Modifier, SelectionState, RichUtils } from "draft-js"
 //    READ   //
 ///////////////
 
-/*
-const getSelectedBlocks = (editorState) => {
-    const contentState = editorState.getCurrentContent()
-    const selectionState = editorState.getSelection()
-    //Get Selected block keys.
-    const selectStartKey = selectionState.getStartKey()
-    const selectEndKey = selectionState.getEndKey()
-    //Convert to indices.
-    const blockArray = contentState.getBlocksAsArray()
-    const blockStart = contentState.getBlockForKey(selectStartKey)
-    const blockEnd = contentState.getBlockForKey(selectEndKey)
-    const blockStartIndex = blockArray.indexOf(blockStart)
-    const blockEndIndex = blockArray.indexOf(blockEnd)
-    //
-    return blockArray.slice(blockStartIndex, blockEndIndex + 1)
-}
-*/
-
 export const checkOnlyOneBlockSelected = (editorState) => {
     const selectionState = editorState.getSelection()
     const selectStartKey = selectionState.getStartKey()
@@ -38,20 +20,20 @@ const getSelectedBlock = (editorState) => {
     return block
 }
 
-const findLinksInSelectedBlock = (editorState) => {
+const findEntitiesInSelectedBlock = (editorState, entityType) => {
     const contentState = editorState.getCurrentContent()
     const selectedBlock = getSelectedBlock(editorState)
     const characters = selectedBlock.getCharacterList().toArray()
     const startOffset = 0
     const endOffset = characters.length - 1
-    const links = []
-    let currentLinkEntityKey = null
-    let currentLinkStartOffset = null
-    const addLink = (endOffset) => {
-        links.push({
-            startOffset: currentLinkStartOffset,
+    const entities = []
+    let currentEntityKey = null
+    let currentEntityStartOffset = null
+    const addEntity = (endOffset) => {
+        entities.push({
+            startOffset: currentEntityStartOffset,
             endOffset,
-            entityKey: currentLinkEntityKey
+            entityKey: currentEntityKey
         })
     }
     for (let i=startOffset; i<endOffset; i++) {
@@ -59,103 +41,62 @@ const findLinksInSelectedBlock = (editorState) => {
         const character = characters[i]
         const entityKey = character.getEntity()
         const entity = entityKey ? contentState.getEntity(entityKey) : null
-        const entityType = entityKey ? entity.getType() : null
-        const isInsideLink = (currentLinkEntityKey !== null)
+        const foundEntityType = entityKey ? entity.getType() : null
+        const isInsideSearchEntity = (currentEntityKey !== null)
         //
-        if (!isInsideLink) {
-            const foundLink = (
+        if (!isInsideSearchEntity) {
+            const foundSearchEntity = (
                 entityKey !== null &&
-                entityType === "LINK"
+                foundEntityType === entityType
             )
-            if (foundLink) {
-                currentLinkEntityKey = entityKey
-                currentLinkStartOffset = i
+            if (foundSearchEntity) {
+                currentEntityKey = entityKey
+                currentEntityStartOffset = i
             }
         }
         //
         else {
-            const foundEndOfLink = (
-                entityKey !== currentLinkEntityKey
+            const foundEndOfEntity = (
+                entityKey !== currentEntityKey
             )
-            if (foundEndOfLink) {
-                const linkEndOffset = i
-                addLink(linkEndOffset)
-                currentLinkEntityKey = null
-                currentLinkStartOffset = null
+            if (foundEndOfEntity) {
+                const entityEndOffset = i
+                addEntity(entityEndOffset)
+                currentEntityKey = null
+                currentEntityStartOffset = null
             }
         }
     }
-    const isStillInsideLink = (currentLinkEntityKey !== null)
-    if (isStillInsideLink)
-        addLink(endOffset)
-    return links
+    const isStillInsideSearchEntity = (currentEntityKey !== null)
+    if (isStillInsideSearchEntity)
+        addEntity(endOffset)
+    return entities
 }
 
-const filterLinksToSelected = (editorState, links) => {
+const filterEntitiesToSelected = (editorState, entities) => {
     const selectionState = editorState.getSelection()
     const selectionStartOffset = selectionState.getStartOffset()
     const selectionEndOffset = selectionState.getEndOffset()
-    const filteredLinks = links.filter(
-        link => (
-            selectionStartOffset < link.endOffset &&
-            selectionEndOffset > link.startOffset
+    const filteredEntities = entities.filter(
+        entity => (
+            selectionStartOffset < entity.endOffset &&
+            selectionEndOffset > entity.startOffset
         )
     )
-    return filteredLinks
+    return filteredEntities
 }
 
-/*
-const findSelectedLinks = (editorState) => {
-    const contentState = editorState.getCurrentContent()
-    const selectionState = editorState.getSelection()
-    //Get Selected Block.
-    const selectStartKey = selectionState.getStartKey()
-    const selectEndKey = selectionState.getEndKey()
-    //Convert to indices.
-    const blockArray = contentState.getBlocksAsArray()
-    const blockStart = contentState.getBlockForKey(selectStartKey)
-    const blockEnd = contentState.getBlockForKey(selectEndKey)
-    const blockStartIndex = blockArray.indexOf(blockStart)
-    const blockEndIndex = blockArray.indexOf(blockEnd)
-    const links = [] //{}
-    //Iterate through selected blocks.
-    for (let i=blockStartIndex; i<=blockEndIndex; i++) {
-        //Get block
-        const block = blockArray[i]
-        //Iterate through characters of block
-        const characters = block.getCharacterList().toArray()
-        for (const character of characters) {
-            //Get entity key at character
-            const entityKey = character.getEntity()
-            //If not null, there is an entity.
-            if (entityKey !== null) {
-                //Get entity from entity key
-                const entity = contentState.getEntity(entityKey)
-                //Check that it's a link.
-                if (
-                    entity !== null &&
-                    entity.getType() === "LINK"
-                )
-                    //Add it.
-                    links.push({
-                        entity, entityKey
-                    })
-            }
-        }
-    }
-    return links
-}
-*/
-
-export const isToggled = (editorState) => {
+export const isToggled = (editorState, entityType) => {
     const onlyOneBlockSelected = checkOnlyOneBlockSelected(editorState)
     if (!onlyOneBlockSelected)
         return false
-    const linksInSelectedBlock = findLinksInSelectedBlock(editorState)
-    const selectedLinks = filterLinksToSelected(
-        editorState, linksInSelectedBlock
+    const entitiesInSelectedBlock = findEntitiesInSelectedBlock(
+        editorState, entityType
     )
-    return (selectedLinks.length > 0)
+    const selectedEntities = filterEntitiesToSelected(
+        editorState, entitiesInSelectedBlock
+    )
+    return (selectedEntities.length > 0)
 }
 
 
@@ -164,75 +105,51 @@ export const isToggled = (editorState) => {
 ///////////////
 
 
-export const applyLink = (editorState, url) => {
+export const applyEntity = (editorState, entityType, entityData) => {
     const contentState = editorState.getCurrentContent()
     const selectionState = editorState.getSelection()
     const contentStateWithEntity = contentState.createEntity(
-        "LINK", "MUTABLE", {url: url}
+        entityType, "MUTABLE", entityData //e.g. { url }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
-    const contentStateWithLink = Modifier.applyEntity(
+    const contentStateWithEntityApplied = Modifier.applyEntity(
         contentStateWithEntity,
         selectionState,
         entityKey
     )
-    const editorStateWithLinkEntity = EditorState.push(
-        editorState, contentStateWithLink
+    const editorStateWithEntity = EditorState.push(
+        editorState, contentStateWithEntityApplied
     )
-    const editorStateWithLink = /*RichUtils.toggleLink(
-        editorStateWithLinkEntity, 
-        editorStateWithLinkEntity.getSelection(), 
-        entityKey
-    )*/ editorStateWithLinkEntity
-    return editorStateWithLink
+    return editorStateWithEntity
 }
 
-export const removeSelectedLinks = (editorState) => {
+export const removeSelectedEntities = (editorState, entityType) => {
     //Get selected block
     const selectedBlock = getSelectedBlock(editorState)
-    const selectionState = editorState.getSelection()
     const selectedBlockKey = selectedBlock.getKey()
-    //Find selected links
-    const linksInSelectedBlock = findLinksInSelectedBlock(editorState)
-    const selectedLinks = filterLinksToSelected(
-        editorState, linksInSelectedBlock
+    //Find selected entities
+    const entitiesInSelectedBlock = findEntitiesInSelectedBlock(editorState, entityType)
+    const selectedEntities = filterEntitiesToSelected(
+        editorState, entitiesInSelectedBlock
     )
-    //Remove links
+    //Remove entities
     const contentState = editorState.getCurrentContent()
     let intermediateContentState = contentState
-    for (const link of selectedLinks) {
-        const linkSelection = (
+    for (const entity of selectedEntities) {
+        const entitySelection = (
             SelectionState
             .createEmpty(selectedBlockKey)
-            .set("anchorOffset", link.startOffset)
-            .set("focusOffset", link.endOffset)
+            .set("anchorOffset", entity.startOffset)
+            .set("focusOffset", entity.endOffset)
         )
         intermediateContentState = Modifier.applyEntity(
-            intermediateContentState, linkSelection, null
+            intermediateContentState, entitySelection, null
         )
     }
     //Apply new content state.
-    const contentStateWithoutLinks = intermediateContentState
-    const editorStateWithoutLinkEntities = EditorState.push(
-        editorState, contentStateWithoutLinks
+    const contentStateWithoutEntities = intermediateContentState
+    const editorStateWithoutEntities = EditorState.push(
+        editorState, contentStateWithoutEntities
     )
-    //Toggle links
-    let intermediateEditorState = editorStateWithoutLinkEntities
-    for (const link of selectedLinks) {
-        const linkSelection = (
-            SelectionState
-            .createEmpty(selectedBlockKey)
-            .set("anchorOffset", link.startOffset)
-            .set("focusOffset", link.endOffset)
-        )
-        /*
-        intermediateEditorState = RichUtils.toggleLink(
-            intermediateEditorState, 
-            linkSelection, 
-            link.entityKey
-        )
-        */
-    }
-    const editorStateWithoutLinks = intermediateEditorState
-    return editorStateWithoutLinks
+    return editorStateWithoutEntities
 }

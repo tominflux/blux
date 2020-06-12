@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function LinkComponent(props) {
+export default function UrlLinkComponent(props) {
     const entity = props.contentState.getEntity(props.entityKey)
     const url = entity.getData().url
     return (
