@@ -128,6 +128,6 @@ export async function loadPageStates() {
         return pageStates
     } catch (err) {
         alert("Could not load page states.")
-        throw err
+        console.error(err)
     }
 }

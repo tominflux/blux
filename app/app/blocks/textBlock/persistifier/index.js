@@ -4,6 +4,7 @@ import {
     EditorState 
 } from "draft-js"
 import { initialContentState } from "../redux/reducer"
+import compositeDecorator from '../component/decorators'
 
 
 function extractRawContentState(editorState) {
@@ -41,7 +42,7 @@ const unpersistify = (persistifiedTextBlockState) => {
     const adaptedContentState = (blockCount > 0) ?
         receivedContentState : initialContentState()
     const editorState = EditorState.createWithContent(
-        adaptedContentState
+        adaptedContentState, compositeDecorator
     )
     const { rawContentState, ...withoutRawContentState} =
         persistifiedTextBlockState

@@ -5,6 +5,7 @@ import { blockStyles } from './blockStyles'
 import Toolbar from './cmsComponents/toolbar'
 import { getElementPosition, isCMS } from '../../../misc'
 import { TEXT_ALIGNMENT_STATES } from '../redux/actionTypes'
+import 'draft-js/dist/Draft.css';
 import './styles.css'
 
 const TextComponent = (props) => {

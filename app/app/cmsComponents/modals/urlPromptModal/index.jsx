@@ -6,6 +6,9 @@ import { cmsify } from '../../cmsify'
 import './styles.css'
 
 function UrlPromptModal(props) {
+    //
+    const [url, setUrl] = React.useState(null)
+    //
     return (
         <Modal
             onClickAway={props.onClickAway}
@@ -15,11 +18,13 @@ function UrlPromptModal(props) {
             <div className="blux-url-modal__textbox-container">
                 <SeamlessTextbox
                     placeholder="URL goes here..."
+                    onChange={(e) => setUrl(e.target.value)}
                 />
             </div>
             <div className="blux-url-modal__button-container">
                 <Button
                     className="blux-url-modal__ok-button"
+                    onClick={() => props.onConfirm(url)}
                 >
                     OK
                 </Button>

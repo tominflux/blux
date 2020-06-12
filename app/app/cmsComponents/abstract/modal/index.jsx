@@ -1,18 +1,20 @@
 import React from 'react'
 import './styles.css'
 import ModalFooter from './footer'
+import { quickObjectCompare } from '../../../misc'
 
 
 export default function Modal(props) {
     if (!props.show) { return null }
-    //
+    //Refs
+    const ref = React.createRef(null)
+    //Events
     const onClick = (e, ref, onClickAway) => {
         if (e.target === ref.current) {
             onClickAway()
         }
     }
     //
-    const ref = React.createRef(null)
     return (
         <div 
             className="blux-modal"

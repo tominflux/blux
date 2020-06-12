@@ -2,7 +2,9 @@ import React from 'react'
 import BlockToggle from './blockToggle'
 import AlignmentToggle from './alignmentToggle'
 import InlineToggle from './inlineToggle'
+import LinkToggle from './linkToggle'
 import Separator from './separator'
+import UrlPromptModal from '../../../../../cmsComponents/modals/urlPromptModal'
 import { 
     GrTextAlignLeft, 
     GrTextAlignCenter, 
@@ -10,8 +12,19 @@ import {
 } from 'react-icons/gr'
 import { TEXT_ALIGNMENT_STATES } from '../../../redux/actionTypes'
 import './styles.css'
+import { applyLink } from './linkToggle/editorControls'
+
 
 export default function Toolbar(props) {
+    //State
+    const [showUrlPrompt, setShowUrlPrompt] = React.useState(false)
+    //Events
+    const onConfirmUrl = (url) => {
+        const newEditorState = applyLink(props.editorState, url)
+        props.updateEditorState(newEditorState)
+        setShowUrlPrompt(false)
+    }
+    //Constants
     const editorToggleProps = {
         editorState: props.editorState,
         updateEditorState: props.updateEditorState
@@ -20,7 +33,8 @@ export default function Toolbar(props) {
         alignmentState: props.alignmentState,
         setAlignment: props.setAlignment
     }
-    return (
+    //Render
+    return (<>
         <div 
             className={
                 "blux-toolbar" + 
@@ -51,6 +65,11 @@ export default function Toolbar(props) {
                     <span style={{fontStyle: "italic"}}>I</span>
                 </InlineToggle>
                 <Separator />
+                <LinkToggle 
+                    {...editorToggleProps}
+                    showPrompt={() => setShowUrlPrompt(true)}
+                />
+                <Separator />
                 <AlignmentToggle 
                     alignmentType={TEXT_ALIGNMENT_STATES.LEFT}
                     {...alignmentToggleProps}
@@ -79,5 +98,10 @@ export default function Toolbar(props) {
                 */}
             </div>
         </div>
-    )
+        <UrlPromptModal
+            show={showUrlPrompt}
+            onClickAway={() => setShowUrlPrompt(false)}
+            onConfirm={(url) => onConfirmUrl(url)}
+        />
+    </>)
 }
