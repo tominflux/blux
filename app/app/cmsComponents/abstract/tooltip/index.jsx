@@ -1,5 +1,5 @@
 import React from 'react'
-import { cmsify, hideable } from '../../cmsify'
+import { hideable } from '../../cmsify'
 import { inheritClasses, quickObjectCompare } from '../../../misc'
 import './styles.css'
 
@@ -27,13 +27,9 @@ const bringToLife = (hideableStaticTooltip) => {
         const [show, setShow] = React.useState(false)
         const [position, setPosition] = React.useState({x: 0, y: 0})
         //Effects
-        React.useEffect(() => {
-            if (props.targetRef.current === null)
-                return
-        }, [])
         // - Update Position
         React.useEffect(() => {
-            if (props.targetRef.current === null)
+            if (!props.targetRef.current)
                 return
             //
             const element = props.targetRef.current

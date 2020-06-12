@@ -75,8 +75,7 @@ const findLinksInSelectedBlock = (editorState) => {
         //
         else {
             const foundEndOfLink = (
-                entityKey === null ||
-                entityType !== "LINK"
+                entityKey !== currentLinkEntityKey
             )
             if (foundEndOfLink) {
                 const linkEndOffset = i

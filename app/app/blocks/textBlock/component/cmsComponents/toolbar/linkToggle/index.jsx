@@ -21,6 +21,7 @@ export default function LinkToggle(props) {
         <Toggle
             isToggled={() => isToggled(props.editorState)}
             toggle={() => toggle()}
+            tooltip="External Link"
         >
             <Octicon icon={LinkExternal} />
         </Toggle>
