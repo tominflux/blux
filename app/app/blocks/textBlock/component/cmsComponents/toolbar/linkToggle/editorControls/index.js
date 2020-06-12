@@ -149,6 +149,9 @@ const findSelectedLinks = (editorState) => {
 */
 
 export const isToggled = (editorState) => {
+    const onlyOneBlockSelected = checkOnlyOneBlockSelected(editorState)
+    if (!onlyOneBlockSelected)
+        return false
     const linksInSelectedBlock = findLinksInSelectedBlock(editorState)
     const selectedLinks = filterLinksToSelected(
         editorState, linksInSelectedBlock

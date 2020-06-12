@@ -8,6 +8,20 @@ import './styles.css'
 function UrlPromptModal(props) {
     //
     const [url, setUrl] = React.useState(null)
+    //Effects
+    React.useEffect(() => {
+        const onKeyDown = (e) => {
+            if (!props.show)
+                return
+            if (e.key === "Enter") {
+                props.onConfirm(url)
+            }
+        }
+        window.addEventListener("keydown", onKeyDown)
+        return () => {
+            window.removeEventListener("keydown", onKeyDown)
+        }
+    })
     //
     return (
         <Modal
