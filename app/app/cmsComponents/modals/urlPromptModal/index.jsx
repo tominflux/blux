@@ -8,7 +8,12 @@ import './styles.css'
 function UrlPromptModal(props) {
     //
     const [url, setUrl] = React.useState(null)
+    //Functions
+    // - URLify (auto add https:// if needed)
     //Effects
+    // - Auto focus textbox.
+
+    // - Confirm on enter press.
     React.useEffect(() => {
         const onKeyDown = (e) => {
             if (!props.show)
@@ -33,6 +38,7 @@ function UrlPromptModal(props) {
                 <SeamlessTextbox
                     placeholder="URL goes here..."
                     onChange={(e) => setUrl(e.target.value)}
+                    autofocus
                 />
             </div>
             <div className="blux-url-modal__button-container">

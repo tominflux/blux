@@ -11,6 +11,7 @@ export default function SeamlessTextbox(props) {
             onChange={props.onChange}
             onEnter={props.onEnter}
             readOnly={props.readOnly}
+            autofocus={props.autofocus}
             placeholder={props.placeholder}
         >
             {props.children}
