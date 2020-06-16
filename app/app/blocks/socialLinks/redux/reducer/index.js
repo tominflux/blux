@@ -1,5 +1,5 @@
 import SOCIAL_LINKS_ACTION_TYPES from "../actionTypes";
-import { newBlockInitialState } from "../../../../block/redux/reducer";
+import { newBlockInitialState } from "../../../../block/block/redux/reducer";
 import { immutablePush, immutableReplace, immutableDelete, immutableSwap } from "../../../../misc";
 
 

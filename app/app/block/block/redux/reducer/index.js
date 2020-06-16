@@ -1,4 +1,4 @@
-import { getBlockMap } from '../../../blockMap'
+import { getBlockMap } from '../../../../blockMap'
 
 /**
  * Creates a five character random ID.

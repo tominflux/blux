@@ -1,5 +1,5 @@
-import { PAGE_ACTION } from "../../../redux/actionTypes"
-import { BLOCK_ACTION } from "../../../page/redux/actionTypes"
+import { PAGE_ACTION } from "../../../../redux/actionTypes"
+import { BLOCK_ACTION } from "../../../../page/redux/actionTypes"
 
 /**
  * Creates an absolute action from a block action.

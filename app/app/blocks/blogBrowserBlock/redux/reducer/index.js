@@ -1,5 +1,5 @@
 import BLOG_BROWSER_ACTION_TYPES from "../actionTypes";
-import { newBlockInitialState } from "../../../../block/redux/reducer";
+import { newBlockInitialState } from "../../../../block/block/redux/reducer";
 
 
 export const blogBrowserInitialState = () => ({

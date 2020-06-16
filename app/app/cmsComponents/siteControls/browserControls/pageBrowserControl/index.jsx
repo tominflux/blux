@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../../../abstract/button'
 import Octicon, { File } from '@primer/octicons-react'
 import PageSelectorModal from '../../../modals/pageSelectorModal'
+import refreshPages from '../../../../tasks/refreshPages'
 
 
 export default function PageBrowserControl(props) {
@@ -10,6 +11,10 @@ export default function PageBrowserControl(props) {
     //Events
     const onClick = () => {
         setShowSelector(true)
+    }
+    const onConfirm = () => {
+        setShowSelector(false)
+        refreshPages()
     }
     //
     return (<>
@@ -22,8 +27,8 @@ export default function PageBrowserControl(props) {
         </Button>
         <PageSelectorModal
             show={showSelector}
-            onClickAway={() => setShowSelector(false)}
-            onConfirm={() => setShowSelector(false)}
+            onClickAway={() => onConfirm()}
+            onConfirm={() => onConfirm()}
             canRename
             canDelete
         />

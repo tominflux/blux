@@ -1,5 +1,5 @@
 import React from 'react'
-import { getBlockMap } from '../blockMap'
+import { getBlockMap } from '../../blockMap'
 import './styles.css'
 
 

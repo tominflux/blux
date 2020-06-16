@@ -1,0 +1,10 @@
+
+
+const SERIES_ACTION_TYPES = {
+    CREATE: "CREATE",
+    UPDATE: "UPDATE",
+    SWAP: "SWAP",
+    DELETE: "DELETE"
+}
+
+export default SERIES_ACTION_TYPES

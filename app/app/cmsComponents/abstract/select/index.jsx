@@ -45,7 +45,7 @@ export default function Select(props) {
         return (
             <div 
                 className="blux-select__selected"
-                onClick={() => setOpen(!isOpen)}
+                onClick={() => setOpen( (prevOpen) => !prevOpen )}
             >
                 {
                     (selectedIndex !== null) ? (

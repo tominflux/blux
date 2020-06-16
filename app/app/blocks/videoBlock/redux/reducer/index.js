@@ -1,4 +1,4 @@
-import { newBlockInitialState } from "../../../../block/redux/reducer";
+import { newBlockInitialState } from "../../../../block/block/redux/reducer";
 import VIDEO_ACTION_TYPES from "../actionTypes";
 
 export const BLOCK_TYPE_VIDEO = "video"

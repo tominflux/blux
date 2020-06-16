@@ -1,10 +1,10 @@
 import React from 'react'
 import store from '../redux/store'
-import Block from '../block'
+import Block from '../block/block'
 import PageControls from './cmsComponents/controls'
 import { getPageMap } from '../pageMap'
 import { getBlockMap } from '../blockMap'
-import { createBlockAction as blockActionToAction } from '../block/redux/actions'
+import { createBlockAction as blockActionToAction } from '../block/block/redux/actions'
 import { createActionFromPageAction } from './redux/reducer'
 
 

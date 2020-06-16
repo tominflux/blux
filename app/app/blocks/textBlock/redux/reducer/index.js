@@ -1,5 +1,5 @@
 import TEXT_ACTION_TYPES, { TEXT_ALIGNMENT_STATES } from "../actionTypes"
-import { newBlockInitialState } from "../../../../block/redux/reducer" 
+import { newBlockInitialState } from "../../../../block/block/redux/reducer" 
 import { EditorState, ContentBlock, ContentState } from "draft-js"
 import compositeDecorator from "../../component/decorators"
 

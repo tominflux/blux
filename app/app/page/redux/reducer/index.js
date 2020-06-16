@@ -8,11 +8,10 @@ import {
     PUBLISH,
     UNPUBLISH
 } from "../actionTypes"
-import BlockReducer from "../../../block/redux/reducer"
+import BlockReducer from "../../../block/block/redux/reducer"
 import { immutableInsert, immutableSwap } from "../../../misc"
 import { PAGE_ACTION } from "../../../redux/actionTypes"
 import { getPageMap } from "../../../pageMap"
-import { getBlockMap } from "../../../blockMap"
 
 
 ///////////
