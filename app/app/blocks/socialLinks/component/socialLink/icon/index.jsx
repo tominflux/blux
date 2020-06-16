@@ -3,13 +3,13 @@ import { SOCIAL_LINK_TYPE } from '../../../'
 import FacebookIcon from './facebookIcon'
 import InstagramIcon from './instagramIcon'
 import MiscIcon from './miscIcon'
-
+import './styles.css'
 
 export default function SocialLinkIcon(props) {
     switch (props.type) {
         case SOCIAL_LINK_TYPE.FACEBOOK:
             return <FacebookIcon />
-        case SOCIAL_LINK_TYPE.FACEBOOK: 
+        case SOCIAL_LINK_TYPE.INSTAGRAM: 
             return <InstagramIcon />
         case SOCIAL_LINK_TYPE.MISC:
             return <MiscIcon />

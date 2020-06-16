@@ -11,8 +11,6 @@ function UrlPromptModal(props) {
     //Functions
     // - URLify (auto add https:// if needed)
     //Effects
-    // - Auto focus textbox.
-
     // - Confirm on enter press.
     React.useEffect(() => {
         const onKeyDown = (e) => {

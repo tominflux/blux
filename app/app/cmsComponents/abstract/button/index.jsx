@@ -2,43 +2,44 @@ import React from 'react'
 import Tooltip from '../tooltip'
 import './styles.css'
 
+const _Button = React.forwardRef(
+    (forwardProps, forwardRef) => (
+        <button
+            ref={forwardRef}
+            type={forwardProps.type || "button"}
+            className={
+                "blux-button" + (
+                    (forwardProps.disabled === true) ? 
+                        " blux-button--disabled" : ""
+                ) + (
+                    (forwardProps.className) ? 
+                        " " + forwardProps.className : ""
+                )
+            }
+            style={forwardProps.style}
+            onClick={forwardProps.onClick}
+        >
+            {forwardProps.children}
+        </button>
+    )
+)
 
 function Button(props) {
-    //
-    const PureButton = React.forwardRef(
-        (props, ref) => (
-            <button
-                ref={ref}
-                type={props.type || "button"}
-                className={
-                    "blux-button" + (
-                        (props.disabled === true) ? 
-                            " blux-button--disabled" : ""
-                    ) + (
-                        (props.className) ? 
-                            " " + props.className : ""
-                    )
-                }
-                style={props.style}
-                onClick={(e)=>props.onClick(e)}
-            >
-                {props.children}
-                {tooltipElement}
-            </button>
-        )
-    )
-    //
+    //Ref
     const ref = React.createRef()
-    //
+    //Constants
     const tooltipElement = (
         props.tooltip ? 
             <Tooltip targetRef={ref}>
                 {props.tooltip}
             </Tooltip> : null
     )
-    //
+    //Render
     return (<>
-        <PureButton {...props} ref={ref} />
+        <_Button 
+            {...props} 
+            ref={ref} 
+        />
         {tooltipElement}
     </>)
 }

@@ -1,0 +1,67 @@
+
+
+.blux-select {
+    position: relative;
+    border-top-left-radius: 6pt;
+    border-top-right-radius: 6pt;
+    border-bottom: none;
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        2pt 2pt 11pt aliceblue inset, 
+        -2pt -2pt 11pt aliceblue inset, 
+        2pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        2pt -2pt 4pt rgba(0, 0, 0, 0.33), 
+        -1pt 2pt 4pt rgba(0, 0, 0, 0.66),
+        -2pt 2pt 2pt aliceblue;
+}
+
+.blux-select--closed {
+    border-bottom-left-radius: 6pt;
+    border-bottom-right-radius: 6pt;
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        2pt 2pt 11pt aliceblue inset, 
+        -2pt -2pt 11pt aliceblue inset, 
+        2pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        2pt -2pt 4pt rgba(0, 0, 0, 0.33), 
+        -1pt 2pt 4pt rgba(0, 0, 0, 0.66),
+        -2pt 2pt 2pt aliceblue;
+}
+
+.blux-select__selected {
+    padding: 3.3pt;
+}
+
+.blux-select__option {
+    padding: 3.3pt;
+    box-shadow: 
+        -1pt -1pt 2pt rgba(0, 0, 0, 0.22) inset, 
+        1pt 1pt 4pt rgba(0, 0, 0, 0.11) inset,
+        2pt 2pt 11pt aliceblue inset, 
+        -2pt -2pt 11pt aliceblue inset
+}
+
+.blux-select--closed
+.blux-select__options-container {
+    padding-top: 0pt;
+    padding-bottom: 0pt;
+}
+
+.blux-select__options-container {
+    position: absolute;
+    padding-top: 3.3pt;
+    padding-bottom: 3.3pt;
+    width: 100%;
+    top: 100%;
+    overflow: hidden;
+    transition: height 0.133s ease;
+    border-bottom-left-radius: 6pt;
+    border-bottom-right-radius: 6pt;
+    box-shadow: 
+        2pt -2pt 9pt rgba(240, 248, 255, 0.66), 
+        2pt -2pt 4pt rgba(0, 0, 0, 0.33), 
+        -1pt 2pt 4pt rgba(0, 0, 0, 0.66),
+        -2pt 2pt 2pt aliceblue;
+}

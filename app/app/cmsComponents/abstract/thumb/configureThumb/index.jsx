@@ -11,10 +11,7 @@ const ConfigureThumb = (props) => {
                     "" : " blux-thumb__configure--hidden"  
                 )
             }
-            onClick={(e) => {
-                e.stopPropagation()
-                props.onClick()
-            }}
+            onClick={props.onClick}
         >
             <Octicon icon={Gear} />
         </Button>

@@ -12,6 +12,7 @@
     z-index: 1300;
     background-color: rgba(246, 246, 255, 0.5);
     pointer-events: none;
+    max-width: 166pt;
 }
 
 .blux-tooltip__content {

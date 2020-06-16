@@ -1,7 +1,6 @@
 const { default: SOCIAL_LINKS_ACTION_TYPES } = require("../actionTypes");
 
 
-
 const addLink = (newLinkType, newLinkUrl) => ({
     type: SOCIAL_LINKS_ACTION_TYPES.ADD_LINK,
     payload: { newLinkType, newLinkUrl }
@@ -12,6 +11,11 @@ const modifyLink = (indexToModify, updatedLinkType, updatedLinkUrl) => ({
     payload: { 
         indexToModify, updatedLinkType, updatedLinkUrl 
     }
+})
+
+const swapLinks = (swapIndexA, swapIndexB) => ({
+    type: SOCIAL_LINKS_ACTION_TYPES.SWAP_LINKS,
+    payload: { swapIndexA, swapIndexB }
 })
 
 const removeLink = (indexToRemove) => ({
@@ -25,7 +29,7 @@ const removeLink = (indexToRemove) => ({
 
 
 const SOCIAL_LINKS_ACTIONS = {
-    addLink, modifyLink, removeLink
+    addLink, modifyLink, swapLinks, removeLink
 }
 
 export default SOCIAL_LINKS_ACTIONS

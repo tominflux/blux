@@ -1,0 +1,17 @@
+
+
+.blux-social-links {
+    text-align: center;
+    padding-top: 22pt;
+    padding-bottom: 22pt;
+}
+
+.blux-social-links__configure-container  {
+    position: absolute;
+    top: 50%;
+    right: 66pt;
+    transform: translateY(-50%);
+}
+.blux-social-links__configure {
+    position: static;
+}

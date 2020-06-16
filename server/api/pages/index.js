@@ -8,10 +8,14 @@ const API_PATH = "/api/pages"
 /////////
 
 
-async function readHandler(req, res) {
-    const pageIds = await discoverPages()
-    const pages = await readPages(pageIds)
-    res.send(pages)
+async function readHandler(req, res, next) {
+    try {
+        const pageIds = await discoverPages()
+        const pages = await readPages(pageIds)
+        res.send(pages)
+    } catch(err) {
+        next(err)
+    }
 }
 
 

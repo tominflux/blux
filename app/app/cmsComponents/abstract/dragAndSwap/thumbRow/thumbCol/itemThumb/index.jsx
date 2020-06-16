@@ -122,7 +122,9 @@ export default function ItemThumb(props) {
                 onDelete={props.onDelete}
                 showConfigure={props.onConfigure}
                 onConfigure={props.onConfigure}
-            />
+            >
+                {props.children}
+            </Thumb>
         </div>
     )
 }
