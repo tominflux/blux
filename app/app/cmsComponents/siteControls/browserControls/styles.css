@@ -3,6 +3,7 @@
     position: fixed;
     bottom: 22pt;
     left: 33pt;
+    z-index: 1000;
 }
 
 .blux-browser-controls__button {

@@ -9,6 +9,7 @@ import createNewPost from './createNewPost'
 import './styles.css'
 import refreshPages from '../../../tasks/refreshPages'
 import { connect } from 'react-redux'
+const path = require("path")
 
 const mapStateToProps = (state) => ({
     pages: state.PageCollection.pages
@@ -39,9 +40,12 @@ function BlogBrowserComponent(props) {
         refreshPosts(navigation)
     }
     const onNewPostClick = async () => {
-        await createNewPost(props.postsFolder)
-        await refreshPages()
-        await refreshPosts()        
+        const response = await createNewPost(props.postsFolder)
+        const responseData = await response.json()
+        const redirectPath = path.join(
+            "/", responseData.id
+        )
+        window.location = redirectPath
     }
     //
     React.useEffect(() => {

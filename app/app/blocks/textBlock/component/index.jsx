@@ -41,7 +41,7 @@ const TextComponent = (props) => {
     return (
         <div 
             className={
-                "blux-text-block" + alignmentClass
+                "blux-text-block" + alignmentClass + " container"
             }
             ref={ref}
         >

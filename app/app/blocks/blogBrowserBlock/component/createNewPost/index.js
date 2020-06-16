@@ -20,6 +20,9 @@ export default async function createNewPost(postsFolder) {
         }
     )
     if (!response.ok) {
-        alert("Could not create new page.")
+        const msg = "Could not create new page."
+        alert(msg)
+        throw new Error(msg)
     }
+    return response
 }

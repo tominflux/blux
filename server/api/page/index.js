@@ -49,7 +49,7 @@ async function createNewPage(parentPath, pageState, count=0) {
     const baseId = `new-page${suffix}`
     const name = `${baseId}.json`
     const absParentPath = getAbsPath(parentPath)
-    const newPageId = path.join(absParentPath, baseId)
+    const newPageId = path.join(parentPath, baseId)
     const newPageAbsPath = path.join(absParentPath, name)
     //
     const exists = await fs.exists(newPageAbsPath)
@@ -63,7 +63,7 @@ async function createNewPage(parentPath, pageState, count=0) {
         validatePageState(newPageId, pageStateWithId)
         const pageJson = JSON.stringify(pageStateWithId)
         await fs.writeFile(newPageAbsPath, pageJson)
-        return name
+        return { id: newPageId }
     }
 }
 
