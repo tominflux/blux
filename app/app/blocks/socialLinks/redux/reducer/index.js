@@ -22,7 +22,6 @@ export default function SocialLinksReducer(
             const linksWithLinkAdded = immutablePush(
                 newLink, state.links
             )
-            console.log("ADD_LINK")
             return {
                 ...state,
                 links: linksWithLinkAdded
@@ -38,7 +37,6 @@ export default function SocialLinksReducer(
             const linksWithLinkModified = immutableReplace(
                 modifiedLink, indexToModify, state.links
             )
-            console.log("MODIFY_LINK")
             return {
                 ...state,
                 links: linksWithLinkModified
@@ -46,7 +44,7 @@ export default function SocialLinksReducer(
         case SOCIAL_LINKS_ACTION_TYPES.SWAP_LINKS:
             const { swapIndexA, swapIndexB } = action.payload
             const linksWithLinksSwapped = immutableSwap(
-                swapIndexA, swapIndexB
+                swapIndexA, swapIndexB, state.links
             )
             return {
                 ...state,
