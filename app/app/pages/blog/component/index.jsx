@@ -14,7 +14,6 @@ export default function BlogPageComponent(props) {
                 isDraft={props.isDraft}
                 publishedDate={props.publishedDate}
                 modifiedDate={props.modifiedDate}
-                //
                 onTitleChange={(newTitle) => onTitleChange(newTitle)}
             />
             <div className="container blux-blog-page__content">

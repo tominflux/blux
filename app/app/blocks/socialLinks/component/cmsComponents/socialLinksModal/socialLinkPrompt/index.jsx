@@ -54,16 +54,16 @@ export default function SocialLinkPrompt(props) {
             heading="Configure Social Link"
         >
             <div className="row blux-social-prompt__inputs-container">
-                <div className="col-3">
+                <div className="col-3 text-right">
                     <Select
                         options={selectOptions}
                         onChange={(value) => setType(value)}
                     />
                 </div>
-                <div className="col-9">
+                <div className="col-9 text-left">
                     <SeamlessTextbox
                         placeholder="URL goes here..."
-                        onChange={(e) => setUrl(e.target.value)}
+                        onChange={(value) => setUrl(value)}
                         autofocus
                     />
                 </div>

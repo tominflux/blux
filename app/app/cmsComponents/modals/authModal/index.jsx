@@ -11,12 +11,12 @@ function AuthModal(props) {
     const [user, setUser] = React.useState(null)
     const [pass, setPass] = React.useState(null)
     //Events
-    const onUserChange = (e) => {
-        const userText = e.target.value
+    const onUserChange = (value) => {
+        const userText = value
         setUser(userText)
     }
-    const onPassChange = (e) => {
-        const passText = e.target.value
+    const onPassChange = (value) => {
+        const passText = value
         setPass(passText)
     }
     const onSubmit = () => {
@@ -42,14 +42,14 @@ function AuthModal(props) {
             <div>
                 <Textbox
                     className="blux-auth-modal__user"
-                    onChange={(e) => onUserChange(e)}
+                    onChange={(value) => onUserChange(value)}
                     placeholder={props.userPrompt || "Username"}
                 />
             </div>
             <div>
                 <Password
                     className="blux-auth-modal__pass"
-                    onChange={(e) => onPassChange(e)}
+                    onChange={(value) => onPassChange(value)}
                     placeholder={props.passPrompt || "Password"}
                 />   
             </div>

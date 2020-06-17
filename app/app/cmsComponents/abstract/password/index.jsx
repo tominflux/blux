@@ -8,7 +8,7 @@ export default function Password(props) {
             className={inheritClasses(props, "blux-textbox")}
             type="password"
             placeholder={props.children}
-            onChange={props.onChange}
+            onChange={(e) => props.onChange(e.target.value)}
         />   
     )
 }

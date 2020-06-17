@@ -20,11 +20,11 @@ const deleteItem = (deleteIndex) => ({
     payload: { deleteIndex }
 })
 
-const SERIES_ACTIONS = [
+const SERIES_ACTIONS = {
     createItem,
     updateItem,
     swapItems,
     deleteItem
-]
+}
 
 export default SERIES_ACTIONS

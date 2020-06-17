@@ -7,8 +7,9 @@ import './styles.css'
 
 
 function _SocialLinksComponent(props) {
+    //State
     const [showModal, setShowModal] = React.useState(false)
-    //
+    //Getters
     const getSocialLinks = () => (
         props.links.map(
             (link, index) => (
@@ -20,7 +21,7 @@ function _SocialLinksComponent(props) {
             )
         )
     )
-    //
+    //Render
     return (<>
         <div className="blux-social-links">
             { getSocialLinks() }

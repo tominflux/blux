@@ -7,11 +7,26 @@ export default function AutoGrowTextArea(props) {
     const ref = React.createRef()
     //State 
     const [absoluteHeight, setAbsoluteHeight] = React.useState(null)
+    //Constants
+    const {
+        className,
+        style,
+        rows,
+        cols,
+        onKeyUp,
+        onChange,
+        ...inheritedProps
+    } = props
     //Events
     const onTextAreaKeyUp = (e) => {
         setAbsoluteHeight(`0px`)
-        if (props.onKeyUp) {
-            props.onKeyUp(e)
+        if (onKeyUp) {
+            onKeyUp(e)
+        }
+    }
+    const onTextAreaChange = (e) => {
+        if (onChange) {
+            onChange(e.target.value)
         }
     }
     //Effects
@@ -21,15 +36,6 @@ export default function AutoGrowTextArea(props) {
             setAbsoluteHeight(`${element.scrollHeight}px`)
         }
     })
-    //
-    const {
-        className,
-        style,
-        rows,
-        cols,
-        onKeyUp,
-        ...inheritedProps
-    } = props
     //
     const processedStyle = {
         ...(style ? style : {}),
@@ -43,6 +49,7 @@ export default function AutoGrowTextArea(props) {
             cols={props.cols || 22}
             style={processedStyle}
             onKeyUp={(e) => onTextAreaKeyUp(e)}
+            onChange={(e) => onTextAreaChange(e)}
             {...inheritedProps}
             value={props.children}
         />

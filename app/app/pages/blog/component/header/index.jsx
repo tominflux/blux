@@ -16,8 +16,8 @@ export default function BlogHeader(props) {
         return modifiedStr
     }
     //Events
-    const onTitleChange = (e) => {
-        const newTitle = e.target.value
+    const onTitleChange = (value) => {
+        const newTitle = value
         props.onTitleChange(newTitle)
     }
     //
@@ -29,7 +29,7 @@ export default function BlogHeader(props) {
                         isCMS() ?
                             <AutoGrowTextArea
                                 className="blux-blog-header__title-textbox"
-                                onChange={(e) => onTitleChange(e)}
+                                onChange={(value) => onTitleChange(value)}
                             >
                                 {props.title}
                             </AutoGrowTextArea> :

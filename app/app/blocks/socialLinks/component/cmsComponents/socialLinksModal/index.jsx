@@ -23,7 +23,6 @@ function _SocialLinksModal(props) {
         props.swapLinks(indexA, indexB)
     }
     const onDSDeleteItem = (index) => {
-        console.log(props)
         props.removeLink(index)
     }
     // - Local Events
