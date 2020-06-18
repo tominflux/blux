@@ -36,13 +36,21 @@ function AuthCheck(props) {
     }
     const onLoginReceive = async (authValid) => {
         props.authLoginReceive(authValid)
-        if (authValid)
+        if (authValid) {
             props.onPass()
+        } else {
+            alert("Invalid credentials.")
+        }
     }
     //Functions
     const performCheck = async () => {
         props.authCheckSend()
         const response = await fetch(API_PATH)
+        if (!response.ok) {
+            const msg = "Could not check if authenticated."
+            alert(msg)
+            throw new Error(msg)
+        }
         const { configured, validSession } = await response.json()
         onCheckResponse(configured, validSession)
     }
@@ -58,11 +66,28 @@ function AuthCheck(props) {
                 body: requestJson
             }
         )
+        if (!response.ok) {
+            const msg = "Could not log-in."
+            alert(msg)
+            throw new Error(msg)
+        }
         const json = await response.json()
         const { authValid } = json
         onLoginReceive(authValid)
     }
-    //
+    //Effects 
+    // - Routine Check (Every 30 seconds.)
+    React.useEffect(() => {
+        const interval = setInterval(
+            () => performCheck(),
+            30 * 1000
+        )
+        return () => {
+            if (interval)
+                clearInterval(interval)
+        }
+    })
+    //Render
     switch (props.authState) {
         case AUTH_STATE.LOGGED_OUT:
             performCheck()

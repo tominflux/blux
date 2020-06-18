@@ -43,7 +43,7 @@ export default function SeriesReducer(state, action) {
         case SERIES_ACTION_TYPES.DELETE:
             const { deleteIndex } = action.payload
             const itemsWithoutRemovedItem = immutableDelete(
-                deleteIndex
+                deleteIndex, state.items
             )
             return {
                 ...state,

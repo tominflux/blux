@@ -15,6 +15,7 @@ export default function AutoGrowTextArea(props) {
         cols,
         onKeyUp,
         onChange,
+        children,
         ...inheritedProps
     } = props
     //Events
@@ -36,7 +37,18 @@ export default function AutoGrowTextArea(props) {
             setAbsoluteHeight(`${element.scrollHeight}px`)
         }
     })
-    //
+    //Constants
+    const readonlyProps = {
+        readOnly: true,
+        value: props.children
+    }
+    const editableProps = {
+        readOnly: false,
+        defaultValue: props.children
+    }
+    const dynamicProps = {
+        ...(props.readOnly ? readonlyProps : editableProps)
+    }
     const processedStyle = {
         ...(style ? style : {}),
         height: absoluteHeight
@@ -51,7 +63,7 @@ export default function AutoGrowTextArea(props) {
             onKeyUp={(e) => onTextAreaKeyUp(e)}
             onChange={(e) => onTextAreaChange(e)}
             {...inheritedProps}
-            value={props.children}
+            {...dynamicProps}
         />
     )
 }

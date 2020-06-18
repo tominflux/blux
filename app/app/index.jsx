@@ -8,11 +8,13 @@ import { registerCustomBlocks } from "./blockMap";
 import customComponents from '../../../blux-components'
 
 const Header = customComponents.header
+const Footer = customComponents.footer
 
 function App() {
     return (<>
         <Header />
         <BluxContent />
+        <Footer />
     </>)
 }
 

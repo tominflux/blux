@@ -13,3 +13,7 @@
 .blux-text-block__block-header-one {
     padding-bottom: 18pt;
 }
+
+.blux-text-block a {
+    color: initial;
+}
