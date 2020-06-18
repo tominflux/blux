@@ -4,12 +4,11 @@ import SeamlessTextbox from '../../abstract/seamlessTextbox'
 import Button from '../../abstract/button'
 import { cmsify } from '../../cmsify'
 import './styles.css'
+import { urlify } from '../../../misc'
 
 function UrlPromptModal(props) {
     //
     const [url, setUrl] = React.useState(null)
-    //Functions
-    // - URLify (auto add https:// if needed)
     //Effects
     // - Confirm on enter press.
     React.useEffect(() => {
@@ -25,6 +24,11 @@ function UrlPromptModal(props) {
             window.removeEventListener("keydown", onKeyDown)
         }
     })
+    //Events
+    const onTextboxChange = (value) => {
+        const newUrl = urlify(value)
+        setUrl(newUrl)
+    }
     //
     return (
         <Modal
@@ -35,7 +39,7 @@ function UrlPromptModal(props) {
             <div className="blux-url-modal__textbox-container">
                 <SeamlessTextbox
                     placeholder="URL goes here..."
-                    onChange={(value) => setUrl(value)}
+                    onChange={(value) => onTextboxChange(value)}
                     autofocus
                 />
             </div>

@@ -228,6 +228,20 @@ export function slugifyFilename(filename) {
 }
 
 
+////////
+////////
+
+
+export const urlify = (string) => (
+    (
+        string.search("https://") === -1 &&
+        string.search("http://") === -1 &&
+        !string.search("mailto:")
+    ) ? (
+        `https://${string}` 
+    ) : string
+)
+
 
 ///////
 ////////

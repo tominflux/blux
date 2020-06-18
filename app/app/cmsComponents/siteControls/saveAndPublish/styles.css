@@ -3,6 +3,7 @@
     position: fixed;
     top: 22pt;
     right: 22pt;
+    z-index: 100;
 }
 
 .blux-save-and-publish__button {
