@@ -4,7 +4,7 @@ import Button from '../../abstract/button'
 import { cmsify } from '../../cmsify'
 import './styles.css'
 
-function ConfirmPromptModal(props) {
+function _ConfirmPromptModal(props) {
     return (
         <Modal
             onClickAway={props.onClickAway}
@@ -32,4 +32,5 @@ function ConfirmPromptModal(props) {
     )
 }
 
-export default cmsify(ConfirmPromptModal)
+const ConfirmPromptModal = cmsify(_ConfirmPromptModal) 
+export default ConfirmPromptModal
