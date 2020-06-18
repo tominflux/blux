@@ -6,7 +6,7 @@ import { cmsify } from '../../cmsify'
 const path = require("path")
 import './styles.css'
 
-function MediaSelectorModal(props) {
+function _MediaSelectorModal(props) {
     //State
     const [navigation, setNavigation] = React.useState("./")
     const [selected, setSelected] = React.useState(null)
@@ -103,4 +103,5 @@ function MediaSelectorModal(props) {
     )
 }
 
-export default cmsify(MediaSelectorModal)
+const MediaSelectorModal = cmsify(_MediaSelectorModal)
+export default MediaSelectorModal

@@ -9,7 +9,7 @@ const path = require("path")
 
 const API_ROOT_PAGE = "/api/page/"
 
-function PageSelectorModal(props) {
+function _PageSelectorModal(props) {
     //State
     const [navigation, setNavigation] = React.useState("./")
     const [selected, setSelected] = React.useState(null)
@@ -94,5 +94,5 @@ function PageSelectorModal(props) {
     )
 }
 
-
-export default cmsify(PageSelectorModal)
+const PageSelectorModal = cmsify(_PageSelectorModal)
+export default PageSelectorModal
