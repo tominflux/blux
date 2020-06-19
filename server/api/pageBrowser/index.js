@@ -29,6 +29,12 @@ const getPageId = (pagePath, pageName) => (
         pageName : path.join(pagePath, pageName)
 )
 
+const getPageType = async (absPath) => {
+    const pageData = await fs.readFile(absPath)
+    const pageString = pageData.toString()
+    const pageObj = JSON.parse(pageString)
+    return pageObj.type
+}
 
 /////////
 /////////
@@ -58,10 +64,12 @@ async function readFolder(pagePath) {
         const isFolder = await checkIfFolder(filePath)
         const name = fileName.replace(".json", "")
         const id = getPageId(pagePath, name)
+        const type = (isFolder ? null : await getPageType(filePath))
         const fileInfo = {
             isFolder,
             path: filePagePath,
-            name
+            name,
+            type
         }
         listings.push(
             isFolder ? fileInfo : { ...fileInfo, id }
@@ -75,10 +83,12 @@ async function readFile(pagePath) {
     const fileName = path.basename(absPath)
     const name = fileName.replace(".json", "")
     const id = getPageId(pagePath, name)
+    const type = (isFolder ? null : await getPageType(absPath))
     return {
         path: pagePath,
         name,
-        id
+        id,
+        type
     }
 }
 

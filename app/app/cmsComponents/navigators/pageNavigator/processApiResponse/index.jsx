@@ -38,10 +38,21 @@ export const generateThumbProps = async (apiResponseItem) => {
     const { isFolder, name, path } = apiResponseItem
     return {
         type: getThumbType(isFolder),
+        pageType: apiResponseItem.type,
         children: getThumbChildren(isFolder, name),
         name: name
     }
 }
+
+export const checkPageTypeFilter = (thumbProps, types) => (
+    types && types.includes(thumbProps.pageType)
+)
+
+export const filterThumbProps = (thumbProps, thumbFilter) => (
+    thumbProps.type === NAVIGATOR_THUMB_TYPE.FOLDER || (
+        checkPageTypeFilter(thumbProps, thumbFilter.types)
+    )
+)
 
 export const generateThumbPropsCollection = async (apiResponse, onlyFolders=false) => {
     const thumbPropsCollection = []
@@ -58,4 +69,15 @@ export const generateThumbPropsCollection = async (apiResponse, onlyFolders=fals
     } else {
         return thumbPropsCollection
     }
+}
+
+export const filterThumbPropsCollection = (thumbPropsCollection, thumbFilter) => {
+    if (!thumbFilter) {
+        return thumbPropsCollection
+    }
+    const filteredThumbPropsCollection = 
+        thumbPropsCollection.filter(
+            thumbProps => filterThumbProps(thumbProps, thumbFilter)
+        )
+    return filteredThumbPropsCollection
 }

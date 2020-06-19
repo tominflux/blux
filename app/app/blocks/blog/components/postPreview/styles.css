@@ -73,3 +73,9 @@
     padding-left: 11pt;
     padding-right: 11pt;
 }
+
+.blux-post-preview__read-more {
+    font-weight: 600;
+    font-size: 16pt;
+    margin-right: 33pt;
+}

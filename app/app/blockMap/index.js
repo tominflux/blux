@@ -2,14 +2,16 @@
 import ImageBlock from '../blocks/imageBlock'
 import TextBlock from '../blocks/textBlock'
 import VideoBlock from '../blocks/videoBlock'
-import BlogBrowserBlock from '../blocks/blogBrowserBlock'
+import BlogStreamBlock from '../blocks/blog/blogStreamBlock'
 import SocialLinksBlock from '../blocks/socialLinks'
+import BlogPostPreviewBlock from '../blocks/blog/blogPostPreviewBlock'
 
 const defaultBlockMap = new Map([
     ["image", ImageBlock],
     ["text", TextBlock],
     ["video", VideoBlock],
-    ["blog-browser", BlogBrowserBlock],
+    ["blog-stream", BlogStreamBlock],
+    ["blog-post-preview", BlogPostPreviewBlock],
     ["social-links", SocialLinksBlock]
 ])
 let customBlockMap = new Map()

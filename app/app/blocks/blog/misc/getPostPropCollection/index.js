@@ -67,7 +67,7 @@ const getPreviewTextContentState = (postPage) => {
     }
 }
 
-const getPostProps = (postPageId, postPage) => {
+export const getPostProps = (postPageId, postPage) => {
     const getTitle = () => (postPage.title)
     const isDraft = () => (postPage.isDraft)
     const getModifiedDate = () => (postPage.modifiedDate)

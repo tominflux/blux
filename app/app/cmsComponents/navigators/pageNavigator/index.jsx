@@ -1,6 +1,7 @@
 import React from 'react'
 import Navigator from '../../abstract/navigator'
 import { generateThumbPropsCollection } from './processApiResponse'
+import { filterThumbPropsCollection } from './processApiResponse'
 const path = require("path")
 
 export const API_ROOT = "/api/page-browser/"
@@ -45,9 +46,13 @@ export default function PageNavigator(props) {
         )
     }
     //
-    const processApiResponse = async (response) => (
-        await generateThumbPropsCollection(response, props.onlyFolders)
-    )
+    const processApiResponse = async (response) => {
+        const thumbPropsCollection = 
+            await generateThumbPropsCollection(response, props.onlyFolders)
+        const filteredThumbPropsCollection = 
+            filterThumbPropsCollection(thumbPropsCollection, props.pageFilter)
+        return filteredThumbPropsCollection
+    }
     //
     return (
         <Navigator

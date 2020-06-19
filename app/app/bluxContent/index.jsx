@@ -73,17 +73,36 @@ const mapDispatchToProps = {
 }
 
 function BluxContent(props) {
+    //State
+    const [passedOnce, setPassedOnce] = React.useState(false)
     //Effects
+    // - Public Refresh
     if (!isCMS()) {
         React.useEffect(() => {
             refreshPages()
         }, [])
     }
+    // - Scroll-to-Top after Link
+    const prevLocationRef = React.useRef()
+    React.useEffect(() => {
+        if (props.location !== prevLocationRef.current) {
+            window.scrollTo(0, 0)
+            prevLocationRef.current = props.location
+        }
+    })
+    //Events
+    const onPass = () => {
+        if (!passedOnce) {
+            refreshPages()
+            setPassedOnce(true)
+        }
+    }
+    //Render
     return (<>
         { 
             isCMS() ? 
                 <AuthCheck 
-                    onPass={() => refreshPages()}
+                    onPass={() => onPass()}
                 /> : 
                 null 
         }

@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from '../../../../../cmsComponents/abstract/button'
+import Button from '../../../../../../cmsComponents/abstract/button'
 import './styles.css'
 import Octicon, { Pencil } from '@primer/octicons-react'
-import { cmsify, hideable } from '../../../../../cmsComponents/cmsify'
-import { inheritClasses } from '../../../../../misc'
+import { cmsify, hideable } from '../../../../../../cmsComponents/cmsify'
+import { inheritClasses } from '../../../../../../misc'
 
 function NewPost(props) {
     return (

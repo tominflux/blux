@@ -94,6 +94,19 @@ export default function PostPreview(props) {
                                     /> : null
                             }
                         </div>
+                        {
+                            (props.readMore) ? (
+                                <div className="container text-right">
+                                    <div className="row">
+                                        <div className="col">
+                                            <span className="blux-post-preview__read-more">
+                                                Read More...
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : null
+                        }
                     </div>
                 </div>
             </div>

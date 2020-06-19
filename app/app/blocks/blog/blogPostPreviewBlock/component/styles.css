@@ -1,0 +1,11 @@
+
+
+.blog-post-preview__container {
+    position: relative;
+    border-top: 0.66pt solid rgba(0, 0, 0, 0.66);
+}
+
+.blog-post-preview__no-post {
+    padding-top: 88pt;
+    padding-bottom: 88pt;
+}

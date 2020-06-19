@@ -5,7 +5,7 @@ import { AiOutlineFileAdd, AiOutlineFolderAdd } from 'react-icons/ai'
 import './styles.css'
 
 
-export default function PageSelectorModal(props) {
+export default function PageSelectorFooter(props) {
     return (
         <div className="row align-items-center">
             <div className="col-5">

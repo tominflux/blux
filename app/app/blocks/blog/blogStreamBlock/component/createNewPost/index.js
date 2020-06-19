@@ -1,4 +1,4 @@
-import { blogPageInitialState } from "../../../../pages/blog/redux/reducer"
+import { blogPageInitialState } from "../../../../../pages/blog/redux/reducer"
 
 const path = require("path")
 

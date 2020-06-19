@@ -84,6 +84,7 @@ function _PageSelectorModal(props) {
                 onSelect={
                     (thumbProps) => onSelect(thumbProps)
                 }
+                pageFilter={props.pageFilter}
                 canSelect={true}
                 canRename={props.canRename}
                 canDelete={props.canDelete}

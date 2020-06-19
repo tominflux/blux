@@ -1,13 +1,13 @@
 import React from 'react'
-import getPostPropCollection from './getPostPropCollection'
-import PostPreview from './postPreview'
-import { blockify } from '../../blockify'
-import ConfigureButton from '../../../cmsComponents/abstract/configureButton'
-import PageFolderSelectorModal from '../../../cmsComponents/modals/pageFolderSelectorModal'
+import getPostPropCollection from '../../misc/getPostPropCollection'
+import PostPreview from '../../components/postPreview'
+import { blockify } from '../../../blockify'
+import ConfigureButton from '../../../../cmsComponents/abstract/configureButton'
+import PageFolderSelectorModal from '../../../../cmsComponents/modals/pageFolderSelectorModal'
 import NewPost from './cmsComponents/newPost'
 import createNewPost from './createNewPost'
 import './styles.css'
-import refreshPages from '../../../tasks/refreshPages'
+import refreshPages from '../../../../tasks/refreshPages'
 import { connect } from 'react-redux'
 const path = require("path")
 
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
     pages: state.PageCollection.pages
 })
 
-function BlogBrowserComponent(props) {
+function BlogStreamComponent(props) {
     //State
     const [showSelector, setShowSelector] = React.useState(false)
     const [postPropCollection, setPostPropCollection] = 
@@ -82,8 +82,7 @@ function BlogBrowserComponent(props) {
             show={showSelector}
             onClickAway={() => setShowSelector(false)}
             onConfirm={
-                (navigation) => 
-                    onConfirm(navigation)
+                (navigation) => onConfirm(navigation)
             }
             canRename
             canDelete
@@ -91,6 +90,6 @@ function BlogBrowserComponent(props) {
     </>)
 }
 
-const connected = connect(mapStateToProps, null)(BlogBrowserComponent)
+const connected = connect(mapStateToProps, null)(BlogStreamComponent)
 const blockified = blockify(connected)
 export default blockified
