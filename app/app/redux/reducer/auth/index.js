@@ -1,4 +1,10 @@
-import { AUTH_CHECK_SEND, AUTH_CHECK_RECEIVE, AUTH_LOGIN_SEND, AUTH_LOGIN_RECEIVE } from "../../actionTypes";
+import { 
+    AUTH_CHECK_SEND, 
+    AUTH_CHECK_RECEIVE, 
+    AUTH_LOGIN_SEND, 
+    AUTH_LOGIN_RECEIVE, 
+    AUTH_EXPIRE 
+} from "../../actionTypes";
 
 
 export const AUTH_STATE = {
@@ -55,6 +61,11 @@ export default function Auth(
                         AUTH_STATE.LOGGED_IN :
                         AUTH_STATE.INVALID_AUTH
                 )
+            }
+        case AUTH_EXPIRE:
+            return {
+                ...state,
+                authState: AUTH_STATE.LOGGED_OUT
             }
         default:
             return state

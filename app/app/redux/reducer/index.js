@@ -3,8 +3,16 @@ import Auth from './auth'
 import StaticRepo from'./staticRepo'
 import PageCollection from './pageCollection'
 
-export default combineReducers({
+const cmsReducers = {
     Auth,
-    StaticRepo,
-    PageCollection,
+    StaticRepo
+}
+
+const publicReducers = {
+    PageCollection
+}
+
+export default combineReducers({
+    ...cmsReducers,
+    ...publicReducers
 })

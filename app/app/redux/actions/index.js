@@ -14,6 +14,7 @@ import {
     AUTH_CHECK_RECEIVE,
     AUTH_LOGIN_SEND,
     AUTH_LOGIN_RECEIVE,
+    AUTH_EXPIRE,
 } from "../actionTypes";
 
 
@@ -91,4 +92,9 @@ export const authLoginSend = () => ({
 export const authLoginReceive = (authValid) => ({
     type: AUTH_LOGIN_RECEIVE,
     payload: { authValid }
+})
+
+export const authExpire = () => ({
+    type: AUTH_EXPIRE,
+    payload: {}
 })

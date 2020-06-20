@@ -3,7 +3,8 @@ import {
     authCheckSend,
     authCheckReceive,
     authLoginSend,
-    authLoginReceive
+    authLoginReceive,
+    authExpire
 } from '../../redux/actions'
 import FatalError from '../covers/fatalError'
 import LoginModal from './loginModal'
@@ -18,7 +19,8 @@ const mapDispatchToProps = {
     authCheckSend,
     authCheckReceive,
     authLoginSend,
-    authLoginReceive
+    authLoginReceive,
+    authExpire
 }
 
 const API_PATH = "/api/auth"
@@ -79,7 +81,9 @@ function AuthCheck(props) {
     // - Routine Check (Every 30 seconds.)
     React.useEffect(() => {
         const interval = setInterval(
-            () => performCheck(),
+            () => {
+                props.authExpire()
+            },
             30 * 1000
         )
         return () => {
