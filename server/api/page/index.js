@@ -2,13 +2,9 @@ const path = require("path")
 const fs = require("fs-extra")
 const { getConfig } = require("../../../misc/config")
 const { HTTP_METHOD, configureAuthApi } = require("../auth")
+const { updateBegan, updateEnded, isSaving } = require("./synchroniser")
 
 const API_PATH = /\/api\/page\/(.*)/
-
-const blankPage = () => ({
-    type: "default",
-    blocks: []
-})
 
 const getPageRoot = () => (
     path.join(
@@ -129,12 +125,23 @@ const readHandler = async (req, res, next) => {
 }
 
 function updateHandler(req, res, next) {
+    if (isSaving()) {
+        const msg = "Page is already saving."
+        console.error(msg)
+        next(new Error(msg))
+        return
+    }
+    updateBegan()
     const pageId = req.params[0] 
     updatePage(pageId, req.body)
     .then(
-        onFilePageState => res.send(onFilePageState)
+        (onFilePageState) => {
+            updateEnded()
+            res.send(onFilePageState)
+        }
     )
     .catch(err => { 
+        updateEnded()
         console.error(err)
         next(err)
     })

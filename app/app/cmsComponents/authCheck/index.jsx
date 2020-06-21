@@ -46,6 +46,7 @@ function AuthCheck(props) {
     }
     //Functions
     const performCheck = async () => {
+        console.log("Performing Auth Check.")
         props.authCheckSend()
         const response = await fetch(API_PATH)
         if (!response.ok) {
@@ -82,6 +83,7 @@ function AuthCheck(props) {
     React.useEffect(() => {
         const interval = setInterval(
             () => {
+                console.log("Auth expired.")
                 props.authExpire()
             },
             30 * 1000

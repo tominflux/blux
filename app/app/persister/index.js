@@ -93,7 +93,7 @@ export async function savePageState(pageState) {
             body: pageJson
         })
         if (!response.ok) {
-            alert("Could not save page state.")
+            //alert("Could not save page state.")
             console.error(pageState)
             throw new Error(
                 "Could not save page state."
