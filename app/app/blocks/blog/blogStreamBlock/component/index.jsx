@@ -28,11 +28,31 @@ function BlogStreamComponent(props) {
         setPostPropCollection(freshPostPropCollection)
     }
     //Getters
-    const getPostPreviews = () => (
-        postPropCollection.map(
-            postProps => <PostPreview {...postProps}/>
+    const getOrderedPostPropCollection = () => (
+        postPropCollection.sort(
+            (postPropsA, postPropsB) => {
+                const dateA = (
+                    postPropsA.draft ? 
+                        postPropsA.modifiedDate :
+                        postPropsA.publishedDate
+                )
+                const dateB = (
+                    postPropsB.draft ? 
+                        postPropsB.modifiedDate :
+                        postPropsB.publishedDate
+                )
+                return (dateA < dateB)
+            }
         )
     )
+    const getPostPreviews = () => {
+        const orderedPostPropCollection = 
+            getOrderedPostPropCollection()
+        const postPreviews = orderedPostPropCollection.map(
+            postProps => <PostPreview {...postProps}/>
+        )
+        return postPreviews
+    }
     //Events
     const onConfirm = (navigation) => {
         setShowSelector(false)
