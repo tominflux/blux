@@ -16,3 +16,16 @@
 .blux-text-block--justified {
     text-align: justify;
 }
+
+@media (max-width: 767px) {
+    .blux-text-block {
+        padding-left: 11pt;
+        padding-right: 11pt;
+    }
+}
+@media (max-width: 575px) {
+    .blux-text-block {
+        padding-top: 11pt;
+        padding-bottom: 11pt;
+    }
+}
