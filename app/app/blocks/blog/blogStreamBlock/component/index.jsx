@@ -76,9 +76,11 @@ function BlogStreamComponent(props) {
     return (<>
         <div className="blux-blog-browser">
             <div className="container blux-blog-browser__container">
+                {/*
                 <h1 className="blux-blog-browser__heading">
                     Recent Posts
                 </h1>
+                */}
                 <NewPost 
                     onClick={() => onNewPostClick()}
                     show={props.showCms}

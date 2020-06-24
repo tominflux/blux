@@ -16,11 +16,9 @@ export default function PostPreview(props) {
         const imgElement = imgRef.current
         if (imgElement === null)
             return 
-        const imgPortrait = (imgElement.height > imgElement.width)
-        if (imgPortrait === true && isImagePortait === false) {
-            setImagePortrait(true)
-        } else if (imgPortrait === false && isImagePortait === true) {
-            setImagePortrait(false)
+        const currentImagePortrait = (imgElement.naturalHeight > imgElement.naturalWidth)
+        if (currentImagePortrait !== isImagePortait) {
+            setImagePortrait(currentImagePortrait)
         }
     })
     //Getters
@@ -46,22 +44,24 @@ export default function PostPreview(props) {
         <Link to={url} className="blux-post-preview">
             <div className="blux-post-preview__container">
                 <div className="row align-items-center blux-post-preview__row">
-                    <div className="col-3 blux-post-preview__image-col">
-                        <img 
-                            ref={imgRef}
-                            className={imgClass}
-                            src={props.imgSrc}
-                            alt=""
-                        /> 
+                    <div className="col-lg-3 blux-post-preview__image-col">
+                        <div className="blux-post-preview__image-container">
+                            <img 
+                                ref={imgRef}
+                                className={imgClass}
+                                src={props.imgSrc}
+                                alt=""
+                            /> 
+                        </div>
                     </div>
-                    <div className="col-9 blux-post-preview__text-col">
+                    <div className="col-lg-9 blux-post-preview__text-col">
                         <div className="row align-items-start blux-post-preview__header">
-                            <div className="col-7">
+                            <div className="col-md-7">
                                 <h1 className="blux-post-preview__title">
                                     {props.title}
                                 </h1>
                             </div>
-                            <div className="col-5">
+                            <div className="col-md-5">
                                 <div className="row blux-post-preview__date-row">
                                     <div className="col">
                                         {

@@ -1,14 +1,33 @@
 
+
+/******************/
+
+
 .blux-text-block__block-unstyled {
     font-size: 15pt;
     padding-bottom: 18pt;
 }
 
-
 .blux-text-block__block-paragraph {
     font-size: 15pt;
     padding-bottom: 18pt;
 }
+
+@media (max-width: 767px) {
+    .blux-text-block__block-unstyled {
+        font-size: 12pt;
+        padding-bottom: 11pt;
+    }
+    
+    .blux-text-block__block-paragraph {
+        font-size: 12pt;
+        padding-bottom: 11pt;
+    }
+}
+
+
+/******************/
+
 
 .blux-text-block__block-header-one {
     padding-bottom: 18pt;
