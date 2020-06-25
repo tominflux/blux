@@ -33,26 +33,24 @@ export default function BlogHeader(props) {
                             >
                                 {props.title}
                             </AutoGrowTextArea> :
-                            <h1>
-                                {props.title}
-                            </h1>
+                            props.title
                     }
                 </h1>
-                <div className="row">
-                    <div className="col-6 blux-blog-header__published-col">
+                <div className="row blux-blog-header__date-details">
+                    <div className="col-sm-6 blux-blog-header__published-col">
                         {
                             props.isDraft ?
                                 <span className="blux-blog-header__draft">
                                     Draft
                                 </span> :
                                 <span className="blux-blog-header__published">
-                                    {`Published: ${getPublishedStr()}` }
+                                    {`Published - ${getPublishedStr()}` }
                                 </span>
                         } 
                     </div>
-                    <div className="col-6 blux-blog-header__modified-col">
+                    <div className="col-sm-6 blux-blog-header__modified-col">
                         <span className="blux-blog-header__modified">
-                            {`Last Modified: ${getModifiedStr()}` }
+                            {`Edited - ${getModifiedStr()}` }
                         </span>
                     </div>
                 </div>

@@ -24,6 +24,12 @@ const checkSessionCookie = (req) => {
         sessionToken ? 
             checkSessionValid(sessionToken) : false
     )
+    if (!validSession) {
+        const cookiesStr = JSON.stringify(cookies)
+        console.log(
+            `Cookies: ${cookiesStr}`
+        )
+    }
     return validSession
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Editor, EditorState } from 'draft-js'
-import { blockStyles } from '../../../textBlock/component/blockStyles'
+import { blockStyles } from './blockStyles'
 const path = require("path")
 import './styles.css'
 

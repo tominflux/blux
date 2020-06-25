@@ -11,14 +11,13 @@
 
 .blux-post-preview__container {
     padding-top: 22pt;
-    padding-bottom: 22pt;
+    padding-bottom: 16.66pt;
     border-bottom: 0.66pt solid rgba(0, 0, 0, 0.66);
 }
 
 .blux-post-preview__image-col {
     text-align: center;
     padding: unset;
-    padding-bottom: 22pt;
 }
 
 .blux-post-preview__image-container {
@@ -48,7 +47,7 @@
 }
 
 .blux-post-preview__header {
-    margin-bottom: 11pt;
+    margin-bottom: 8.8pt;
 }
 
 .blux-post-preview__title {
@@ -58,9 +57,15 @@
 
 @media (max-width: 767px) {
     .blux-post-preview__title {
-        font-size: 18pt;
+        font-size: 19.66pt;
         text-align: center;
         margin-bottom: 11pt;
+    }
+}
+
+@media (max-width: 991px) {
+    .blux-post-preview__image-col {
+        padding-bottom: 22pt;
     }
 }
 
@@ -116,6 +121,7 @@
         font-size: 9pt;
     }
 }
+
 
 
 /********************/

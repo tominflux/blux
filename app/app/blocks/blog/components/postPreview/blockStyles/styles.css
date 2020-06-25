@@ -1,0 +1,48 @@
+
+
+/******************/
+
+
+.blux-post-preview__block-unstyled {
+    font-size: 14.66pt;
+    padding-bottom: 22pt;
+    font-weight: 300;
+}
+
+.blux-post-preview__block-paragraph {
+    font-size: 14.66pt;
+    padding-bottom: 22pt;
+    font-weight: 300;
+}
+
+@media (max-width: 767px) {
+    .blux-post-preview__block-unstyled {
+        font-size: 12.22pt;
+        padding-bottom: 13.33pt;
+    }
+    
+    .blux-post-preview__block-paragraph {
+        font-size: 12.22pt;
+        padding-bottom: 13.33pt;
+    }
+}
+
+
+/******************/
+
+
+.blux-post-preview__block-header-one {
+    font-size: 23.33pt;
+    padding-bottom: 18.88pt;
+}
+
+
+@media (max-width: 767px) {
+    .blux-post-preview__block-header-one {
+        font-size: 20pt;
+    }
+}
+
+.blux-post-preview a {
+    color: initial;
+}

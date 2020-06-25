@@ -17,6 +17,9 @@
 }
 
 @media (max-width: 767px) {
+    .blux-image-block {
+        padding: 11pt 0pt;
+    }
     .blux-image-block__img {
         max-width: calc(100vw - 44pt);
     }

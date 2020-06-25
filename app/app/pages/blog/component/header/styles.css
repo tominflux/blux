@@ -9,7 +9,8 @@
 
 .blux-blog-header__title {
     text-align: center;
-    font-size: 38pt;
+    font-size: 32pt;
+    margin-bottom: 13.3pt;
 }
 
 .blux-blog-header__title-textbox {    
@@ -20,12 +21,16 @@
     text-align: right;
     padding-right: 22pt;
     border-right: 0.33pt solid rgba(0,0,0,0.44);
+    font-size: 15.22pt;
 }
 
 .blux-blog-header__modified-col {
     text-align: left;
     padding-left: 22pt;
     border-left: 0.33pt solid rgba(0,0,0,0.44);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14.33pt;
 }
 
 .blux-blog-header__draft {
@@ -41,4 +46,39 @@
     transform: translateX(-50%);
     width: 44%;
     border-bottom: 3.3pt solid black; 
+}
+
+@media (max-width: 991px) {
+    .blux-blog-header__published-col {
+        font-size: 14.44pt;
+    } 
+    .blux-blog-header__modified-col {
+        font-size: 14pt;
+    }
+}
+
+@media (max-width: 767px) {
+    .blux-blog-header__published-col {
+        font-size: 13.33pt;
+    } 
+    .blux-blog-header__modified-col {
+        font-size: 13pt;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .blux-blog-header__published-col {
+        border: none;
+        text-align: center;
+        padding-right: 0;
+        margin-bottom: 6.6pt;
+        font-size: 12pt;
+    }
+
+    .blux-blog-header__modified-col {
+        border: none;
+        text-align: center;
+        font-size: 11pt;
+    }
 }

@@ -83,8 +83,10 @@ function AuthCheck(props) {
     React.useEffect(() => {
         const interval = setInterval(
             () => {
-                console.log("Auth expired.")
-                props.authExpire()
+                if (props.authState === AUTH_STATE.LOGGED_IN) {
+                    console.log("Auth expired.")
+                    props.authExpire()
+                }
             },
             30 * 1000
         )

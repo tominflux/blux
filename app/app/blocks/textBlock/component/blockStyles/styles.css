@@ -4,24 +4,26 @@
 
 
 .blux-text-block__block-unstyled {
-    font-size: 15pt;
-    padding-bottom: 18pt;
+    font-size: 16.6pt;
+    padding-bottom: 24.4pt;
+    font-weight: 300;
 }
 
 .blux-text-block__block-paragraph {
-    font-size: 15pt;
-    padding-bottom: 18pt;
+    font-size: 16.6pt;
+    padding-bottom: 24.4pt;
+    font-weight: 300;
 }
 
 @media (max-width: 767px) {
     .blux-text-block__block-unstyled {
-        font-size: 12pt;
-        padding-bottom: 11pt;
+        font-size: 13.3pt;
+        padding-bottom: 16.6pt;
     }
     
     .blux-text-block__block-paragraph {
-        font-size: 12pt;
-        padding-bottom: 11pt;
+        font-size: 13.3pt;
+        padding-bottom: 16.6pt;
     }
 }
 
@@ -30,7 +32,16 @@
 
 
 .blux-text-block__block-header-one {
-    padding-bottom: 18pt;
+    font-size: 32pt;
+    padding-bottom: 24.4pt;
+    font-weight: 400;
+}
+
+
+@media (max-width: 767px) {
+    .blux-text-block__block-header-one {
+        font-size: 22pt;
+    }
 }
 
 .blux-text-block a {
