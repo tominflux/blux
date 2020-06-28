@@ -86,7 +86,8 @@ const postHandler = async (req, res, next) => {
                     sameSite: true,
                     signed: true,
                     secure: true,
-                    maxAge: SESSION_SHELF_LIFE
+                    maxAge: SESSION_SHELF_LIFE,
+                    path: "/"
                 }
                 res
                 .cookie(
