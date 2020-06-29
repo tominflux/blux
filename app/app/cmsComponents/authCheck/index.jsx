@@ -66,6 +66,7 @@ function AuthCheck(props) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'same-origin',
                 body: requestJson
             }
         )
