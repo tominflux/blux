@@ -28,8 +28,9 @@ function BlogStreamComponent(props) {
         setPostPropCollection(freshPostPropCollection)
     }
     //Getters
-    const getOrderedPostPropCollection = () => (
-        postPropCollection.sort(
+    const getOrderedPostPropCollection = () => {
+        const sortedPostPropCollection = [...postPropCollection]
+        sortedPostPropCollection.sort(
             (postPropsA, postPropsB) => {
                 const dateA = (
                     postPropsA.draft ? 
@@ -41,10 +42,11 @@ function BlogStreamComponent(props) {
                         postPropsB.modifiedDate :
                         postPropsB.publishedDate
                 )
-                return (dateA < dateB)
+                return dateB - dateA
             }
         )
-    )
+        return sortedPostPropCollection
+    }
     const getPostPreviews = () => {
         const orderedPostPropCollection = 
             getOrderedPostPropCollection()
