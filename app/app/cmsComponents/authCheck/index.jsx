@@ -48,7 +48,11 @@ function AuthCheck(props) {
     const performCheck = async () => {
         console.log("Performing Auth Check.")
         props.authCheckSend()
-        const response = await fetch(API_PATH)
+        const response = await fetch(
+            API_PATH, {
+                credentials: 'same-origin'
+            }
+        )
         if (!response.ok) {
             const msg = "Could not check if authenticated."
             alert(msg)
