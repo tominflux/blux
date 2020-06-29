@@ -11,7 +11,7 @@ const removePage = async (pageId) => {
         API_ROOT, pageId
     )
     const response = await fetch(
-        deletePath, { method: "DELETE" }
+        deletePath, { method: "DELETE", credentials: "same-origin" }
     )
     if (!response.ok) {
         const msg = `Could not delete page. [pageId=${pageId}]`

@@ -19,6 +19,7 @@ export default function MediaNavigator(props) {
             uploadPath, 
             {
                 method: "POST",
+                credentials: "same-origin",
                 body: formData
             }
         )
@@ -56,6 +57,7 @@ export default function MediaNavigator(props) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "same-origin",
                 body: JSON.stringify(requestBody)
             }
         )
@@ -67,7 +69,7 @@ export default function MediaNavigator(props) {
         )
         await fetch(
             deletePath,
-            { method: "DELETE" }
+            { method: "DELETE", credentials: "same-origin" }
         )
     }
     //Functions

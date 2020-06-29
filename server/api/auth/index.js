@@ -85,7 +85,7 @@ const postHandler = async (req, res, next) => {
                     httpOnly: true,
                     sameSite: true,
                     signed: true,
-                    secure: true,
+                    secure: process.env.NODE_ENV ? true : false,
                     maxAge: SESSION_SHELF_LIFE,
                     path: "/"
                 }

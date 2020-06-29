@@ -16,6 +16,7 @@ export default async function createNewPost(postsFolder) {
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: "same-origin",
             body: JSON.stringify(pageState)
         }
     )

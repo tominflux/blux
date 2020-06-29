@@ -56,7 +56,7 @@ const unpersistify = (persistifiedPageState) => ({
 })
 
 async function checkPageModified(persistifiedPageState, pageApiPath) {
-    const response = await fetch(pageApiPath)
+    const response = await fetch(pageApiPath, { credentials: "same-origin" })
     const serverPageState = await response.json()
     const pageModified = (
         !quickObjectCompare(persistifiedPageState, serverPageState)
@@ -90,6 +90,7 @@ export async function savePageState(pageState) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
+            credentials: "same-origin",
             body: pageJson
         })
         if (!response.ok) {
@@ -110,7 +111,7 @@ export async function loadPageStates() {
         getRunType() === RUN_TYPE.CMS ?
             "/api/pages" : "/content/pages.json"
     )
-    const response = await fetch(pagesLocation)
+    const response = await fetch(pagesLocation, { credentials: "same-origin" })
     if (!response.ok) {
         alert("Could not load page states.")
         throw new Error(

@@ -43,6 +43,7 @@ function _MediaSelectorModal(props) {
             uploadPath, 
             {
                 method: "POST",
+                credentials: "same-origin",
                 body: formData
             }
         )
@@ -57,7 +58,7 @@ function _MediaSelectorModal(props) {
         )
         const response = await fetch(
             requestPath, 
-            { method: "POST" }
+            { method: "POST", credentials: "same-origin" }
         )
         if (!response.ok) {
             alert("Could not create new folder.")

@@ -110,7 +110,7 @@ export default function Navigator(props) {
     React.useEffect(() => {
         //Functions
         const fetchApiResponse = async () => {
-            const rawResponse = await fetch(getRequestPath())
+            const rawResponse = await fetch(getRequestPath(), { credentials: "same-origin" })
             const parsedResponse = await rawResponse.json()
             return parsedResponse
         }

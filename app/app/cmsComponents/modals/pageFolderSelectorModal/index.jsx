@@ -31,7 +31,7 @@ function PageFolderSelectorModal(props) {
         )
         const response = await fetch(
             requestPath,
-            { method: "POST" }
+            { method: "POST", credentials: "same-origin"}
         )
         if (!response.ok) {
             alert("Could not create new page.")
@@ -44,7 +44,7 @@ function PageFolderSelectorModal(props) {
         )
         const response = await fetch(
             requestPath,
-            { method: "POST" }
+            { method: "POST", credentials: "same-origin"}
         )
         if (!response.ok) {
             alert("Could not create new page.")

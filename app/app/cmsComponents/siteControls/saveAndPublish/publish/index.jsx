@@ -13,7 +13,7 @@ export default function Publish(props) {
         props.setSavingOrPublishing(true)
         const response = await fetch(
             "/api/publish", 
-            { method: "POST" }
+            { method: "POST", credentials: "same-origin" }
         )
         if (response.status !== 200) {
             alert("Could not publish website.")

@@ -12,7 +12,7 @@ const getPostPageIds = async (postsFolder) => {
     const requestPath = path.join(
         PAGE_BROWSER_API_PATH, postsFolder
     )
-    const response = await fetch(requestPath)
+    const response = await fetch(requestPath, { credentials: "same-origin" })
     if (response.ok) {
         const pathInfo = await response.json()
         if (pathInfo.isFolder) {

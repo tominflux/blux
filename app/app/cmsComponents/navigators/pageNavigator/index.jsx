@@ -31,6 +31,7 @@ export default function PageNavigator(props) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "same-origin",
                 body: JSON.stringify(requestBody)
             }
         )
@@ -42,7 +43,7 @@ export default function PageNavigator(props) {
         )
         await fetch(
             deletePath,
-            { method: "DELETE" }
+            { method: "DELETE", credentials: "same-origin" }
         )
     }
     //

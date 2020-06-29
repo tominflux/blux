@@ -9,7 +9,7 @@ export default function Save(props) {
         props.setSavingOrPublishing(true)
         const response = await fetch(
             "/api/save-state", 
-            { method: "POST" }
+            { method: "POST", credentials: "same-origin" }
         )
         if (response.status !== 200) {
             alert("Could not save website state.")

@@ -41,6 +41,7 @@ function _PageSelectorModal(props) {
             { 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "same-origin",
                 body: JSON.stringify(requestBody)
             }
         )
@@ -56,7 +57,7 @@ function _PageSelectorModal(props) {
         )
         const response = await fetch(
             requestPath,
-            { method: "POST" }
+            { method: "POST", credentials: "same-origin" }
         )
         if (!response.ok) {
             alert("Could not create new page.")
