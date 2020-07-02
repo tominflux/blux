@@ -1,4 +1,4 @@
-
+const path = require("path")
 
 export const extractAllRawText = (page) => {
     const blocks = page.blocks
@@ -44,3 +44,7 @@ export const extractImages = (page) => {
     }
     return images
 }
+
+export const extractName = (page) => (
+    path.basename(page.id)
+)
