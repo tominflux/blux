@@ -3,6 +3,7 @@ import { getBlockMap } from "../blockMap"
 import { getRunType, RUN_TYPE, quickObjectCompare } from "../misc"
 import { modified } from "../page/redux/actions"
 import store from "../redux/store"
+import searchPages from "../util/hocs/searchEnabled/searchPages"
 const path = require("path")
 
 const API_PATH = "/api/page/"

@@ -29,8 +29,7 @@ function BlogStreamComponent(props) {
     }
     //Getters
     const getOrderedPostPropCollection = () => {
-        const sortedPostPropCollection = [...postPropCollection]
-        sortedPostPropCollection.sort(
+        const sortedPostPropCollection = [...postPropCollection].sort(
             (postPropsA, postPropsB) => {
                 const dateA = (
                     postPropsA.draft ? 

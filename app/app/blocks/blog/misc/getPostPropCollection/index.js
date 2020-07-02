@@ -76,8 +76,8 @@ export const getPostProps = (postPageId, postPage) => {
             postPage.publishedDate : "N/A"
     )
     const getImgSrc = () => {
-        if (postPage.imgSrc) {
-            return postPage.imgSrc
+        if (postPage.image) {
+            return postPage.image.src
         } else {
             for (const block of postPage.blocks) {
                 if (block.type === "image") {
