@@ -1,8 +1,8 @@
 import { createStore } from "redux"
-import BluxReducer from '../reducer'
+import CompositeReducer from '../reducer'
 
 const store = createStore(
-    BluxReducer,
+    CompositeReducer,
     (
         window.__REDUX_DEVTOOLS_EXTENSION__ && 
         window.__REDUX_DEVTOOLS_EXTENSION__()

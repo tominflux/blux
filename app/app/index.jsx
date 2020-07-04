@@ -5,10 +5,10 @@ import BluxContent from '../app/bluxContent'
 import store from './redux/store'
 import { Provider } from 'react-redux'
 import { registerCustomBlocks } from "./blockMap";
-import customComponents from '../../../blux-components'
+import BluxApp from '../../../blux-app'
 
-const Header = customComponents.header
-const Footer = customComponents.footer
+const Header = BluxApp.components.header
+const Footer = BluxApp.components.footer
 
 function App() {
     return (<>
@@ -33,6 +33,6 @@ async function render() {
 }
 
 export async function runApp() {
-    registerCustomBlocks(customComponents.blocks)
+    registerCustomBlocks(BluxApp.blocks)
     render()
 }

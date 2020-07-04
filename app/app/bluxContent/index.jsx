@@ -60,11 +60,6 @@ const getLoadingPage = () => (
 //Redux mappers
 const mapStateToProps = (state) => ({
     authState: state.Auth.authState,
-    staticRepoState: {
-        checking: state.StaticRepo.checking,
-        initialised: state.StaticRepo.initialised,
-        initialising: state.StaticRepo.initialising
-    },
     pages: state.PageCollection.pages
 })
 const mapDispatchToProps = { 

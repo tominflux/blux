@@ -12,18 +12,6 @@ export const PAGE_ACTION = "PAGE_ACTION"
 /////////
 /////////
 
-/* STATIC REPO */
-
-export const STATIC_REPO_CHECK_SEND = "STATIC_REPO_CHECK_SEND"
-export const STATIC_REPO_CHECK_RECEIVE = "STATIC_REPO_CHECK_RECEIVE"
-export const STATIC_REPO_IMPORT_SEND = "STATIC_REPO_IMPORT_SEND"
-export const STATIC_REPO_IMPORT_RECEIVE = "STATIC_REPO_IMPORT_RECEIVE"
-
-
-/////////
-/////////
-/////////
-
 /* AUTH */
 
 export const AUTH_CHECK_SEND = "AUTH_CHECK_SEND"

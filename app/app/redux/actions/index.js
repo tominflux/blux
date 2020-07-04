@@ -4,11 +4,6 @@ import {
     RECEIVE_PAGES, 
     PAGE_REMOVED,
     PAGE_ACTION, 
-    //GIT CHECK
-    STATIC_REPO_CHECK_SEND,
-    STATIC_REPO_CHECK_RECEIVE,
-    STATIC_REPO_IMPORT_SEND,
-    STATIC_REPO_IMPORT_RECEIVE,
     //AUTH CHECK
     AUTH_CHECK_SEND,
     AUTH_CHECK_RECEIVE,
@@ -42,33 +37,6 @@ export const pageAction = (pageIndex, pageAction) => ({
         pageAction
     }
 })
-
-
-/////////
-/////////
-/////////
-
-
-export const staticRepoCheckSend = () => ({
-    type: STATIC_REPO_CHECK_SEND,
-    payload: {}
-})
-
-export const staticRepoCheckReceive = (alreadyImported) => ({
-    type: STATIC_REPO_CHECK_RECEIVE,
-    payload: { alreadyImported }
-})
-
-export const staticRepoImportSend = () => ({
-    type: STATIC_REPO_IMPORT_SEND,
-    payload: {}
-})
-
-export const staticRepoImportReceive = (successful) => ({
-    type: STATIC_REPO_IMPORT_RECEIVE,
-    payload: { successful }
-})
-
 
 /////////
 /////////

@@ -1,18 +1,24 @@
 import { combineReducers } from "redux";
 import Auth from './auth'
-import StaticRepo from'./staticRepo'
 import PageCollection from './pageCollection'
+import BluxApp from '../../../../../blux-app'
 
 const cmsReducers = {
-    Auth,
-    StaticRepo
+    Auth
 }
 
 const publicReducers = {
     PageCollection
 }
 
-export default combineReducers({
+const customReducers = {
+    ...BluxApp.redux.reducers
+}
+
+const compositeReducer = combineReducers({
     ...cmsReducers,
-    ...publicReducers
+    ...publicReducers,
+    ...customReducers
 })
+
+export default compositeReducer
