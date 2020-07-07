@@ -66,21 +66,31 @@ function determinePageRelevance(searchText, page) {
  */
 export default function searchPages(searchText, pages) {
     const trimmedSearchText = searchText.trim()
-    if (trimmedSearchText === "") {
-        return pages
-    }
-    const results = pages.map(
-        (page) => ({
-            relevance: determinePageRelevance(trimmedSearchText, page),
-            page    
-        })
+    const results = (
+        (trimmedSearchText !== "") ?
+            pages.map(
+                (page) => ({
+                    relevance: determinePageRelevance(trimmedSearchText, page),
+                    page    
+                })
+            ) : 
+            pages.map(
+                (page) => ({
+                    relevance: null,
+                    page    
+                })
+            )
     )
     const filteredResults = results.filter(
         (result) => (result.relevance !== SEARCH_RELEVANCE.NONE)
     )
     const sortedResults = [...filteredResults].sort(
         (resultA, resultB) => {
-            if (resultA.relevance !== resultB.relevance) {
+            if (
+                resultA.relevance !== null &&
+                resultB.relevance !== null &&
+                resultA.relevance !== resultB.relevance
+            ) {
                 return (resultB.relevance - resultA.relevance)
             } else {
                 return (
