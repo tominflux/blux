@@ -1,0 +1,17 @@
+
+
+.blux-image-block__placeholder {
+    display: inline-block;
+    text-align: center;
+    width: 330pt;
+    height: 330pt;
+    border-radius: 6.6pt;
+    border: 1.33pt solid rgba(0, 0, 0, 0.44);
+}
+
+
+.blux-image-block__placeholder-icon {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

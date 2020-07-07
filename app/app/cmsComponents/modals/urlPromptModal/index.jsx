@@ -6,9 +6,14 @@ import { cmsify } from '../../cmsify'
 import './styles.css'
 import { urlify } from '../../../misc'
 
-function UrlPromptModal(props) {
+function _UrlPromptModal(props) {
     //
     const [url, setUrl] = React.useState(null)
+    //Functions
+    const confirm = () => {
+        props.onConfirm(url)
+        setUrl(null)
+    }
     //Effects
     // - Confirm on enter press.
     React.useEffect(() => {
@@ -16,7 +21,7 @@ function UrlPromptModal(props) {
             if (!props.show)
                 return
             if (e.key === "Enter") {
-                props.onConfirm(url)
+                confirm()
             }
         }
         window.addEventListener("keydown", onKeyDown)
@@ -46,7 +51,7 @@ function UrlPromptModal(props) {
             <div className="blux-url-modal__button-container">
                 <Button
                     className="blux-url-modal__ok-button"
-                    onClick={() => props.onConfirm(url)}
+                    onClick={() => confirm()}
                 >
                     OK
                 </Button>
@@ -55,4 +60,5 @@ function UrlPromptModal(props) {
     )
 }
 
-export default cmsify(UrlPromptModal)
+const UrlPromptModal = cmsify(_UrlPromptModal)
+export default UrlPromptModal

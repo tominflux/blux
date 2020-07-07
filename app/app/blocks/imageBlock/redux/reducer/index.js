@@ -4,7 +4,9 @@ import { newBlockInitialState } from "../../../../block/block/redux/reducer"
 export const newImageInitialState = () => ({
     ...newBlockInitialState("image"),
     src: null,
-    alt: null
+    alt: null,
+    pageLink: null,
+    externalLink: null
 })
 
 export default function ImageReducer(
@@ -22,6 +24,20 @@ export default function ImageReducer(
             return {
                 ...state,
                 alt: newAlt
+            }
+        case IMAGE_ACTION_TYPES.SET_PAGE_LINK:
+            const { newPageLink } = action.payload
+            return {
+                ...state,
+                pageLink: newPageLink,
+                externalLink: null
+            }
+        case IMAGE_ACTION_TYPES.SET_EXTERNAL_LINK:
+            const { newExternalLink } = action.payload
+            return {
+                ...state,
+                pageLink: null,
+                externalLink: newExternalLink
             }
         default:
             return state

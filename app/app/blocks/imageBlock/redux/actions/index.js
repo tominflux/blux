@@ -13,13 +13,26 @@ const updateImageAlt = newAlt => ({
     payload: { newAlt }
 })
 
+const setPageLink = newPageLink => ({
+    type: IMAGE_ACTION_TYPES.SET_PAGE_LINK,
+    payload: { newPageLink }
+})
+
+const setExternalLink = newExternalLink => ({
+    type: IMAGE_ACTION_TYPES.SET_EXTERNAL_LINK,
+    payload: { newExternalLink }
+})
+
 
 /////////
 /////////
 
 
 const IMAGE_ACTIONS = {
-    updateImageSrc, updateImageAlt
+    updateImageSrc, 
+    updateImageAlt,
+    setPageLink,
+    setExternalLink
 }
 
 export default IMAGE_ACTIONS

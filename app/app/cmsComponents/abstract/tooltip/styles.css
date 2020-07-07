@@ -10,13 +10,13 @@
         0pt 1.66pt 3pt rgba(22, 22, 88, 0.33);
     font-size: 11pt;
     z-index: 1300;
-    background-color: rgba(246, 246, 255, 0.5);
+    background-color: rgba(246, 246, 255, 0.66);
     pointer-events: none;
     max-width: 166pt;
 }
 
 .blux-tooltip__content {
     display: inline-block;
-    opacity: 0.75;
+    opacity: 0.88;
     max-width: 166pt;
 }
