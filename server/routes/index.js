@@ -8,6 +8,9 @@ async function serve(expressApp, htmlFolderLocation) {
         const htmlPath = path.join(htmlFolderLocation, "index.html")
         const htmlFileExists = await fs.exists(htmlPath)
         if (!htmlFileExists) {
+            console.error(
+                `Could not serve route: ${htmlPath}.`
+            )
             res.send(
                 "<p> " + 
                     "Could not render route, HTML document " +
