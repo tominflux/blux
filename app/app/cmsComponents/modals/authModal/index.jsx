@@ -42,7 +42,7 @@ function AuthModal(props) {
             <div>
                 <Textbox
                     className="blux-auth-modal__user"
-                    onChange={(value) => onUserChange(value)}
+                    onChange={(e) => onUserChange(e.target.value)}
                     placeholder={props.userPrompt || "Username"}
                 />
             </div>

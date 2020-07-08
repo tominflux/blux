@@ -32,14 +32,13 @@ function ImageComponent(props) {
         const pageId = (
             (thumbProps !== null) ? 
                 path.join(
-                    navigation, thumbProps.name
+                    "/", navigation, thumbProps.name
                 ) : null
         )
         props.setPageLink(pageId)
         setShowPageSelector(false)
     }
     const onConfirmUrl = (url) => {
-        console.log(url)
         props.setExternalLink(url)
         setShowUrlPrompt(false)
     }

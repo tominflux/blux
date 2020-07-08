@@ -44,7 +44,7 @@ function _UrlPromptModal(props) {
             <div className="blux-url-modal__textbox-container">
                 <SeamlessTextbox
                     placeholder="URL goes here..."
-                    onChange={(value) => onTextboxChange(value)}
+                    onChange={(e) => onTextboxChange(e.target.value)}
                     autofocus
                 />
             </div>

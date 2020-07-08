@@ -63,7 +63,7 @@ export default function SocialLinkPrompt(props) {
                 <div className="col-9 text-left">
                     <SeamlessTextbox
                         placeholder="URL goes here..."
-                        onChange={(value) => setUrl(value)}
+                        onChange={(e) => setUrl(e.target.value)}
                         autofocus
                     />
                 </div>
