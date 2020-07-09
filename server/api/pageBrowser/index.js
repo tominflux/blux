@@ -129,21 +129,35 @@ async function renamePageOrFolder(pagePath, newPath) {
     await fs.rename(absPath, slugifiedPath)
 }
 
-
-async function deletePageOrFolder(pagePath) {
-    const absPathFolder = getAbsPath(pagePath)
-    const absPathPage = absPathFolder + ".json"
-    const existsFolder = await fs.exists(absPathFolder)
-    const existsFile = await fs.exists(absPathPage)
-    if (!existsFolder && !existsFile) {
+async function deletePage(pagePath) {
+    const absPath = getAbsPath(pagePath) + ".json"
+    const exists = await fs.exists(absPath)
+    if (!exists) {
         throw new Error(
-            "Specified page or folder does not exist. " +
-            pagePath
+            `Specified page does not exist. [path=${pagePath}]`
         )
     }
-    const isFolder = existsFolder
-    const absPath = isFolder ? absPathFolder : absPathPage
     await fs.remove(absPath)
+}
+
+async function deleteFolder(pagePath) {
+    const absPath = getAbsPath(pagePath)
+    const exists = await fs.exists(absPath)
+    if (!exists) {
+        throw new Error(
+            `Specified folder does not exist. [path=${pagePath}]`
+        )
+    }
+    await fs.remove(absPath)
+}
+
+
+async function deletePageOrFolder(pagePath, isFolder) {
+    if (isFolder) {
+        await deleteFolder(pagePath)
+    } else {
+        await deletePage(pagePath)
+    }
 }
 
 /////////
@@ -188,8 +202,9 @@ async function updateHandler(req, res, next) {
 
 async function deleteHandler(req, res, next) {
     const pagePath = req.params[0]
+    const isFolder = req.body.isFolder
     try {
-        await deletePageOrFolder(pagePath)
+        await deletePageOrFolder(pagePath, isFolder)
         res.send(pagePath)
     } catch (err) {
         next(err)

@@ -34,7 +34,10 @@ export const extractImages = (page) => {
     }
     const blocks = page.blocks
     const imageBlocks = blocks.filter(
-        block => (block.type === "image")
+        block => (
+            block.type === "image" ||
+            block.type === "banner-image"
+        )
     )
     for (const imageBlock of imageBlocks) {
         images.push({

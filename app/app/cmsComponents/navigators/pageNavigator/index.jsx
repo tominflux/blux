@@ -2,6 +2,7 @@ import React from 'react'
 import Navigator from '../../abstract/navigator'
 import { generateThumbPropsCollection } from './processApiResponse'
 import { filterThumbPropsCollection } from './processApiResponse'
+import { NAVIGATOR_THUMB_TYPE } from '../../abstract/navigator/thumbRow/thumbCol'
 const path = require("path")
 
 export const API_ROOT = "/api/page-browser/"
@@ -41,9 +42,19 @@ export default function PageNavigator(props) {
         const deletePath = path.join(
             API_ROOT, navigation, thumbProps.name
         )
+        const requestBody = {
+            isFolder: (thumbProps.type === NAVIGATOR_THUMB_TYPE.FOLDER)
+        }
         await fetch(
             deletePath,
-            { method: "DELETE", credentials: "same-origin" }
+            { 
+                method: "DELETE", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "same-origin",
+                body: JSON.stringify(requestBody)
+            }
         )
     }
     //
