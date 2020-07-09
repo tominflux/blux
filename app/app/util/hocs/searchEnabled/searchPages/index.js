@@ -92,11 +92,25 @@ export default function searchPages(searchText, pages) {
                 resultA.relevance !== resultB.relevance
             ) {
                 return (resultB.relevance - resultA.relevance)
-            } else {
+            } else if (
+                resultA.page.publishedDate !== null &&
+                resultB.page.publishedDate !== null
+            ) {
                 return (
                     resultB.page.publishedDate - 
                     resultA.page.publishedDate
                 )
+            } else {
+                if (resultA.page.publishedDate !== null) {
+                    return (0 - 1)
+                } else if (resultB.page.publishedDate !== null) {
+                    return (1 - 0)
+                } else {
+                    return (
+                        resultB.page.modifiedDate -
+                        resultA.page.modifiedDate
+                    )
+                }
             }
         }
     )
