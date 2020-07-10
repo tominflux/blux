@@ -1,11 +1,11 @@
 
 
 .blux-create-block {
-    text-align: center;
-    height: 166pt;
-    padding-top: 44pt;
     z-index: 100;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
 
 
