@@ -7,7 +7,8 @@ export default function ItemThumb(props) {
     const getThumbProps = () => ({
         type: NAVIGATOR_THUMB_TYPE.ITEM,
         name: props.name,
-        bgUrl: props.bgUrl
+        bgUrl: props.bgUrl,
+        data: props.data || null
     })
     //Events
     const onClick = async () => {

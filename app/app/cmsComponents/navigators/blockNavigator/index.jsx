@@ -23,7 +23,7 @@ export default function BlockNavigator(props) {
                 type: NAVIGATOR_THUMB_TYPE.ITEM,
                 children: BlockIcon ? <BlockIcon /> : null,
                 name: block.displayName || blockKey,
-                blockKey: blockKey
+                data: { blockKey }
             }
         }
         const thumbPropsCollection = blockKeys.map(

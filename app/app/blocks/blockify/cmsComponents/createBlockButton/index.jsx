@@ -22,8 +22,7 @@ function _CreateBlockButton(props) {
         setShowBlockGallery(false)
         //Retrieve selected block.
         const blockMap = getBlockMap()
-        const blockKey = thumbProps.blockKey
-        console.log(thumbProps)
+        const blockKey = thumbProps.data.blockKey
         if (!blockMap.has(blockKey)) {
             const msg = (
                 `Selected block [blockKey=${blockKey}] does `
@@ -46,7 +45,7 @@ function _CreateBlockButton(props) {
                 newBlockInitialState(blockKey)
         )
         //Dispatch create block redux action.
-        createBlock(
+        props.createBlock(
             props.pageId,
             props.blockId,
             initialState
