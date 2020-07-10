@@ -16,9 +16,7 @@ export default function Navigator(props) {
     const [thumbPropsCollection, setThumbPropsCollection] = React.useState([])
     const [dragOver, setDragOver] = React.useState(false)
     const [selected, setSelected] = React.useState(null) //Thumb Name
-    //Functions 
-    const getRequestPath = () => path.join(props.apiPath, navigation)
-    //Actions
+   //Actions
     const navigate = (newNavigation) => {
         setNavigation(newNavigation)
         setReceived(false)
@@ -109,14 +107,6 @@ export default function Navigator(props) {
     // - Fetch and Generate Thumbs
     React.useEffect(() => {
         //Functions
-        const fetchApiResponse = async () => {
-            const rawResponse = await fetch(getRequestPath(), { credentials: "same-origin" })
-            const parsedResponse = await rawResponse.json()
-            return parsedResponse
-        }
-        const processIntoThumbProps = async (apiResponse) => (
-            await props.processApiResponse(apiResponse)
-        )
         const addUpDirThumb = (intermediateThumbProps) => (
             (
                 navigation !== "/" && 
@@ -135,11 +125,10 @@ export default function Navigator(props) {
         const fetchAndGenerateThumbs = async () => {
             setMostRecentFetch(Date.now())
             setFetching(true)
-            const response = await fetchApiResponse()
+            const thumbsProps = await props.fetchThumbs(navigation)
             setFetching(false)
             setReceived(true)
-            const processedThumbProps = await processIntoThumbProps(response)
-            const thumbsPropsWithUpDir = addUpDirThumb(processedThumbProps)
+            const thumbsPropsWithUpDir = addUpDirThumb(thumbsProps)
             setThumbPropsCollection(thumbsPropsWithUpDir)
         }  
         //

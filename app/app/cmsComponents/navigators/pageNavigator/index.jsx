@@ -57,21 +57,39 @@ export default function PageNavigator(props) {
             }
         )
     }
-    //
-    const processApiResponse = async (response) => {
-        const thumbPropsCollection = 
-            await generateThumbPropsCollection(response, props.onlyFolders)
-        const filteredThumbPropsCollection = 
-            filterThumbPropsCollection(thumbPropsCollection, props.pageFilter)
-        return filteredThumbPropsCollection
+    //Functions
+    const fetchThumbs = async (navigation) => {
+        const requestPath = path.join(API_ROOT, navigation)
+        const response = await fetch(
+            requestPath, 
+            { credentials: "same-origin" }
+        )
+        if (!response.ok) {
+            const msg = "Could not fetch PageNavigator thumbs."
+            alert(msg)
+            throw new Error(msg)
+        }
+        try {
+            const thumbsData = await response.json()
+            const thumbPropsCollection = await generateThumbPropsCollection(
+                thumbsData, props.onlyFolders
+            )
+            const filteredThumbPropsCollection = filterThumbPropsCollection(
+                thumbPropsCollection, props.pageFilter
+            )
+            return filteredThumbPropsCollection
+        } catch (err) {
+            console.error(err)
+            alert("Could not parse PageNavigator thumbs.")
+            throw err
+        }
     }
-    //
+    //Render
     return (
         <Navigator
-            apiPath={API_ROOT}
-            processApiResponse={
-                async (response) => 
-                    await processApiResponse(response)
+            fetchThumbs={
+                async (navigation) => 
+                    await fetchThumbs(navigation)
             }
             onNavigate={
                 async (navigation) =>
