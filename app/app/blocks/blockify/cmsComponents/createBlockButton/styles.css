@@ -9,6 +9,7 @@
 }
 
 
+
 .blux-create-block__button {
     position: static;
     font-size: 24pt;
@@ -19,35 +20,4 @@
     margin-left: 6pt;
     height: 33pt;
     vertical-align: middle;
-    transform: translateX(0%);
-    transition: position 0.3s ease, transform 0.122s ease, opacity 0.22s ease;
-}
-.blux-create-block__button--hidden {
-    transform: scale(0.0);
-    opacity: 0.0;
-}
-
-.blux-create-block__select {
-    margin-right: 6pt;
-    transform: scaleX(1.0);
-    opacity: 1.0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.blux-create-block--unopened {
-    padding: 0;
-    height: 0;
-}
-
-.blux-create-block--unopened
-.blux-create-block__button {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.blux-create-block--unopened
-.blux-create-block__select {
-    transform: scaleX(0.0);
-    opacity: 0.0;
 }

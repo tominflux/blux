@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../../../abstract/button'
-
+import './styles.css'
 
 
 export default function BlockGalleryFooter(props) {

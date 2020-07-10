@@ -1,8 +1,8 @@
 import React from 'react'
+import Modal from '../../abstract/modal'
 import BlockNavigator from '../../navigators/blockNavigator'
 import Footer from './footer'
 import { cmsify } from '../../cmsify'
-import './styles.css'
 
 
 function _BlockGallery(props) {
@@ -15,7 +15,7 @@ function _BlockGallery(props) {
     //Modal Events
     const onConfirm = () => {
         if (props.onConfirm)
-            props.onConfirm(selected, navigation)
+            props.onConfirm(selected)
     }
     //Render
     return (

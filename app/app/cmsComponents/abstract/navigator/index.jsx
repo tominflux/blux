@@ -125,11 +125,11 @@ export default function Navigator(props) {
         const fetchAndGenerateThumbs = async () => {
             setMostRecentFetch(Date.now())
             setFetching(true)
-            const thumbsProps = await props.fetchThumbs(navigation)
+            const thumbs = await props.fetchThumbs(navigation)
             setFetching(false)
             setReceived(true)
-            const thumbsPropsWithUpDir = addUpDirThumb(thumbsProps)
-            setThumbPropsCollection(thumbsPropsWithUpDir)
+            const thumbsWithUpDir = addUpDirThumb(thumbs)
+            setThumbPropsCollection(thumbsWithUpDir)
         }  
         //
         const fetchRequired = (

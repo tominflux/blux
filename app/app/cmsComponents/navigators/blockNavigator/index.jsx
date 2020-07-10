@@ -14,14 +14,16 @@ export default function BlockNavigator(props) {
     const fetchThumbs = () => {
         //Get block map (including custom)
         const blockMap = getBlockMap()
-        const blockKeys = blockMap.keys()
+        const blockKeys = [...blockMap.keys()]
         //Map to thumbProps collection.
         const blockToThumbProps = (blockKey) => {
             const block = blockMap.get(blockKey)
+            const BlockIcon = block.icon || null
             return {
                 type: NAVIGATOR_THUMB_TYPE.ITEM,
-                children: block.icon || null,
-                name: block.displayName || blockKey
+                children: BlockIcon ? <BlockIcon /> : null,
+                name: block.displayName || blockKey,
+                blockKey: blockKey
             }
         }
         const thumbPropsCollection = blockKeys.map(

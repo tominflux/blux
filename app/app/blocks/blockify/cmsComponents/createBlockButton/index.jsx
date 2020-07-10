@@ -1,111 +1,83 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { createBlock } from '../../../../page/redux/actions'
-import { getBlockMap } from '../../../../blockMap'
-import './styles.css'
 import Button from '../../../../cmsComponents/abstract/button'
-import { cmsify } from '../../../../cmsComponents/cmsify'
+import BlockGallery from '../../../../cmsComponents/modals/blockGallery'
+import { createBlock } from '../../../../page/redux/actions'
+import { connect } from 'react-redux'
+import { inheritClasses } from "../../../../misc"
+import { cmsify, hideable } from '../../../../cmsComponents/cmsify'
+import { getBlockMap } from '../../../../blockMap'
+import { newBlockInitialState } from '../../../../block/block/redux/reducer'
+import './styles.css'
 
 
 //Redux mappers
 const mapDispatchToProps = { createBlock }
 
-//Handlers 
-const onUnopenedClick = (openFn) => {
-    openFn()
-}
-const onOpenedClick = (
-    selectedType, pageId, blockBeforeId, createBlock, closeFn
-) => {
-    const blockDescriptor = getBlockMap().get(selectedType)
-    const initialStateFn = blockDescriptor.redux.initialState
-    const initialState = initialStateFn()
-    createBlock(pageId, blockBeforeId, initialState)
-    closeFn()
-}
-
-//Events
-const onButtonClick = (
-    opened, openFn, selectedType, pageId, blockBeforeId, createBlock,
-    closeFn
-) => {
-    if (opened === true) {
-        onOpenedClick(
-            selectedType, pageId, blockBeforeId, createBlock, closeFn
+function _CreateBlockButton(props) {
+    //State
+    const [showBlockGallery, setShowBlockGallery] = React.useState(false)
+    //Events 
+    const onBlockGalleryConfirm = (thumbProps) => {
+        //Close block gallery UI.
+        setShowBlockGallery(false)
+        //Retrieve selected block.
+        const blockMap = getBlockMap()
+        const blockKey = thumbProps.blockKey
+        console.log(thumbProps)
+        if (!blockMap.has(blockKey)) {
+            const msg = (
+                `Selected block [blockKey=${blockKey}] does `
+                `not exist.`
+            )
+            alert(msg)
+            throw new Error(msg)
+        }
+        const block = blockMap.get(blockKey)
+        //Create new block instance state
+        const initialStateFn = (
+            block.redux ? (
+                block.redux.initialState ? 
+                    block.redux.initialState : null
+            ) : null
         )
-    } else {
-        onUnopenedClick(openFn)
+        const initialState = (
+            initialStateFn ? 
+                initialStateFn() :
+                newBlockInitialState(blockKey)
+        )
+        //Dispatch create block redux action.
+        createBlock(
+            props.pageId,
+            props.blockId,
+            initialState
+        )
     }
-}
-const onSelectType = (e, setSelectedType) => {
-    const newType = e.target.value
-    setSelectedType(newType)
-}
-
-//
-const CreateBlockButton = (props) => {
-    const [opened, setOpened] = React.useState(false)
-    const [selectedType, setSelectedType] = React.useState("image")
-    const blockTypes = [...getBlockMap().keys()]
-    /*
-    if (props.show === false && opened === true) {
-        setOpened(false)
-    }
-    */
-    //Create mouse position observer to check if
-    //mouse is very distant from element.
-    //If so, close it.
-    return (
-        <div 
-            className={
-                "blux-create-block" + (opened ? 
-                    "" : " blux-create-block--unopened"
-                )
-            }
-        >
-            <select
-                className="blux-create-block__select"
-                onChange={(e)=>{
-                    onSelectType(e, setSelectedType)
-                }}
-            >
-                { 
-                    blockTypes.map(
-                        (type, index) => (
-                            <option key={index} value={type}>
-                                {type}
-                            </option>
-                        )
-                    ) 
-                }
-            </select>
-            <Button 
-                className={
-                    "blux-create-block__button" + (props.show ? 
-                        "" : " blux-create-block__button--hidden"    
-                    )
-                }
-                onClick={()=>{
-                    onButtonClick(
-                        opened,
-                        () => setOpened(true),
-                        selectedType, 
-                        props.pageId, 
-                        props.blockId,
-                        props.createBlock,
-                        () => setOpened(false)
-                    )
-                }}
-                tooltip="Create New Block"
+    //Render
+    return (<>
+        <div className={inheritClasses(props, "blux-create-block")}>
+            <Button
+                className="blux-create-block__button"
+                onClick={() => setShowBlockGallery(true)}
             >
                 +
             </Button>
         </div>
-    )
+        <BlockGallery
+            onClickAway={() => setShowBlockGallery(false)}
+            show={showBlockGallery}
+            onConfirm={(thumbProps) => onBlockGalleryConfirm(thumbProps)}
+        />
+    </>)
 }
 
-export default cmsify(
-    connect(
-        null, mapDispatchToProps
-    )(CreateBlockButton)
-)
+const connectedCreateBlockButton = 
+    connect(null, mapDispatchToProps)(_CreateBlockButton)
+const hideableCreateBlockButton = 
+    hideable(connectedCreateBlockButton)
+const cmsifiedCreateBlockButton = 
+    cmsify(hideableCreateBlockButton)
+
+const CreateBlockButton = cmsifiedCreateBlockButton
+export default CreateBlockButton
+
+

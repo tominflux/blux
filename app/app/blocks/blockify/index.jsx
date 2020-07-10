@@ -1,9 +1,9 @@
 import React from 'react'
-import './styles.css'
 import DeleteBlockButton from './cmsComponents/deleteBlockButton'
 import MoveBlockControl from './cmsComponents/moveBlockControl'
 import CreateBlockButton from './cmsComponents/createBlockButton'
 import { isCMS } from '../../misc'
+import './styles.css'
 
 export const blockify = (component) => {
     const InnerComponent = component
