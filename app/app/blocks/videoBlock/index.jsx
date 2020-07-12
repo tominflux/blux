@@ -1,7 +1,9 @@
+import React from 'react'
 import VideoComponent from './component'
 import VIDEO_ACTIONS from './redux/actions'
 import VIDEO_ACTION_TYPES from './redux/actionTypes'
 import VideoReducer, { videoInitialState } from './redux/reducer'
+import Octicon, { Play } from '@primer/octicons-react'
 
 
 const VideoBlock = {
@@ -11,7 +13,9 @@ const VideoBlock = {
         actionTypes: VIDEO_ACTION_TYPES,
         reducer: VideoReducer,
         initialState: videoInitialState
-    }
+    },
+    displayName: "Video",
+    icon: () => <Octicon icon={Play} size="large"/>
 }
 
 export default VideoBlock

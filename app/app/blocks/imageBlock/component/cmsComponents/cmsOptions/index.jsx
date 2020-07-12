@@ -1,24 +1,33 @@
 import React from 'react'
-import ImageCmsSelectImage from './selectImage'
-import ImageCmsApplyExternalLink from './applyExternalLink'
-import ImageCmsApplyPageLink from './applyPageLink'
+import BlockOptions from '../../../../../cmsComponents/modals/blockOptions'
+import BlockOptionsButton from '../../../../../cmsComponents/modals/blockOptions/button'
+import Octicon, { Link, LinkExternal, FileMedia } from '@primer/octicons-react'
 import { inheritClasses } from '../../../../../misc'
 import { cmsify, hideable } from '../../../../../cmsComponents/cmsify'
 import './styles.css'
 
 function _ImageCmsOptions(props) {
     return (
-        <div className={inheritClasses(props, "blux-image-block__cms")}>
-            <ImageCmsSelectImage 
+        <BlockOptions show={props.show}>
+            <BlockOptionsButton
+                tooltip="Select Image"
                 onClick={props.onSelectImage}
-            />
-            <ImageCmsApplyPageLink
+            >
+                <Octicon icon={FileMedia} size="medium"/>
+            </BlockOptionsButton>
+            <BlockOptionsButton
+                tooltip="Page Link"
                 onClick={props.onApplyPageLink}
-            />
-            <ImageCmsApplyExternalLink
+            >
+                <Octicon icon={Link} size="medium"/>
+            </BlockOptionsButton>
+            <BlockOptionsButton
+                tooltip="External Link"
                 onClick={props.onApplyExternalLink}
-            />
-        </div>
+            >
+                <Octicon icon={LinkExternal} size="medium"/>
+            </BlockOptionsButton>
+        </BlockOptions>
     )
 }
 
