@@ -3,25 +3,32 @@ import VideoCmsOptions from './cmsComponents/cmsOptions'
 import MediaSelectorModal from '../../../cmsComponents/modals/mediaSelectorModal'
 import { VIDEO_SOURCE_TYPE } from '..';
 import VideoBlockLocalVideo from './localVideo';
+import VideoBlockEmbedVideo from './embedVideo' 
 import VideoPlaceholder from './placeholder';
 import { MEDIA_VIDEO } from '../../../misc';
 import { blockify } from '../../blockify';
 const path = require("path")
 import './styles.css'
+import UrlPromptModal from '../../../cmsComponents/modals/urlPromptModal';
 
 function VideoBlock(props) {
     //State
-    const [showSelector, setShowSelector] = React.useState(false)
+    const [showMediaSelector, setShowMediaSelector] = React.useState(false)
+    const [showUrlPrompt, setShowUrlPrompt] = React.useState(false)
     //Events
-    const onConfirm = (thumbProps, navigation) => {
-        setShowSelector(false)
+    const onConfirmMedia = (thumbProps, navigation) => {
+        setShowMediaSelector(false)
         const mediaId = path.join(
             navigation, thumbProps.name
         )
         const videoSrc = path.join(
             "/content/media", mediaId
         )
-        props.updateVideoSrc(videoSrc)
+        props.setLocalSrc(videoSrc)
+    }
+    const onConfirmUrl = (url) => {
+        props.setEmbedSrc(url)
+        setShowUrlPrompt(false)
     }
     //Getters
     const getVideo = () => {
@@ -35,13 +42,20 @@ function VideoBlock(props) {
                         src={props.src}
                     />
                 )
+            case VIDEO_SOURCE_TYPE.EMBED:
+                return (
+                    <VideoBlockEmbedVideo
+                        src={props.src}
+                    />
+                )
             default:
                 const msg = (
                     `Unrecognised video source type ` +
                     `[srcType=${props.srcType}].`
                 )
                 alert(msg)
-                throw new Error(msg)
+                console.error(msg)
+                return <VideoPlaceholder />
         }
     }
     //
@@ -50,21 +64,27 @@ function VideoBlock(props) {
             { getVideo() }
             <VideoCmsOptions
                 show={props.showCms}
-                onSelectLocal={() => setShowSelector(true)}
+                onSelectLocal={() => setShowMediaSelector(true)}
+                onEmbedIframe={() => setShowUrlPrompt(true)}
             />
         </div>
         <MediaSelectorModal
-            show={showSelector}
-            onClickAway={() => setShowSelector(false)}
+            show={showMediaSelector}
+            onClickAway={() => setShowMediaSelector(false)}
             onConfirm={
                 (thumbProps, navigation) => 
-                    onConfirm(thumbProps, navigation)
+                    onConfirmMedia(thumbProps, navigation)
             }
             mediaFilter={{
                 types: [ MEDIA_VIDEO ]
             }}
             canDelete
             canDrop
+        />
+        <UrlPromptModal
+            show={showUrlPrompt}
+            onClickAway={() => setShowUrlPrompt(false)}
+            onConfirm={(url) => onConfirmUrl(url)}
         />
     </>)
 }

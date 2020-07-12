@@ -1,13 +1,19 @@
 import VIDEO_ACTION_TYPES from "../actionTypes";
 
 
-const updateVideoSrc = newSrc => ({
-    type: VIDEO_ACTION_TYPES.UPDATE_SRC,
-    payload: { newSrc }
+const setLocalSrc = newLocalSrc => ({
+    type: VIDEO_ACTION_TYPES.SET_LOCAL_SRC,
+    payload: { newLocalSrc }
+})
+const setEmbedSrc = newEmbedSrc => ({
+    type: VIDEO_ACTION_TYPES.SET_EMBED_SRC,
+    payload: { newEmbedSrc }
 })
 
+
 const VIDEO_ACTIONS = {
-    updateVideoSrc
+    setLocalSrc,
+    setEmbedSrc
 }
 
 export default VIDEO_ACTIONS

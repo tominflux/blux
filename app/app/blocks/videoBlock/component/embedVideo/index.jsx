@@ -1,9 +1,9 @@
 import React from 'react'
-
+import './styles.css'
 
 export default function VideoBlockEmbedVideo(props) {
     //Render
-    return ( 
+    return (
         <div className="blux-video-block__embed-container">
             <iframe
                 className="blux-video-block__embed-video"

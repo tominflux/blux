@@ -1,10 +1,9 @@
 
 .blux-video-block__embed-container {
     position: relative;
-    display: inline-block;
 }
 
 .blux-video-block__embed-video {
-    max-width: 900pt;
-    max-height: 550pt;
+    width: 100%;
+    height: 480pt;
 }
