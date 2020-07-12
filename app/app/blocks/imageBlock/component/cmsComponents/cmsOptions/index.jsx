@@ -2,7 +2,6 @@ import React from 'react'
 import BlockOptions from '../../../../../cmsComponents/modals/blockOptions'
 import BlockOptionsButton from '../../../../../cmsComponents/modals/blockOptions/button'
 import Octicon, { Link, LinkExternal, FileMedia } from '@primer/octicons-react'
-import { inheritClasses } from '../../../../../misc'
 import { cmsify, hideable } from '../../../../../cmsComponents/cmsify'
 import './styles.css'
 

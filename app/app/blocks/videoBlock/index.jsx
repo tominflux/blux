@@ -5,6 +5,10 @@ import VIDEO_ACTION_TYPES from './redux/actionTypes'
 import VideoReducer, { videoInitialState } from './redux/reducer'
 import Octicon, { Play } from '@primer/octicons-react'
 
+export const VIDEO_SOURCE_TYPE = {
+    LOCAL: "LOCAL",
+    EMBED: "EMBED"
+}
 
 const VideoBlock = {
     component: VideoComponent,

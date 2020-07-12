@@ -1,8 +1,9 @@
 import React from 'react'
-import Plyr from 'plyr';
-import NewVideo from './cmsComponents/newVideo'
-import EditVideo from './cmsComponents/editVideo'
+import VideoCmsOptions from './cmsComponents/cmsOptions'
 import MediaSelectorModal from '../../../cmsComponents/modals/mediaSelectorModal'
+import { VIDEO_SOURCE_TYPE } from '..';
+import VideoBlockLocalVideo from './localVideo';
+import VideoPlaceholder from './placeholder';
 import { MEDIA_VIDEO } from '../../../misc';
 import { blockify } from '../../blockify';
 const path = require("path")
@@ -11,13 +12,6 @@ import './styles.css'
 function VideoBlock(props) {
     //State
     const [showSelector, setShowSelector] = React.useState(false)
-    //Ref
-    const ref = React.useRef(null)
-    //Effects
-    // - Activate Plyr
-    React.useEffect(() => {
-        new Plyr(ref.current);
-    }, [])
     //Events
     const onConfirm = (thumbProps, navigation) => {
         setShowSelector(false)
@@ -29,32 +23,35 @@ function VideoBlock(props) {
         )
         props.updateVideoSrc(videoSrc)
     }
+    //Getters
+    const getVideo = () => {
+        if (props.src === null) {
+            return <VideoPlaceholder />
+        }
+        switch (props.srcType) {
+            case VIDEO_SOURCE_TYPE.LOCAL:
+                return (
+                    <VideoBlockLocalVideo
+                        src={props.src}
+                    />
+                )
+            default:
+                const msg = (
+                    `Unrecognised video source type ` +
+                    `[srcType=${props.srcType}].`
+                )
+                alert(msg)
+                throw new Error(msg)
+        }
+    }
     //
     return (<>
         <div className="blux-video-block">
-            {
-                (props.src === null) ?
-                    <NewVideo
-                        show={props.showCms}
-                        onClick={() => setShowSelector(true)}
-                    /> :
-                    <div className="blux-video-block__video-container">
-                        <video 
-                            className="blux-video-block__video"
-                            ref={ref}
-                            controls
-                        >
-                            <source 
-                                src={props.src}
-                            />
-                            Your browser does not support the video tag.
-                        </video>
-                        <EditVideo
-                            show={props.showCms}
-                            onClick={() => setShowSelector(true)}
-                        /> 
-                    </div>
-            }
+            { getVideo() }
+            <VideoCmsOptions
+                show={props.showCms}
+                onSelectLocal={() => setShowSelector(true)}
+            />
         </div>
         <MediaSelectorModal
             show={showSelector}
