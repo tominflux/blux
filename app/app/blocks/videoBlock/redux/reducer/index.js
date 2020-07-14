@@ -7,7 +7,6 @@ export const BLOCK_TYPE_VIDEO = "video"
 export const videoInitialState = () => ({
     ...newBlockInitialState(BLOCK_TYPE_VIDEO),
     src: null,
-    alt: null,
     srcType: null
 })
 
