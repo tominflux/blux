@@ -6,10 +6,10 @@ import VideoBlockLocalVideo from './localVideo';
 import VideoBlockEmbedVideo from './embedVideo' 
 import VideoPlaceholder from './placeholder';
 import { MEDIA_VIDEO } from '../../../misc';
+import UrlPromptModal from '../../../cmsComponents/modals/urlPromptModal';
 import { blockify } from '../../blockify';
 const path = require("path")
 import './styles.css'
-import UrlPromptModal from '../../../cmsComponents/modals/urlPromptModal';
 
 function VideoBlock(props) {
     //State

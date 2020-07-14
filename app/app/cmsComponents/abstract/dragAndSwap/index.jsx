@@ -123,15 +123,17 @@ export default function DragAndSwap(props) {
             shrink: thumbsShrink[index]
         })
     )
-    const addItemThumb = {
+    const getAddItemThumb = () => ({
         type: THUMB_TYPES.ADD_ITEM
-    }
-    const thumbsWithAddItem = [
-        ...thumbsWithShrinkProp,
-        addItemThumb
-    ]
+    })
+    const allThumbs = (
+        props.showAddItemThumb ? [
+            ...thumbsWithShrinkProp,
+            getAddItemThumb()
+        ] : thumbsWithShrinkProp
+    )
     const thumbRows = splitIntoGroups(
-        thumbsWithAddItem, 3
+        allThumbs, 3
     )
     //
     return (

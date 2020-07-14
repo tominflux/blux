@@ -1,4 +1,5 @@
 import React from 'react'
+import Plyr from 'plyr';
 import './styles.css'
 
 
