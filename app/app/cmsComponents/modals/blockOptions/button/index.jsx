@@ -8,7 +8,7 @@ export default function BlockOptionsButton(props) {
     return(
         <Button
             className="blux-block-options__button"
-            tooptip={props.tooltip}
+            tooltip={props.tooltip}
             onClick={props.onClick}
         >
             {props.children}

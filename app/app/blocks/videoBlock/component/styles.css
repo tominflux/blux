@@ -1,16 +1,7 @@
 
 .blux-video-block {
     width: 100%;
+    height: 480pt;
     text-align: center;
     padding: 22pt;
-}
-
-.blux-video-block__video-container {
-    position: relative;
-    display: inline-block;
-}
-
-.blux-video-block__video {
-    max-width: 900pt;
-    max-height: 550pt;
 }
