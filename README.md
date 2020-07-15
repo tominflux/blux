@@ -1,6 +1,8 @@
 # blux
 
-**blux** is a React framework for building JAMstack websites with a WYSIWYG CMS.
+**blux** is a React framework for building JAMstack websites with a *WYSIWYG CMS.
+
+*The CMS of a **blux** site is the same code and same appearence as the public-facing site, but with extra content-management UI & functionalities on top.
 
 ---
 
@@ -33,7 +35,7 @@
 
 *Pages* and *blocks* can be likened to abstract classes in OOP. Whilst all pages and all blocks have shared functionality, they can only exist in some extended form with unique functionality on top.
 
-The site admin can dynamically add, remove and modify **pages** and **blocks** via the CMS.
+The site admin can dynamically add, remove and modify *pages* and *blocks* via the CMS. 
 
 The entire persistent state of the website exists within Redux, and therefore, every bit of content-management that happens is through Redux.
 
