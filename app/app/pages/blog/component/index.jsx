@@ -1,6 +1,7 @@
 import React from 'react'
 import BlogHeader from './header'
 import './styles.css'
+import { inheritClasses } from '../../../misc'
 
 
 export default function BlogPageComponent(props) {
@@ -8,7 +9,11 @@ export default function BlogPageComponent(props) {
     const onTitleChange = (newTitle) => props.setTitle(newTitle)
     //
     return (
-        <div className="blux-blog-page">
+        <div 
+            className={
+                inheritClasses(props, "blux-blog-page")
+            }
+        >
             <BlogHeader
                 title={props.title}
                 isDraft={props.isDraft}

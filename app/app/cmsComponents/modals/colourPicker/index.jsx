@@ -2,7 +2,7 @@ import React from 'react'
 import iro from '@jaames/iro'
 import './styles.css'
 import { inheritClasses } from '../../../misc'
-import { hideable } from '../../cmsify'
+import { hideable, cmsify } from '../../cmsify'
 
 function _ColourPicker(props) {
     //Refs
@@ -59,7 +59,9 @@ function _ColourPicker(props) {
     )
 }
 
-const hideableColourPicker = hideable(_ColourPicker)
+const hideableColourPicker = cmsify(
+    hideable(_ColourPicker)
+)
 
 const ColourPicker = hideableColourPicker
 export default ColourPicker

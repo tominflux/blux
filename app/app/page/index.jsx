@@ -6,7 +6,7 @@ import { getPageMap } from '../pageMap'
 import { getBlockMap } from '../blockMap'
 import { createBlockAction as blockActionToAction } from '../block/block/redux/actions'
 import { createActionFromPageAction } from './redux/reducer'
-
+import './styles.css'
 
 function prepareDispatchersForPage(page, pageId) {
     if (!page.redux) 
@@ -68,6 +68,7 @@ export default function Page(props) {
     const pageDispatchers = prepareDispatchersForPage(page, pageId)
     return (
         <PageComponent 
+            className="blux-page"
             {...pageProps}
             {...pageDispatchers}
         >
