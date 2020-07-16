@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.blux-create-block--no-blocks {
+    bottom: unset;
+    top: 0;
+}
 
 
 .blux-create-block__button {

@@ -4,5 +4,6 @@
 }
 
 .blux-blog-page__content {
+    position: relative;
     padding-top: 33pt;
 }

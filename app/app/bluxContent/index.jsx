@@ -34,6 +34,7 @@ const getCurrentPage = props => {
     }
     const initialCreateBlockButton = (pageProps.blocks.length === 0) ?
         <CreateBlockButton 
+            className="blux-create-block--no-blocks"
             pageId={pageId}
             show={true}
         /> : null
