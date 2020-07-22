@@ -18,9 +18,10 @@ import {
 import { TEXT_ALIGNMENT_STATES } from '../../../redux/actionTypes'
 const path = require("path")
 import './styles.css'
+import { cmsify } from '../../../../../cmsComponents/cmsify'
 
 
-export default function Toolbar(props) {
+function _Toolbar(props) {
     //State
     const [showPageSelector, setShowPageSelector] = React.useState(false)
     const [showUrlPrompt, setShowUrlPrompt] = React.useState(false)
@@ -137,3 +138,6 @@ export default function Toolbar(props) {
         />
     </>)
 }
+
+const Toolbar = cmsify(_Toolbar)
+export default Toolbar
