@@ -236,7 +236,8 @@ export const urlify = (string) => (
     (
         string.search("https://") === -1 &&
         string.search("http://") === -1 &&
-        string.search("mailto:") === -1
+        string.search("mailto:") === -1 &&
+        string.search("tel:") === -1
     ) ? `https://${string}` : string
 )
 
