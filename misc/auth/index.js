@@ -37,13 +37,22 @@ const checkPassAgainstPassHash = (pass, passHash) => {
 
 const checkAuthConfigured = () => {
     const confidentialsExists = getConfidentialsExists()
-    if (!confidentialsExists)
+    if (!confidentialsExists) {
+        console.warn("No auth configured - Confidentials do not exist.")
         return false
+    }
     const authUser = getConfidentials().authUser
     const authPassHash = getConfidentials().authPassHash
-    return (
-        (authUser && authPassHash) ? true : false
-    )
+    const configured = (authUser && authPassHash) ? true : false
+    if (!configured) {
+        console.warn(
+            "No auth configured - Confidentials not configured.\n" +
+            `authUser: ${authUser}\n` +
+            `authPassHash: ${authPassHash}`
+        )
+        return false
+    }
+    return true
 }
 
 const checkAuth = async (user, pass) => {

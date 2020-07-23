@@ -2,7 +2,6 @@ const simpleGit = require("simple-git/promise")
 const { getConfig } = require("../config")
 const { getConfidentialsExists, getConfidentials } = require("../confidentials")
 
-
 const checkCredentialsConfigured = () => {
     const confidentialsExists = getConfidentialsExists()
     if (!confidentialsExists)
@@ -98,7 +97,79 @@ const pushStaticRepo = async () => {
     await git.push(authRepo)
 }
 
+
 exports.checkStaticRepoCloned = checkStaticRepoCloned
 exports.cloneStaticRepo = cloneStaticRepo
 exports.pullStaticRepo = pullStaticRepo
 exports.pushStaticRepo = pushStaticRepo
+
+
+///////////
+///////////
+
+
+const fs = require("fs-extra")
+const path = require("path")
+
+/**
+ * Ensures necessary directories and home page are initialised
+ * within static repo. 
+ * @returns boolean
+ */
+const ensureStaticRepoInitialised = async () => {
+    const { staticPath } = getConfig()
+    //Locations of directories and home page file required
+    //for repo to be considered initialised.
+    const contentDir = path.join(staticPath, "content")
+    const mediaDir = path.join(contentDir, "media")
+    const pageDir = path.join(contentDir, "page")
+    const homePath = path.join(pageDir, "index.json")
+    //Functions for making required directories and generating home page.
+    const makeContentDir = 
+        async () => await fs.mkdir(contentDir)
+    const makeMediaDir = 
+        async () => await fs.mkdir(mediaDir)
+    const makePageDir = 
+        async () => await fs.mkdir(pageDir)
+    const genHomePage = async () => {
+        const homePageState = {
+            blocks: [],
+            id: "index",
+            isDraft: false,
+            modifiedDate: Date.now(),
+            publishedDate: Date.now(),
+            type: "default"
+        }
+        const homePageJson = JSON.stringify(homePageState)
+        await fs.writeFile(homePath, homePageJson)
+    }
+    //Check if the directories & home page exist.
+    //Create anything that's missing.
+    const contentDirExists = await fs.exists(contentDir)
+    if (!contentDirExists) {
+        console.log("Creating and initialising content directory within static repo...")
+        await makeContentDir()
+        await makeMediaDir()
+        await makePageDir()
+        await genHomePage()
+    } else {
+        const mediaDirExists = await fs.exists(mediaDir)
+        const pageDirExists = await fs.exists(pageDir)
+        const homePageExists = await fs.exists(homePath)
+        if (!mediaDirExists) {
+            console.log("Creating and media directory within static repo...")
+            await makeMediaDir()
+        }
+        if (!pageDirExists) {
+            console.log("Creating and populating page directory within static repo...")
+            await makePageDir()
+            await genHomePage()
+        } else if (!homePageExists) {
+            console.log("Generating home page within static repo...")
+            await genHomePage()
+        }
+    }
+}
+
+
+exports.ensureStaticRepoInitialised = ensureStaticRepoInitialised

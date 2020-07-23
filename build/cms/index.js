@@ -1,7 +1,7 @@
 const child = require("child_process")
 const { readConfidentials } = require("../../misc/confidentials")
 const { readConfig } = require("../../misc/config")
-const { checkStaticRepoCloned, cloneStaticRepo, pullStaticRepo } = require("../../misc/staticRepo")
+const { checkStaticRepoCloned, cloneStaticRepo, pullStaticRepo, ensureStaticRepoInitialised } = require("../../misc/staticRepo")
 const { checkPublicRepoCloned, clonePublicRepo, pullPublicRepo } = require("../../misc/publicRepo")
 
 async function ensureStaticRepoCloned() {
@@ -25,6 +25,7 @@ async function postbuild() {
     await readConfig()
     await ensureStaticRepoCloned()
     await ensurePublicRepoCloned()
+    await ensureStaticRepoInitialised()
 }
 
 const runParcelBuild = () => (

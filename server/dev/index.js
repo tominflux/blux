@@ -1,6 +1,6 @@
 const { readConfidentials: readConfidentials, getConfidentials } = require("../../misc/confidentials")
 const { readConfig } = require("../../misc/config")
-const { checkStaticRepoCloned, cloneStaticRepo, pullStaticRepo } = require("../../misc/staticRepo")
+const { checkStaticRepoCloned, cloneStaticRepo, pullStaticRepo, ensureStaticRepoInitialised } = require("../../misc/staticRepo")
 const { checkPublicRepoCloned, clonePublicRepo, pullPublicRepo } = require("../../misc/publicRepo")
 const express = require("express")
 const cookieParser = require('cookie-parser')
@@ -35,6 +35,7 @@ async function run() {
     await readConfig()
     await ensureStaticRepoCloned()
     await ensurePublicRepoCloned()
+    await ensureStaticRepoInitialised()
     const signedCookieSecret = getConfidentials().signedCookieSecret
     app.use(express.json())
     app.use(cookieParser(signedCookieSecret))

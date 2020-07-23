@@ -8,7 +8,7 @@ const path = require("path")
 
 const API_PATH = "/api/page/"
 
-const persistify = (pageState) => ({
+export const persistify = (pageState) => ({
     ...pageState,
     blocks: pageState.blocks.map(
         block => {
@@ -31,7 +31,7 @@ const persistify = (pageState) => ({
     )
 })
 
-const unpersistify = (persistifiedPageState) => ({
+export const unpersistify = (persistifiedPageState) => ({
     ...persistifiedPageState,
     blocks: persistifiedPageState.blocks.map(
         persistifiedBlock => {
@@ -56,7 +56,7 @@ const unpersistify = (persistifiedPageState) => ({
     )
 })
 
-async function checkPageModified(persistifiedPageState, pageApiPath) {
+export async function checkPageModified(persistifiedPageState, pageApiPath) {
     const response = await fetch(pageApiPath, { credentials: "same-origin" })
     const serverPageState = await response.json()
     const pageModified = (

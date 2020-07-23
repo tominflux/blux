@@ -3,7 +3,7 @@ import Modal from '../../abstract/modal'
 import Footer from './footer'
 import PageNavigator, { API_ROOT as API_ROOT_PAGE_BROWSER } from '../../navigators/pageNavigator'
 import { cmsify } from '../../cmsify'
-import defaultPageInitialState from '../../../pages/default/initialState'
+import { defaultPageInitialState } from '../../../pages/default/redux/reducer'
 import refreshPages from '../../../tasks/refreshPages'
 const path = require("path")
 
