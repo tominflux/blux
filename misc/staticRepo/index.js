@@ -61,7 +61,7 @@ const cloneStaticRepo = async () => {
     const gitPass = getConfidentials().gitPass
     const authRepo = `https://${gitUser}:${gitPass}@${staticRepo}`
     await git.clone(authRepo, staticPath)
-    console.log("Finished cloning.")
+    //console.log("Finished cloning.")
 }
 
 const pullStaticRepo = async () => {
