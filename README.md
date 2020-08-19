@@ -7,7 +7,7 @@
 ---
 
 ## What is blux for? Why does it exist?
-☯️ **blux** emerged from a political and philisophical stance of fluidity, egalitarianism and anti-establishment sentiment. It aims to empower those with little, and counter systems that are acquiring too much. 
+☯️ **blux** emerged from a political and philisophical stance of grass-roots sentiment. It aims to empower those with little. 
 
 ### Core intentions and principles of this project:
 - Provide user-friendly & intuitive content management for web admins, requiring little-to-no tech experience and smallest possible learning curve.
