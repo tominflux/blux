@@ -4,6 +4,9 @@
     text-align: center;
     padding-top: 22pt;
     padding-bottom: 22pt;
+    display: inline-block;
+    width: 100%;
+    height: 90pt;
 }
 
 .blux-social-links__configure-container  {

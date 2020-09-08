@@ -37,9 +37,9 @@ export default function Textbox(props) {
             type="text"
             placeholder={props.placeholder}
             onClick={props.onClick}
-            onChange={(e) => props.onChange(e)}
+            onChange={props.onChange}
             onBlur={props.onEnter}
-            onKeyPress={(e) => onKeyUp(e)}
+            onKeyPress={props.onKeyUp}
             {...dynamicProps}
         />   
     )
