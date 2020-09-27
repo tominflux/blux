@@ -27,7 +27,7 @@
   "homepage": "https://github.com/MakingUtopia/blux#readme",
   "dependencies": {
     "@primer/octicons-react": "^9.6.0",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "draft-js": "^0.11.4",
     "express": "^4.17.1",
