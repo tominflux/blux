@@ -44,7 +44,7 @@
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
     "regenerator-runtime": "^0.13.3",
-    "simple-git": "^2.4.0"
+    "simple-git": "^2.20.1"
   },
   "devDependencies": {
     "cssnano": "^4.1.10"
