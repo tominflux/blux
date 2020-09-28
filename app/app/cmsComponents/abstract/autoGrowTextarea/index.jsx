@@ -60,8 +60,8 @@ export default function AutoGrowTextArea(props) {
             rows={props.rows || 1}
             cols={props.cols || 22}
             style={processedStyle}
-            onKeyUp={(e) => onTextAreaKeyUp(e)}
-            onChange={(e) => onTextAreaChange(e)}
+            onKeyUp={onTextAreaKeyUp}
+            onChange={onTextAreaChange}
             {...inheritedProps}
             {...dynamicProps}
         />
