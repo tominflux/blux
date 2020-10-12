@@ -27,7 +27,7 @@ export default function AutoGrowTextArea(props) {
     }
     const onTextAreaChange = (e) => {
         if (onChange) {
-            onChange(e.target.value)
+            onChange(e)
         }
     }
     //Effects
