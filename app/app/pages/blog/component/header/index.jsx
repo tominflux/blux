@@ -29,7 +29,7 @@ export default function BlogHeader(props) {
                         isCMS() ?
                             <AutoGrowTextArea
                                 className="blux-blog-header__title-textbox"
-                                onChange={(value) => onTitleChange(value)}
+                                onChange={(e) => onTitleChange(e.target.value)}
                             >
                                 {props.title}
                             </AutoGrowTextArea> :
@@ -44,13 +44,13 @@ export default function BlogHeader(props) {
                                     Draft
                                 </span> :
                                 <span className="blux-blog-header__published">
-                                    {`Published - ${getPublishedStr()}` }
+                                    {`Published - ${getPublishedStr()}`}
                                 </span>
-                        } 
+                        }
                     </div>
                     <div className="col-sm-6 blux-blog-header__modified-col">
                         <span className="blux-blog-header__modified">
-                            {`Edited - ${getModifiedStr()}` }
+                            {`Edited - ${getModifiedStr()}`}
                         </span>
                     </div>
                 </div>
