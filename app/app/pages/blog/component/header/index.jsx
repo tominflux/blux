@@ -16,8 +16,8 @@ export default function BlogHeader(props) {
         return modifiedStr
     }
     //Events
-    const onTitleChange = (e) => {
-        const newTitle = e.target.value
+    const onTitleChange = (value) => {
+        const newTitle = value
         props.onTitleChange(newTitle)
     }
     //
